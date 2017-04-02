@@ -17,6 +17,7 @@ namespace SearchAlgorithmsLib
             get { return openList.Count; }
         }
 
+
         public Searcher()
         {
             openList = new SimplePriorityQueue<State<T>>();
