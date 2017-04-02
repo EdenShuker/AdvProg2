@@ -13,8 +13,6 @@ namespace SearchAlgorithmsLib
         State<T> getGoalState();
 
 
-
-
         List<State<T>> getAllPossibleStates(State<T> s);
     }
 }
