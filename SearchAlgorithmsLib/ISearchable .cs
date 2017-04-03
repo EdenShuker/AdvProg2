@@ -8,11 +8,10 @@ namespace SearchAlgorithmsLib
 {
     public interface ISearchable<T>
     {
-        State<T> getInitialState();
+        State<T> GetInitialState();
 
-        State<T> getGoalState();
+        State<T> GetGoalState();
 
-
-        List<State<T>> getAllPossibleStates(State<T> s);
+        List<State<T>> GetAllPossibleStates(State<T> s);
     }
 }
