@@ -23,14 +23,25 @@ namespace SearchAlgorithmsLib
             openList = new SimplePriorityQueue<State<T>>();
             evaluatedNodes = 0;
         }
+
         protected State<T> popOpenList()
         {
             evaluatedNodes++;
             return openList.Dequeue();
         }
 
+        protected void addToOpenList(State<T> state)
+        {
+            openList.Enqueue(state, state.cost);
+        }
+
+        protected bool isInOpenList(State<T> state)
+        {
+            return openList.Contains(state);
+        }
+
         // ISearcher’s methods:
         public int getNumberOfNodesEvaluated() { return evaluatedNodes; }
-        public abstract Solution search(ISearchable<T> searchable);
+        public abstract Solution<T> search(ISearchable<T> searchable);
     }
 }

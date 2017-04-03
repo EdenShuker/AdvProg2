@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Priority Queue, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OptimizedPriorityQueue.4.0.3\lib\net45\Priority Queue.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BFS.cs" />
+    <Compile Include="DFS.cs" />
     <Compile Include="ISearchable .cs" />
     <Compile Include="ISearcher .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
