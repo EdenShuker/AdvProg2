@@ -8,7 +8,7 @@ namespace SearchAlgorithmsLib
 {
     public class DFS<T> : Searcher<T>
     {
-        public override Solution<T> search(ISearchable<T> searchable)
+        public override Solution<T> Search(ISearchable<T> searchable)
         {
             throw new NotImplementedException();
         }

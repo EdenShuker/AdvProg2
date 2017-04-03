@@ -10,7 +10,8 @@ namespace SearchAlgorithmsLib
     {
         private Stack<State<T>> backTrace;
 
-        public Solution(State<T> state){
+        public Solution(State<T> state)
+        {
             backTrace = new Stack<State<T>>();
             findBackTrace(state);
         }

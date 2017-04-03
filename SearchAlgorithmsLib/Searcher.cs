@@ -17,14 +17,13 @@ namespace SearchAlgorithmsLib
             get { return openList.Count; }
         }
 
-
         public Searcher()
         {
             openList = new SimplePriorityQueue<State<T>>();
             evaluatedNodes = 0;
         }
 
-        protected State<T> popOpenList()
+        protected State<T> PopOpenList()
         {
             evaluatedNodes++;
             return openList.Dequeue();
@@ -32,16 +31,19 @@ namespace SearchAlgorithmsLib
 
         protected void addToOpenList(State<T> state)
         {
-            openList.Enqueue(state, state.cost);
+            openList.Enqueue(state, (float)state.cost);
         }
 
-        protected bool isInOpenList(State<T> state)
-        {
+        protected bool IsInOpenList(State<T> state) {
             return openList.Contains(state);
         }
 
         // ISearcher’s methods:
-        public int getNumberOfNodesEvaluated() { return evaluatedNodes; }
-        public abstract Solution<T> search(ISearchable<T> searchable);
+        public int GetNumberOfNodesEvaluated()
+        {
+            return evaluatedNodes;
+        }
+
+        public abstract Solution<T> Search(ISearchable<T> searchable);
     }
 }
