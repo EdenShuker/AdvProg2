@@ -6,12 +6,23 @@ using System.Threading.Tasks;
 
 namespace SearchAlgorithmsLib
 {
+    /// <summary>
+    /// Searcher interface.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface ISearcher<T>
     {
-        // the search method
+        /// <summary>
+        /// Find a solution to the given problem using an algorithm.
+        /// </summary>
+        /// <param name="searchable"> The problem to solve. </param>
+        /// <returns> Solution to the given problem. </returns>
         Solution<T> Search(ISearchable<T> searchable);
 
-        // get how many nodes were evaluated by the algorithm 
+        /// <summary>
+        /// Get how many nodes were evaluated by the algorithm. 
+        /// </summary>
+        /// <returns> Number of evaluated nodes. </returns>
         int GetNumberOfNodesEvaluated();
     }
 }

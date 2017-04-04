@@ -6,28 +6,45 @@ using System.Threading.Tasks;
 
 namespace SearchAlgorithmsLib
 {
+    /// <summary>
+    /// Represents the solution of general problem.
+    /// </summary>
+    /// <typeparam name="T"> Kind of problem. </typeparam>
     public class Solution<T>
     {
+        /// <summary>
+        /// Holds the full solution.
+        /// </summary>
         private Stack<State<T>> backTrace;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="state"> The last step of the solution. </param>
         public Solution(State<T> state)
         {
             backTrace = new Stack<State<T>>();
-            findBackTrace(state);
+            FindBackTrace(state);
         }
 
-        // Recursive method that fills the stack with the founded path.
-        private void findBackTrace(State<T> state)
+        /// <summary>
+        /// Climb up from the given state to the start of the solution.
+        /// </summary>
+        /// <param name="state"> One step of the solution. </param>
+        private void FindBackTrace(State<T> state)
         {
             if (state != null)
             {
                 backTrace.Push(state);
-                findBackTrace(state.cameFrom);
+                FindBackTrace(state.CameFrom);
             }
         }
 
-        // Get the next state in path.
-        public State<T> getNextState()
+        /// <summary>
+        /// Get the next state in path.
+        /// </summary>
+        /// <returns> The next state of the solution. </returns>
+        public State<T> GetNextState()
         {
             return backTrace.Pop();
         }

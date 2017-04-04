@@ -6,13 +6,29 @@ using System.Threading.Tasks;
 
 namespace SearchAlgorithmsLib
 {
+    /// <summary>
+    /// Searchable interface.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface ISearchable<T>
     {
+        /// <summary>
+        /// Get the initial state of the problem.
+        /// </summary>
+        /// <returns> Initial state. </returns>
         State<T> GetInitialState();
 
-        State<T> getGoalState();
+        /// <summary>
+        /// Get the goal state of the problem.
+        /// </summary>
+        /// <returns> Goal state. </returns>
+        State<T> GetGoalState();
 
-
-        List<State<T>> getAllPossibleStates(State<T> s);
+        /// <summary>
+        /// Get all of the posible states that relevant to the given state.
+        /// </summary>
+        /// <param name="s"> The current state in the problem. </param>
+        /// <returns> List of all of the possible states from the given state.</returns>
+        List<State<T>> GetAllPossibleStates(State<T> s);
     }
 }
