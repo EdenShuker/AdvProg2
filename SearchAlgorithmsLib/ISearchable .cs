@@ -31,7 +31,12 @@ namespace SearchAlgorithmsLib
         /// <returns> List of all of the possible states from the given state.</returns>
         List<State<T>> GetAllPossibleStates(State<T> s);
 
+        /// <summary>
+        /// TODO: complete documentation.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         double GetTransferCost(State<T> from, State<T> to);
-
     }
 }
