@@ -34,21 +34,23 @@ namespace SearchAlgorithmsLib
                 List<State<T>> succerssors = searchable.GetAllPossibleStates(n);
                 foreach (State<T> s in succerssors)
                 {
+                    double newPathCost = n.Cost + searchable.GetTransferCost(n, s); 
                     if (!closed.Contains(s) && !IsInOpenList(s))
                     {
                         s.CameFrom = n;
+                        s.Cost = newPathCost;
                         AddToOpenList(s);
                     }
-                    else
+                    else if (newPathCost < s.Cost)
                     {
-                        // TODO: does it need to be "not in open list" ?
-                        if (IsInOpenList(s))
+                        s.Cost = newPathCost;
+                        if (!IsInOpenList(s))
                         {
                             AddToOpenList(s);
                         }
                         else
                         {
-                            // TODO: adjust its priority in OPEN
+                            AdjustStatePriority(s, (float)s.Cost);
                         }
                     }
                 }

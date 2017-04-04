@@ -30,5 +30,8 @@ namespace SearchAlgorithmsLib
         /// <param name="s"> The current state in the problem. </param>
         /// <returns> List of all of the possible states from the given state.</returns>
         List<State<T>> GetAllPossibleStates(State<T> s);
+
+        double GetTransferCost(State<T> from, State<T> to);
+
     }
 }
