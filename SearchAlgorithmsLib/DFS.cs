@@ -10,7 +10,7 @@ namespace SearchAlgorithmsLib
     /// Searcher using DFS algorithm.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class DFS<T> : Searcher<T>
+    public class DFS<T> : PrioritySearcher<T>
     {
         /// <summary>
         /// Aapply the DFS algorithm on the given problem.
@@ -19,7 +19,30 @@ namespace SearchAlgorithmsLib
         /// <returns> Solution to the problem. </returns>
         public override Solution<T> Search(ISearchable<T> searchable)
         {
-            throw new NotImplementedException();
+            Stack<State<T>> openStates = new Stack<State<T>>();
+            openStates.Push(searchable.GetInitialState());
+            HashSet<State<T>> closed = new HashSet<State<T>>();
+            while (openStates.Count > 0)
+            {
+                State<T> n = openStates.Pop();
+                EvaluatedNodes++;
+                if (n.Equals(searchable.GetGoalState()))
+                {
+                    // Gaol has been reached.
+                    return new Solution<T>(n);
+                }
+                else if (!closed.Contains(n))
+                {
+                    closed.Add(n);
+                    // Handle succerssors.
+                    List<State<T>> succerssors = searchable.GetAllPossibleStates(n);
+                    foreach (State<T> s in succerssors)
+                    {
+                        openStates.Push(s);
+                    }
+                }
+            }
+            return null;
         }
     }
 }

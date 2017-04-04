@@ -10,7 +10,7 @@ namespace SearchAlgorithmsLib
     /// Searcher using BFS algorithm.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BFS<T> : Searcher<T>
+    public class BFS<T> : PrioritySearcher<T>
     {
         /// <summary>
         /// Aapply the BFS algorithm on the given problem.
