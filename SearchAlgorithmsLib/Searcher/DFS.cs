@@ -25,19 +25,21 @@ namespace SearchAlgorithmsLib
             while (openStates.Count > 0)
             {
                 State<T> n = openStates.Pop();
+                // TODO: Check if the "++" need to happen here or only after a state which is not marked (not in the hash set)
                 EvaluatedNodes++;
                 if (n.Equals(searchable.GetGoalState()))
                 {
                     // Gaol has been reached.
                     return new Solution<T>(n);
                 }
-                else if (!closed.Contains(n))
+                if (!closed.Contains(n))
                 {
                     closed.Add(n);
                     // Handle succerssors.
                     List<State<T>> succerssors = searchable.GetAllPossibleStates(n);
                     foreach (State<T> s in succerssors)
                     {
+                        s.CameFrom = n;
                         openStates.Push(s);
                     }
                 }

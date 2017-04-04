@@ -8,6 +8,7 @@ namespace SearchAlgorithmsLib
 {
     /// <summary>
     /// Searchable interface.
+    /// Object that can be searched on.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface ISearchable<T>

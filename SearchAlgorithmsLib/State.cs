@@ -12,8 +12,19 @@ namespace SearchAlgorithmsLib
     /// <typeparam name="T"> Kind of state. </typeparam>
     public class State<T>
     {
+        /// <summary>
+        /// Data of the state.
+        /// </summary>
         private T state;
+
+        /// <summary>
+        /// Cost of the state.
+        /// </summary>
         public double Cost { get; set; }
+
+        /// <summary>
+        /// Wwhere this state came from.
+        /// </summary>
         public State<T> CameFrom { get; set; }
 
         /// <summary>
