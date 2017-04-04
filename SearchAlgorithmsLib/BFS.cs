@@ -34,7 +34,7 @@ namespace SearchAlgorithmsLib
                 List<State<T>> succerssors = searchable.GetAllPossibleStates(n);
                 foreach (State<T> s in succerssors)
                 {
-                    double newPathCost = n.Cost + searchable.GetTransferCost(n, s); 
+                    double newPathCost = n.Cost + searchable.GetTransferCost(n, s);
                     if (!closed.Contains(s) && !IsInOpenList(s))
                     {
                         s.CameFrom = n;
@@ -50,7 +50,7 @@ namespace SearchAlgorithmsLib
                         }
                         else
                         {
-                            AdjustStatePriority(s, (float)s.Cost);
+                            AdjustStatePriority(s, (float) s.Cost);
                         }
                     }
                 }
