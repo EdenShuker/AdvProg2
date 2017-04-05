@@ -10,10 +10,10 @@ namespace SearchAlgorithmsLib
     /// Searcher using DFS algorithm.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class DFS<T> : PrioritySearcher<T>
+    public class DFS<T> : Searcher<T>
     {
         /// <summary>
-        /// Aapply the DFS algorithm on the given problem.
+        /// Apply the DFS algorithm on the given problem.
         /// </summary>
         /// <param name="searchable"> The problem to solve. </param>
         /// <returns> Solution to the problem. </returns>
