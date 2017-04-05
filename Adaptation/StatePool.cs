@@ -12,7 +12,6 @@ namespace Adaptation
     {
         private Dictionary<int, State<Position>> states;
 
-
         public StatePool(Maze maze)
         {
             this.states = new Dictionary<int, State<Position>>();
