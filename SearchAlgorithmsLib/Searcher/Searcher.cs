@@ -13,7 +13,7 @@ namespace SearchAlgorithmsLib
     public abstract class Searcher<T> : ISearcher<T>
     {
         /// <summary>
-        /// TODO: fill the documentation.
+        /// Number of nodes evaluated by the algorithm (how many paths had been checked).
         /// </summary>
         protected int EvaluatedNodes;
 

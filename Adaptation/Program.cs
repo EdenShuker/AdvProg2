@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MazeLib;
 
 namespace Adaptation
 {
@@ -10,6 +11,7 @@ namespace Adaptation
     {
         static void Main(string[] args)
         {
+
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SearchAlgorithmsLib
         /// <summary>
         /// Data of the state.
         /// </summary>
-        private T state;
+        public T Data { get; set; }
 
         /// <summary>
         /// Cost of the state.
@@ -30,10 +30,10 @@ namespace SearchAlgorithmsLib
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="state"> The data that the current state holds. </param>
-        private State(T state)
+        /// <param name="data"> The data that the current state holds. </param>
+        private State(T data)
         {
-            this.state = state;
+            this.Data = data;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace SearchAlgorithmsLib
         /// <returns> True if the data of both states equal, False otherwise. </returns>
         public bool Equals(State<T> s)
         {
-            return state.Equals(s.state);
+            return Data.Equals(s.Data);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace SearchAlgorithmsLib
         /// <returns> Hash code of its data. </returns>
         public override int GetHashCode()
         {
-            return state.GetHashCode();
+            return Data.GetHashCode();
         }
 
         /// <summary>
@@ -123,6 +123,15 @@ namespace SearchAlgorithmsLib
                 State<T> newState = new State<T>(id);
                 states[id] = newState;
                 return newState;
+            }
+
+            public void ResetStates()
+            {
+                foreach (State<T> stateVal in states.Values)
+                {
+                    stateVal.CameFrom = null;
+                    // TODO: check if the cost of the state need to be initialized.
+                }
             }
         }
     }
