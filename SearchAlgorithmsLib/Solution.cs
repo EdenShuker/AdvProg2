@@ -23,7 +23,7 @@ namespace SearchAlgorithmsLib
         /// <param name="state"> The last step of the solution. </param>
         public Solution(State<T> state)
         {
-            backTrace = new Stack<State<T>>();
+            this.backTrace = new Stack<State<T>>();
             FindBackTrace(state);
         }
 
@@ -35,7 +35,7 @@ namespace SearchAlgorithmsLib
         {
             if (state != null)
             {
-                backTrace.Push(state);
+                this.backTrace.Push(state);
                 FindBackTrace(state.CameFrom);
             }
         }
@@ -46,7 +46,7 @@ namespace SearchAlgorithmsLib
         /// <returns> The next state of the solution. </returns>
         public State<T> GetNextState()
         {
-            return backTrace.Pop();
+            return this.backTrace.Pop();
         }
     }
 }

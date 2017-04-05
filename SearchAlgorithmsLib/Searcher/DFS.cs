@@ -25,7 +25,7 @@ namespace SearchAlgorithmsLib
             while (openStates.Count > 0)
             {
                 State<T> n = openStates.Pop();
-                EvaluatedNodes++;
+                this.EvaluatedNodes++;
                 if (n.Equals(searchable.GetGoalState()))
                 {
                     // Gaol has been reached.

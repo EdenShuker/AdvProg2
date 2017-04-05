@@ -22,7 +22,7 @@ namespace SearchAlgorithmsLib
         /// </summary>
         protected Searcher()
         {
-            EvaluatedNodes = 0;
+            this.EvaluatedNodes = 0;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace SearchAlgorithmsLib
         /// <returns> number of nodes evaluated. </returns>
         public int GetNumberOfNodesEvaluated()
         {
-            return EvaluatedNodes;
+            return this.EvaluatedNodes;
         }
 
         /// <summary>

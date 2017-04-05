@@ -23,7 +23,7 @@ namespace SearchAlgorithmsLib
         /// </summary>
         public int OpenListSize
         {
-            get { return openList.Count; }
+            get { return this.openList.Count; }
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace SearchAlgorithmsLib
         /// </summary>
         protected PrioritySearcher() : base()
         {
-            openList = new SimplePriorityQueue<State<T>>();
+            this.openList = new SimplePriorityQueue<State<T>>();
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace SearchAlgorithmsLib
         /// <returns> The next state in the list. </returns>
         protected State<T> PopOpenList()
         {
-            EvaluatedNodes++;
-            return openList.Dequeue();
+            this.EvaluatedNodes++;
+            return this.openList.Dequeue();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace SearchAlgorithmsLib
         /// <param name="state"> State to handle in the algorithm. </param>
         protected void AddToOpenList(State<T> state)
         {
-            openList.Enqueue(state, (float) state.Cost);
+            this.openList.Enqueue(state, (float) state.Cost);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace SearchAlgorithmsLib
         /// <returns> True if the given state is in the list, false otherwise. </returns>
         protected bool IsInOpenList(State<T> state)
         {
-            return openList.Contains(state);
+            return this.openList.Contains(state);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace SearchAlgorithmsLib
         /// <param name="priority"> New value of the priority. </param>
         protected void AdjustStatePriority(State<T> state, float priority)
         {
-            openList.UpdatePriority(state, priority);
+            this.openList.UpdatePriority(state, priority);
         }
     }
 }

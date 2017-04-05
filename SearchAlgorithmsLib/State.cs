@@ -68,7 +68,7 @@ namespace SearchAlgorithmsLib
             private static volatile StatePool instance;
 
             /// <summary>
-            /// Variable for the lock of threads.
+            /// Variable to lock critical section.
             /// </summary>
             private static object syncRoot = new object();
 
@@ -82,7 +82,7 @@ namespace SearchAlgorithmsLib
             /// </summary>
             private StatePool()
             {
-                states = new Dictionary<T, State<T>>();
+                this.states = new Dictionary<T, State<T>>();
             }
 
             /// <summary>
@@ -115,7 +115,7 @@ namespace SearchAlgorithmsLib
             public State<T> GetState(T id)
             {
                 // The state already in the pool (created before)
-                if (states.ContainsKey(id))
+                if (this.states.ContainsKey(id))
                 {
                     return states[id];
                 }
@@ -125,6 +125,9 @@ namespace SearchAlgorithmsLib
                 return newState;
             }
 
+            /// <summary>
+            /// Reset the states of the last data caused by the last operations on it.
+            /// </summary>
             public void ResetStates()
             {
                 foreach (State<T> stateVal in states.Values)
