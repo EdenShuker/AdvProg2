@@ -25,7 +25,6 @@ namespace SearchAlgorithmsLib
             while (openStates.Count > 0)
             {
                 State<T> n = openStates.Pop();
-                // TODO: Check if the "++" need to happen here or only after a state which is not marked (not in the hash set)
                 EvaluatedNodes++;
                 if (n.Equals(searchable.GetGoalState()))
                 {
