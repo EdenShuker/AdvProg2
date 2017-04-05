@@ -30,8 +30,8 @@ namespace SearchAlgorithmsLib
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="state"> The data that the current satate holds. </param>
-        public State(T state)
+        /// <param name="state"> The data that the current state holds. </param>
+        private State(T state)
         {
             this.state = state;
         }
@@ -54,6 +54,76 @@ namespace SearchAlgorithmsLib
         public override int GetHashCode()
         {
             return state.GetHashCode();
+        }
+
+        /// <summary>
+        /// State Pool holds all the states that have been created.
+        /// Singleton class.
+        /// </summary>
+        public sealed class StatePool
+        {
+            /// <summary>
+            /// Instance of the singleton.
+            /// </summary>
+            private static volatile StatePool instance;
+
+            /// <summary>
+            /// Variable for the lock of threads.
+            /// </summary>
+            private static object syncRoot = new object();
+
+            /// <summary>
+            /// Maps an id-data of state to its state.
+            /// </summary>
+            private Dictionary<T, State<T>> states;
+
+            /// <summary>
+            /// Constructor.
+            /// </summary>
+            private StatePool()
+            {
+                states = new Dictionary<T, State<T>>();
+            }
+
+            /// <summary>
+            /// Get the instance of the singleton.
+            /// Thread safety.
+            /// </summary>
+            public static StatePool Instance
+            {
+                get
+                {
+                    if (instance == null)
+                    {
+                        lock (syncRoot)
+                        {
+                            if (instance == null)
+                            {
+                                instance = new StatePool();
+                            }
+                        }
+                    }
+                    return instance;
+                }
+            }
+
+            /// <summary>
+            /// Get the state with the given id.
+            /// </summary>
+            /// <param name="id"> Id of general state. </param>
+            /// <returns> State that holds the id as its data. </returns>
+            public State<T> GetState(T id)
+            {
+                // The state already in the pool (created before)
+                if (states.ContainsKey(id))
+                {
+                    return states[id];
+                }
+                // This is a new state, add it to the dictionary.
+                State<T> newState = new State<T>(id);
+                states[id] = newState;
+                return newState;
+            }
         }
     }
 }
