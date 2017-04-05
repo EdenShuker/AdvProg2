@@ -38,6 +38,6 @@ namespace SearchAlgorithmsLib
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        double GetTransferCost(State<T> from, State<T> to);
+        float GetTransferCost(State<T> from, State<T> to);
     }
 }

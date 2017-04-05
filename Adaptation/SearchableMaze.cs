@@ -10,24 +10,21 @@ namespace Adaptation
 {
     public class SearchableMaze : ISearchable<Position>
     {
-        private State<Position> intialState;
-        private State<Position> goalState;
+        private Maze maze;
 
         public SearchableMaze(Maze maze)
         {
-            // TODO: add state-pool class and add it here as a member.
-            intialState = new State<Position>(maze.InitialPos);
-            goalState = new State<Position>(maze.GoalPos);
+            this.maze = maze;
         }
 
         public State<Position> GetInitialState()
         {
-            return intialState;
+            throw new NotImplementedException();
         }
 
         public State<Position> GetGoalState()
         {
-            return goalState;
+            throw new NotImplementedException();
         }
 
         public List<State<Position>> GetAllPossibleStates(State<Position> s)
@@ -35,9 +32,9 @@ namespace Adaptation
             throw new NotImplementedException();
         }
 
-        public double GetTransferCost(State<Position> @from, State<Position> to)
+        public float GetTransferCost(State<Position> from, State<Position> to)
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

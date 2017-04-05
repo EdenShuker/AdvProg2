@@ -46,5 +46,14 @@ namespace SearchAlgorithmsLib
         {
             return state.Equals(s.state);
         }
+
+        /// <summary>
+        /// Get the hash-code of the state.
+        /// </summary>
+        /// <returns> Hash code of its data. </returns>
+        public override int GetHashCode()
+        {
+            return state.GetHashCode();
+        }
     }
 }
