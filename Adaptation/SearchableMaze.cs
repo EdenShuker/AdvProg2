@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Adaptation
+namespace Ex1
 {
     /// <summary>
     /// Maze object that different algorithm can be applied on it.
@@ -112,5 +112,3 @@ namespace Adaptation
         }
     }
 }
-
-
