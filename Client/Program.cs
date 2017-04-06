@@ -22,12 +22,11 @@ namespace Client
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 // Send data to server
-                Console.Write("Please enter a number: ");
-                int num = int.Parse(Console.ReadLine());
-                writer.Write(num);
+                Console.Write("Please enter a command: ");
+                writer.Write(Console.ReadLine());
                 // Get result from server
-                int result = reader.ReadInt32();
-                Console.WriteLine("Result = {0}", result);
+                string result = reader.ReadString();
+                Console.WriteLine(result);
             }
             Console.ReadLine();
             client.Close();

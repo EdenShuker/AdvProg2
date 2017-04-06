@@ -12,21 +12,23 @@ namespace Ex1
     {
         public void HandleClient(TcpClient client)
         {
-            Task task = new Task(() =>
+           Task task = new Task(() =>
             {
+                Console.WriteLine("performing client handler task");
                 using (NetworkStream stream = client.GetStream())
-                using (BinaryReader reader = new BinaryReader(stream))
-                using (BinaryWriter writer = new BinaryWriter(stream))
+                using (StreamReader reader = new StreamReader(stream))
+                using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    Console.WriteLine("Waiting for a number");
-                    int num = reader.ReadInt32();
-                    Console.WriteLine("Number accepted: " + num);
-                    num *= 2;
-                    writer.Write(num);
-                } 
+                    string commandLine = reader.ReadLine();
+                    Console.WriteLine("Got command: {0}", commandLine);
+                    writer.Write("hello");
+                    //string result = ExecuteCommand(commandLine, client);
+                    //writer.Write(result);
+                }
+                client.Close();
             });
             task.Start();
-            task.Wait();
         }
-    }
+    }
+
 }
