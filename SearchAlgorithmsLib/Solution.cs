@@ -46,7 +46,11 @@ namespace SearchAlgorithmsLib
         /// <returns> The next state of the solution. </returns>
         public State<T> GetNextState()
         {
+            if (backTrace.Count == 0){
+                return null;
+            }
             return this.backTrace.Pop();
         }
+
     }
 }

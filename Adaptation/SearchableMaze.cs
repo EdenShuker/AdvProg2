@@ -13,6 +13,9 @@ namespace Adaptation
     /// </summary>
     public class SearchableMaze : ISearchable<Position>
     {
+        /// <summary>
+        /// The maze to search on.
+        /// </summary>
         private Maze maze;
 
         /// <summary>
@@ -23,6 +26,10 @@ namespace Adaptation
         public SearchableMaze(Maze maze)
         {
             this.maze = maze;
+            // TODO: Maybe switch the call for the method
+            // TODO: from - State<>.StatePool.Instance.GetState(Pos)
+            // TODO: to   - State<>.GetState(Pos)
+            // TODO: so all of the state-pool implementation will be hidden (and the line wont be long).
             // Extract valid states from the maze.
             for (int i = 0; i < this.maze.Rows; i++)
             {
@@ -36,12 +43,19 @@ namespace Adaptation
             }
         }
 
+        /// <summary>
+        /// Get the position of the initial state.
+        /// </summary>
+        /// <returns> state. </returns>
         public State<Position> GetInitialState()
         {
             return State<Position>.GetState(this.maze.InitialPos);
         }
 
-
+        /// <summary>
+        /// Get the position of the goal state.
+        /// </summary>
+        /// <returns> state. </returns>
         public State<Position> GetGoalState()
         {
             return State<Position>.GetState(this.maze.GoalPos);
@@ -61,29 +75,39 @@ namespace Adaptation
             // Check for going Up.
             if (currentRow > 0 && this.maze[currentRow - 1, currentCol] == CellType.Free)
             {
-                possibleStatesList.Add(State<Position>.GetState(new Position(currentRow - 1, currentCol)));
+                possibleStatesList.Add(
+                    State<Position>.GetState(new Position(currentRow - 1, currentCol)));
             }
             // Check for going Down.
             if (currentRow < maze.Rows - 1 && this.maze[currentRow + 1, currentCol] == CellType.Free)
             {
-                possibleStatesList.Add(State<Position>.GetState(new Position(currentRow + 1, currentCol)));
+                possibleStatesList.Add(
+                    State<Position>.GetState(new Position(currentRow + 1, currentCol)));
             }
             // Check for going Right.
             if (currentCol < maze.Cols - 1 && this.maze[currentRow, currentCol + 1] == CellType.Free)
             {
-                possibleStatesList.Add(State<Position>.GetState(new Position(currentRow, currentCol + 1)));
+                possibleStatesList.Add(
+                    State<Position>.GetState(new Position(currentRow, currentCol + 1)));
             }
             // Check for going Left.
             if (currentCol > 0 && this.maze[currentRow, currentCol - 1] == CellType.Free)
             {
-                possibleStatesList.Add(State<Position>.GetState(new Position(currentRow, currentCol - 1)));
+                possibleStatesList.Add(
+                    State<Position>.GetState(new Position(currentRow, currentCol - 1)));
             }
             return possibleStatesList;
         }
 
-
+        /// <summary>
+        /// Get the cost to transfer the state 'from' to state 'to'.
+        /// </summary>
+        /// <param name="from"> state. </param>
+        /// <param name="to"> state. </param>
+        /// <returns> cost to transfer between the two. </returns>
         public float GetTransferCost(State<Position> from, State<Position> to)
         {
+            // TODO: check if this method is necessary.
             return 1;
         }
     }
