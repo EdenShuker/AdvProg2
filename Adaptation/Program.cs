@@ -14,8 +14,10 @@ namespace Ex1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ninii");
-
+            ClientHandler clientHadler = new ClientHandler();
+            Server server = new Server(8000, clientHadler);
+            server.Start();
+            Console.ReadLine();
         }
 
         static void CompareSolvers(int rows, int cols)
