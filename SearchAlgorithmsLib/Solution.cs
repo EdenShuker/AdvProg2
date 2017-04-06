@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace SearchAlgorithmsLib
 {
@@ -50,6 +51,12 @@ namespace SearchAlgorithmsLib
                 return null;
             }
             return this.backTrace.Pop();
+        }
+
+        public string ToJSON()
+        {
+            JObject solutionObj = new JObject();
+            solutionObj["Name"] = 
         }
     }
 }
