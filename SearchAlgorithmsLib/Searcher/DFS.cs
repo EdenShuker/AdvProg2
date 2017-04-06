@@ -38,8 +38,11 @@ namespace SearchAlgorithmsLib
                     List<State<T>> succerssors = searchable.GetAllPossibleStates(n);
                     foreach (State<T> s in succerssors)
                     {
-                        s.CameFrom = n;
-                        openStates.Push(s);
+                        if (!closed.Contains(s))
+                        {
+                            s.CameFrom = n;
+                            openStates.Push(s);
+                        }
                     }
                 }
             }
