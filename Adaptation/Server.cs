@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,24 +11,46 @@ namespace Adaptation
 {
     class Server
     {
-        IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-        TcpListener listener = new TcpListener(ep);
-        listener.Start();
-        Console.WriteLine("Waiting for client connections...");
-        TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine("Client connected");
-        using (NetworkStream stream = client.GetStream())
-        using (BinaryReader reader = new BinaryReader(stream))
-        using (BinaryWriter writer = new BinaryWriter(stream))
+        private int port;
+        private TcpListener listener;
+        private IClientHandler ch;
+
+        public Server(int port, IClientHandler ch)
         {
-         Console.WriteLine("Waiting for a number");
-         int num = reader.ReadInt32();
-            Console.WriteLine("Number accepted");
-         num *= 2;
-         writer.Write(num);
+            this.port = port;
+            this.ch = ch;
         }
 
-        client.Close();
-        listener.Stop();
+        public void Start()
+        {
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            listener = new TcpListener(ep);
+            listener.Start();
+            Console.WriteLine("Waiting for connections...");
+
+            Task task = new Task(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        TcpClient client = listener.AcceptTcpClient();
+                        Console.WriteLine("Got new connection");
+                        ch.HandleClient(client);
+                    }
+                    catch (SocketException)
+                    {
+                        break;
+                    }
+                }
+                Console.WriteLine("Server stopped");
+            });
+            task.Start();
+        }
+
+        public void Stop()
+        {
+            listener.Stop();
+        }
     }
 }
