@@ -15,6 +15,7 @@ namespace Adaptation
         static void Main(string[] args)
         {
             Console.WriteLine("ninii");
+
         }
 
         static void CompareSolvers(int rows, int cols)
