@@ -18,14 +18,13 @@ namespace SearchAlgorithmsLib
         /// </summary>
         private Stack<State<T>> backTrace;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="state"> The last step of the solution. </param>
-        public Solution(State<T> state)
+        private int evaluatedNodes;
+
+        public Solution(State<T> state, int numEvaluatedNodes)
         {
             this.backTrace = new Stack<State<T>>();
             FindBackTrace(state);
+            evaluatedNodes = numEvaluatedNodes;
         }
 
         /// <summary>
@@ -47,19 +46,27 @@ namespace SearchAlgorithmsLib
         /// <returns> The next state of the solution. </returns>
         public State<T> GetNextState()
         {
-            if (backTrace.Count == 0){
+            if (backTrace.Count == 0)
+            {
                 return null;
             }
             return this.backTrace.Pop();
         }
 
-        delegate string PathToString(Stack<State<T>> backTrace);
+        public delegate string PathToString(State<T> start);
+
         public string ToJSON(string name, PathToString func)
         {
             JObject solutionObj = new JObject();
             solutionObj["Name"] = name;
-            //solutionObj["Solution"] 
-            
+            solutionObj["Solution"] = func(backTrace.Peek());
+            solutionObj["NodesEvaluated"] = evaluatedNodes.ToString();
+            return solutionObj.ToString();
         }
+
+//        public static Solution<T> FromJSON(string str)
+//        {
+//            // TODO: not sure about the implementation.
+//        }
     }
 }
