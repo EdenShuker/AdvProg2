@@ -23,10 +23,10 @@ namespace Ex1
                     Console.WriteLine("Number accepted: " + num);
                     num *= 2;
                     writer.Write(num);
-                } 
+                }
             });
             task.Start();
             task.Wait();
         }
-    }
+    }
 }

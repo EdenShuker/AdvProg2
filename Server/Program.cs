@@ -31,7 +31,7 @@ namespace Server
             }
 
             client.Close();
-            listener.Stop();
+            listener.Stop();
         }
     }
 }
