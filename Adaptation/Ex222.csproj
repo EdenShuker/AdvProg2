@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
+    <Compile Include="Command\ICommand.cs" />
     <Compile Include="IClientHandler.cs" />
     <Compile Include="SearchableMaze.cs" />
     <Compile Include="Program.cs" />

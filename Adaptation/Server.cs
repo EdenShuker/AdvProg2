@@ -28,24 +28,28 @@ namespace Ex1
             listener.Start();
             Console.WriteLine("Waiting for connections...");
 
-            Task task = new Task(() => {
-                TcpClient client = listener.AcceptTcpClient();
-                Console.WriteLine("Got new connection");
-                ch.HandleClient(client);
-                //    while (true)
-                //    {
-                //        try
-                //        {
-                //            TcpClient client = listener.AcceptTcpClient();
-                //            Console.WriteLine("Got new connection");
-                //            ch.HandleClient(client);
-                //        }
-                //        catch (SocketException)
-                //        {
-                //            break;
-                //        }
-                //    }
-                //    Console.WriteLine("Server stopped");
+            Task task = new Task(() =>
+            {
+                Console.WriteLine("Task is being performed");
+                try
+                {
+                    TcpClient client = listener.AcceptTcpClient();
+                    Console.WriteLine("Got new connection");
+                    ch.HandleClient(client);
+                    //using (NetworkStream stream = client.GetStream())
+                    //using (BinaryReader reader = new BinaryReader(stream))
+                    //using (BinaryWriter writer = new BinaryWriter(stream))
+                    //{
+                    //    Console.WriteLine("Waiting for a number");
+                    //    int num = reader.ReadInt32();
+                    //    Console.WriteLine("Number accepted: " + num);
+                    //    num *= 2;
+                    //    writer.Write(num);
+                    //}
+                }
+                catch (SocketException)
+                {
+                }
             });
             task.Start();
             task.Wait();

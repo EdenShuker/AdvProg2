@@ -51,6 +51,5 @@ namespace SearchAlgorithmsLib
             }
             return this.backTrace.Pop();
         }
-
     }
 }
