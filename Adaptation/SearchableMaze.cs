@@ -37,7 +37,7 @@ namespace Adaptation
                 {
                     if (this.maze[i, j] == CellType.Free)
                     {
-                        State<Position>.StatePool.Instance.GetState(new Position(i, j));
+                        State<Position>.GetState(new Position(i, j));
                     }
                 }
             }
@@ -49,7 +49,7 @@ namespace Adaptation
         /// <returns> state. </returns>
         public State<Position> GetInitialState()
         {
-            return State<Position>.StatePool.Instance.GetState(this.maze.InitialPos);
+            return State<Position>.GetState(this.maze.InitialPos);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Adaptation
         /// <returns> state. </returns>
         public State<Position> GetGoalState()
         {
-            return State<Position>.StatePool.Instance.GetState(this.maze.GoalPos);
+            return State<Position>.GetState(this.maze.GoalPos);
         }
 
         /// <summary>
@@ -73,28 +73,28 @@ namespace Adaptation
             int currentRow = s.Data.Row;
             int currentCol = s.Data.Col;
             // Check for going Up.
-            if (this.maze[currentRow - 1, currentCol] == CellType.Free)
+            if (currentRow > 0 && this.maze[currentRow - 1, currentCol] == CellType.Free)
             {
                 possibleStatesList.Add(
-                    State<Position>.StatePool.Instance.GetState(new Position(currentRow - 1, currentCol)));
+                    State<Position>.GetState(new Position(currentRow - 1, currentCol)));
             }
             // Check for going Down.
-            if (this.maze[currentRow + 1, currentCol] == CellType.Free)
+            if (currentRow < maze.Rows - 1 && this.maze[currentRow + 1, currentCol] == CellType.Free)
             {
                 possibleStatesList.Add(
-                    State<Position>.StatePool.Instance.GetState(new Position(currentRow + 1, currentCol)));
+                    State<Position>.GetState(new Position(currentRow + 1, currentCol)));
             }
             // Check for going Right.
-            if (this.maze[currentRow, currentCol + 1] == CellType.Free)
+            if (currentCol < maze.Cols - 1 && this.maze[currentRow, currentCol + 1] == CellType.Free)
             {
                 possibleStatesList.Add(
-                    State<Position>.StatePool.Instance.GetState(new Position(currentRow, currentCol + 1)));
+                    State<Position>.GetState(new Position(currentRow, currentCol + 1)));
             }
             // Check for going Left.
-            if (this.maze[currentRow, currentCol - 1] == CellType.Free)
+            if (currentCol > 0 && this.maze[currentRow, currentCol - 1] == CellType.Free)
             {
                 possibleStatesList.Add(
-                    State<Position>.StatePool.Instance.GetState(new Position(currentRow, currentCol - 1)));
+                    State<Position>.GetState(new Position(currentRow, currentCol - 1)));
             }
             return possibleStatesList;
         }
@@ -108,7 +108,7 @@ namespace Adaptation
         public float GetTransferCost(State<Position> from, State<Position> to)
         {
             // TODO: check if this method is necessary.
-            return 0;
+            return 1;
         }
     }
 }

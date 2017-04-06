@@ -56,6 +56,11 @@ namespace SearchAlgorithmsLib
             return Data.GetHashCode();
         }
 
+        public static State<T> GetState(T id)
+        {
+            return StatePool.Instance.GetState(id);
+        }
+
         /// <summary>
         /// State Pool holds all the states that have been created.
         /// Singleton class.
