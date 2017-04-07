@@ -62,10 +62,48 @@ namespace Ex1
             return maze;
         }
 
-
+        // return the name of the game
         public string Play(string move, TcpClient player)
         {
-            throw new NotImplementedException();
+            PlayerInfo playerInfo = null;
+            GameInfo gameInfo = null;
+            string nameOfGame = null;
+            foreach (string nameOfCurrentGame in this.unAvailablesGames.Keys)
+            {
+                GameInfo currentGameInfo = this.unAvailablesGames[nameOfCurrentGame];
+                playerInfo = currentGameInfo.GetPlayer(player);
+                if (player != null)
+                {
+                    gameInfo = currentGameInfo;
+                    nameOfGame = nameOfCurrentGame;
+                    break;
+                }
+            }
+            Maze maze = mazes[gameInfo.NameOfMaze].Maze;
+            Position currentPosition = playerInfo.Location;
+            int currentRow = currentPosition.Row;
+            int currentCol = currentPosition.Col;
+            if (move.Equals("right") && currentCol < maze.Cols - 1 && maze[currentRow, currentCol + 1] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow, currentCol + 1);
+            }
+            else if (move.Equals("left") && currentCol > 0 && maze[currentRow, currentCol - 1] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow, currentCol - 1);
+            }
+            else if (move.Equals("up") && currentRow > 0 && maze[currentRow - 1, currentCol] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow - 1, currentCol);
+            }
+            else if (move.Equals("down") && currentRow < maze.Rows - 1 && maze[currentRow + 1, currentCol] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow + 1, currentCol);
+            }
+            else
+            {
+                return "Invalid Direction";
+            }
+            return nameOfGame;
         }
 
 

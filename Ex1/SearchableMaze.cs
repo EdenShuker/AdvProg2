@@ -79,19 +79,19 @@ namespace Ex1
                     State<Position>.GetState(new Position(currentRow - 1, currentCol)));
             }
             // Check for going Down.
-            if (currentRow < maze.Rows - 1 && this.maze[currentRow + 1, currentCol] == CellType.Free)
+            else if (currentRow < maze.Rows - 1 && this.maze[currentRow + 1, currentCol] == CellType.Free)
             {
                 possibleStatesList.Add(
                     State<Position>.GetState(new Position(currentRow + 1, currentCol)));
             }
             // Check for going Right.
-            if (currentCol < maze.Cols - 1 && this.maze[currentRow, currentCol + 1] == CellType.Free)
+            else if (currentCol < maze.Cols - 1 && this.maze[currentRow, currentCol + 1] == CellType.Free)
             {
                 possibleStatesList.Add(
                     State<Position>.GetState(new Position(currentRow, currentCol + 1)));
             }
             // Check for going Left.
-            if (currentCol > 0 && this.maze[currentRow, currentCol - 1] == CellType.Free)
+            else if (currentCol > 0 && this.maze[currentRow, currentCol - 1] == CellType.Free)
             {
                 possibleStatesList.Add(
                     State<Position>.GetState(new Position(currentRow, currentCol - 1)));
