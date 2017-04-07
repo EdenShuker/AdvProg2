@@ -43,7 +43,6 @@ namespace Ex1
                 Console.WriteLine("Server stopped");
             });
             task.Start();
-            task.Wait();
         }
 
         public void Stop()

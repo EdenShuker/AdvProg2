@@ -18,6 +18,7 @@ namespace Ex1
             Server server = new Server(8000, clientHadler);
             server.Start();
             Console.ReadLine();
+            server.Stop();
         }
 
         static void CompareSolvers(int rows, int cols)

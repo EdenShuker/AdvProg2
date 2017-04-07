@@ -13,5 +13,7 @@ namespace Ex1
         Maze GenerateMaze(string name, int rows, int cols);
 
         Solution<Position> SolveMaze(string name, int algorithm);
+
+
     }
 }

@@ -18,15 +18,7 @@ namespace Ex1.Command
             this.model = model;
         }
 
-        public string Execute(string[] args, TcpClient client = null)
-        {
-            string name = args[0];
-            int algorithm = int.Parse(args[1]);
-            Solution<Position> solution = model.SolveMaze(name, algorithm);
-            return solution.ToJSON(name, pathDirections);
-        }
-
-        public static string pathDirections(State<Position> start)
+        static string ParseDirections(State<Position> start)
         {
             StringBuilder builder = new StringBuilder();
             Position from = start.Data;
@@ -38,7 +30,7 @@ namespace Ex1.Command
                 {
                     num = "2";
                 }
-                else if (from.Row < to.Row)
+                else if (from.Row > to.Row)
                 {
                     num = "3";
                 }
@@ -55,6 +47,14 @@ namespace Ex1.Command
                 from = to;
             }
             return builder.ToString();
+        }
+
+        public string Execute(string[] args, TcpClient client = null)
+        {
+            string name = args[0];
+            int algorithm = int.Parse(args[1]);
+            Solution<Position> solution = model.SolveMaze(name, algorithm);
+            return solution.ToJSON(name, ParseDirections);
         }
     }
 }

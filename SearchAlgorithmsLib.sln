@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchAlgorithmsLib", "SearchAlgorithmsLib\SearchAlgorithmsLib.csproj", "{0E153B38-BF07-4285-A0C8-E384506CB250}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{E2BCC483-0247-4A20-B20B-B4EC3823A029}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex1", "Ex1\Ex1.csproj", "{236A3F8D-8E3D-47BD-BCFF-BAFB535BD541}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client2", "Client2\Client2.csproj", "{00C450AF-4C54-46F6-A35A-43D4ABA164E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{236A3F8D-8E3D-47BD-BCFF-BAFB535BD541}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{236A3F8D-8E3D-47BD-BCFF-BAFB535BD541}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{236A3F8D-8E3D-47BD-BCFF-BAFB535BD541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00C450AF-4C54-46F6-A35A-43D4ABA164E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00C450AF-4C54-46F6-A35A-43D4ABA164E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00C450AF-4C54-46F6-A35A-43D4ABA164E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00C450AF-4C54-46F6-A35A-43D4ABA164E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
