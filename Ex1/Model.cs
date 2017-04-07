@@ -25,11 +25,19 @@ namespace Ex1
 
         public void Close(string nameOfGame)
         {
-            GameInfo game = games[nameOfGame];
-            // close players socket and renove tha game.
+            GameInfo game = null;
+            if (unAvailablesGames.ContainsKey(nameOfGame))
+            {
+                game = unAvailablesGames[nameOfGame];
+                unAvailablesGames.Remove(nameOfGame);
+                game.player2.Close();
+            }
+            else
+            {
+                game = availablesGames[nameOfGame];
+                availablesGames.Remove(nameOfGame);
+            }
             game.player1.Close();
-            game.player2.Close();
-            games.Remove(nameOfGame);
         }
 
         public Maze GenerateMaze(string nameOfMaze, int rows, int cols)

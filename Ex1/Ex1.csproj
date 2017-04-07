@@ -61,7 +61,6 @@
     <Compile Include="Command\SolveMazeCommand.cs" />
     <Compile Include="Command\StartGameCommand.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="GameInfo.cs" />
     <Compile Include="IClientHandler.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="IController.cs" />
