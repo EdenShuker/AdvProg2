@@ -18,7 +18,7 @@ namespace Ex1.Command
         public override string Execute(string[] args, TcpClient client = null)
         {
             string nameOfGame = args[0];
-            Maze maze = this.Model.JoinTo(nameOfGame);
+            Maze maze = this.Model.JoinTo(nameOfGame, client);
             JObject mazeObj = JObject.Parse(maze.ToJSON());
             JObject mergedObj = new JObject();
             mergedObj["Name"] = nameOfGame;

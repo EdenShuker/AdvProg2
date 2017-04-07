@@ -20,7 +20,7 @@ namespace Ex1.Command
             string nameOfGame = args[0];
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
-            Maze maze = this.Model.StartGame(nameOfGame, rows, cols);
+            Maze maze = this.Model.StartGame(nameOfGame, rows, cols, client);
             JObject mazeObj = JObject.Parse(maze.ToJSON());
             JObject mergedObj = new JObject();
             mergedObj["Name"] = nameOfGame;

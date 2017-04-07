@@ -15,14 +15,14 @@ namespace Ex1
 
         Solution<Position> SolveMaze(string name, int algorithm);
 
-        Maze StartGame(string nameOfGame, int rows, int cols);
+        Maze StartGame(string nameOfGame, int rows, int cols, TcpClient player);
 
         string[] GetAvailableGames();
 
-        Maze JoinTo(string nameOfGame);
+        Maze JoinTo(string nameOfGame, TcpClient player);
 
         string Play(string move, TcpClient player);
 
-        int Close(string nameOfGame);
+        void Close(string nameOfGame);
     }
 }

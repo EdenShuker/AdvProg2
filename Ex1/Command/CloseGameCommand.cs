@@ -16,7 +16,7 @@ namespace Ex1.Command
         public override string Execute(string[] args, TcpClient client = null)
         {
             string nameOfGame = args[0];
-            int code = this.Model.Close(nameOfGame);
+            this.Model.Close(nameOfGame);
             return "";
         }
     }
