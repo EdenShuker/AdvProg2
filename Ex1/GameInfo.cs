@@ -12,21 +12,14 @@ namespace Ex1
 {
     public class GameInfo
     {
-        public Maze maze { get; }
+        public string nameOfMaze { get; }
         public Solution<Position> solution { get; set; }
         public TcpClient player1 { get; set; }
         public TcpClient player2 { get; set; }
 
-        public GameInfo(Maze maze)
+        public GameInfo(string mazeName, TcpClient player)
         {
-            this.maze = maze;
-            solution = null;
-            player1 = player2 = null;
-        }
-
-        public GameInfo(Maze maze, TcpClient player)
-        {
-            this.maze = maze;
+            nameOfMaze = mazeName;
             solution = null;
             player1 = player;
             player2 = null;

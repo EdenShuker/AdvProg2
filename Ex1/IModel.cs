@@ -11,9 +11,9 @@ namespace Ex1
 {
     public interface IModel
     {
-        Maze GenerateMaze(string name, int rows, int cols);
+        Maze GenerateMaze(string nameOfMaze, int rows, int cols);
 
-        Solution<Position> SolveMaze(string name, int algorithm);
+        Solution<Position> SolveMaze(string nameOfMaze, int algorithm);
 
         Maze StartGame(string nameOfGame, int rows, int cols, TcpClient player);
 

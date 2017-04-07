@@ -9,10 +9,19 @@ using SearchAlgorithmsLib;
 
 namespace Ex1
 {
+
     public class Model : IModel
     {
-        private Dictionary<string, GameInfo> games;
+        private Dictionary<string, GameInfo> availablesGames;
+        private Dictionary<string, GameInfo> unAvailablesGames;
+        private Dictionary<string, MazeInfo> mazes;
 
+        public Model()
+        {
+            availablesGames = new Dictionary<string, GameInfo>();
+            unAvailablesGames = new Dictionary<string, GameInfo>();
+            mazes = new Dictionary<string, MazeInfo>();
+        }
 
         public void Close(string nameOfGame)
         {
@@ -23,24 +32,24 @@ namespace Ex1
             games.Remove(nameOfGame);
         }
 
-        public Maze GenerateMaze(string name, int rows, int cols)
+        public Maze GenerateMaze(string nameOfMaze, int rows, int cols)
         {
             Maze maze = new Maze(rows, cols);
-            games.Add(name, new GameInfo(maze));
+            mazes.Add(nameOfMaze, new MazeInfo(maze));
             return maze;
         }
 
         public string[] GetAvailableGames()
         {
-            string[] availableGames = games.Keys.ToArray();
-            return availableGames;
+            string[] listOfAvailableGames = availablesGames.Keys.ToArray();
+            return listOfAvailableGames;
         }
 
 
 
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
-            GameInfo game = games[nameOfGame];
+            GameInfo game = availablesGames[nameOfGame];
             if (game.player1 != null)
             {
                 game.player2 = player;
@@ -50,7 +59,7 @@ namespace Ex1
             {
                 game.player1 = player;
             }
-            return game.maze;
+            return mazes[game.nameOfMaze].maze;
         }
 
 
@@ -62,12 +71,12 @@ namespace Ex1
 
 
 
-        public Solution<Position> SolveMaze(string name, int algorithm)
+        public Solution<Position> SolveMaze(string nameOfMaze, int algorithm)
         {
             // means we don't have the solution
-            if (games[name].solution == null)
+            if (mazes[nameOfMaze].solution == null)
             {
-                ISearchable<Position> searchableMaze = new SearchableMaze(games[name].maze);
+                ISearchable<Position> searchableMaze = new SearchableMaze(mazes[nameOfMaze].maze);
                 ISearcher<Position> searcher;
                 // BFS algorithm
                 if (algorithm == 0)
@@ -79,18 +88,59 @@ namespace Ex1
                 {
                     searcher = new DFS<Position>();
                 }
-                games[name].solution = searcher.Search(searchableMaze);
+                mazes[nameOfMaze].solution = searcher.Search(searchableMaze);
             }
-            return games[name].solution;
+            return mazes[nameOfMaze].solution;
         }
 
 
 
         public Maze StartGame(string nameOfGame, int rows, int cols, TcpClient client)
         {
-            Maze maze = new Maze(rows, cols);
-            games.Add(nameOfGame, new GameInfo(maze, client));
+            string mazeStr = null;
+            Maze maze = null;
+            foreach (string nameOfMaze in mazes.Keys) {
+                maze = mazes[nameOfMaze].maze;
+                if (maze.Rows == rows && maze.Cols == cols)
+                {
+                    mazeStr = nameOfMaze;
+                    break;
+                }
+            }
+            availablesGames.Add(nameOfGame, new GameInfo(mazeStr, client, maze.InitialPos));
             return maze;
         }
+
+
+        private class GameInfo
+        {
+            public string nameOfMaze { get; set; }
+            public TcpClient player1 { get; set; }
+            public Position player1Location { get; set; }
+            public TcpClient player2 { get; set; }
+            public Position player2Location { get; set; }
+
+            public GameInfo(string mazeName, TcpClient player, Position location)
+            {
+                nameOfMaze = mazeName;
+                player1 = player;
+                player1Location = location;
+            }
+            
+        }
+
+        private class MazeInfo
+        {
+            public Maze maze { get; set; }
+            public Solution<Position> solution { get; set; }
+
+            public MazeInfo(Maze maze)
+            {
+                this.maze = maze;
+                solution = null;
+            }
+        }
     }
+
+    
 }
