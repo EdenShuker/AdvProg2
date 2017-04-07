@@ -30,14 +30,14 @@ namespace Ex1
             {
                 game = unAvailablesGames[nameOfGame];
                 unAvailablesGames.Remove(nameOfGame);
-                game.player2.Close();
+                game.InfoPlayer2.Player.Close();
             }
             else
             {
                 game = availablesGames[nameOfGame];
                 availablesGames.Remove(nameOfGame);
             }
-            game.player1.Close();
+            game.Player1.Close();
         }
 
         public Maze GenerateMaze(string nameOfMaze, int rows, int cols)
@@ -49,8 +49,7 @@ namespace Ex1
 
         public string[] GetAvailableGames()
         {
-            string[] listOfAvailableGames = availablesGames.Keys.ToArray();
-            return listOfAvailableGames;
+            return availablesGames.Keys.ToArray();
         }
 
 
@@ -58,22 +57,20 @@ namespace Ex1
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
             GameInfo game = availablesGames[nameOfGame];
-            if (game.player1 != null)
-            {
-                game.player2 = player;
-                //TODO: send both players a message
-            }
-            else
-            {
-                game.player1 = player;
-            }
-            return mazes[game.nameOfMaze].maze;
+            Maze maze = mazes[game.NameOfMaze].Maze;
+            game.Player2 = player;
+            game.Player2Location = maze.InitialPos;
+            availablesGames.Remove(nameOfGame);
+            unAvailablesGames.Add(nameOfGame, game);
+            return maze;
         }
 
 
 
         public string Play(string move, TcpClient player)
         {
+            Position position = null;
+            if(strcmp)
             throw new NotImplementedException();
         }
 
@@ -82,9 +79,9 @@ namespace Ex1
         public Solution<Position> SolveMaze(string nameOfMaze, int algorithm)
         {
             // means we don't have the solution
-            if (mazes[nameOfMaze].solution == null)
+            if (mazes[nameOfMaze].Solution == null)
             {
-                ISearchable<Position> searchableMaze = new SearchableMaze(mazes[nameOfMaze].maze);
+                ISearchable<Position> searchableMaze = new SearchableMaze(mazes[nameOfMaze].Maze);
                 ISearcher<Position> searcher;
                 // BFS algorithm
                 if (algorithm == 0)
@@ -96,9 +93,9 @@ namespace Ex1
                 {
                     searcher = new DFS<Position>();
                 }
-                mazes[nameOfMaze].solution = searcher.Search(searchableMaze);
+                mazes[nameOfMaze].Solution = searcher.Search(searchableMaze);
             }
-            return mazes[nameOfMaze].solution;
+            return mazes[nameOfMaze].Solution;
         }
 
 
@@ -108,7 +105,7 @@ namespace Ex1
             string mazeStr = null;
             Maze maze = null;
             foreach (string nameOfMaze in mazes.Keys) {
-                maze = mazes[nameOfMaze].maze;
+                maze = mazes[nameOfMaze].Maze;
                 if (maze.Rows == rows && maze.Cols == cols)
                 {
                     mazeStr = nameOfMaze;
@@ -119,33 +116,58 @@ namespace Ex1
             return maze;
         }
 
+        public bool IsGameBegun(string nameOfGame)
+        {
+            return unAvailablesGames.ContainsKey(nameOfGame);
+        }
+
+        private class PlayerInfo
+        {
+            public TcpClient Player { get; set; }
+            public Position Location { get; set; }
+            public PlayerInfo(TcpClient player, Position location)
+            {
+                Player = player;
+                Location = location;
+            }
+        }
 
         private class GameInfo
         {
-            public string nameOfMaze { get; set; }
-            public TcpClient player1 { get; set; }
-            public Position player1Location { get; set; }
-            public TcpClient player2 { get; set; }
-            public Position player2Location { get; set; }
+            public string NameOfMaze { get; set; }
+            public PlayerInfo PlayerInfo1 { get; set; }
+            public PlayerInfo PlayerInfo2 { get; set; }
 
             public GameInfo(string mazeName, TcpClient player, Position location)
             {
-                nameOfMaze = mazeName;
-                player1 = player;
-                player1Location = location;
+                NameOfMaze = mazeName;
+                PlayerInfo1 = new PlayerInfo(player, location);
+            }
+
+            public PlayerInfo GetPlayer(TcpClient player)
+            {
+                if (PlayerInfo1.Player == player)
+                {
+                    return PlayerInfo1;
+                }
+                else if (PlayerInfo2.Player == player)
+                {
+                    return PlayerInfo2;
+                }
+                return null;
             }
             
         }
 
         private class MazeInfo
         {
-            public Maze maze { get; set; }
-            public Solution<Position> solution { get; set; }
+            public Maze Maze { get; set; }
+            public Solution<Position> Solution { get; set; }
 
             public MazeInfo(Maze maze)
             {
-                this.maze = maze;
-                solution = null;
+                this.Maze = maze;
+                Solution = null;
             }
         }
     }

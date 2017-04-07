@@ -25,6 +25,7 @@ namespace Ex1.Command
             JObject mergedObj = new JObject();
             mergedObj["Name"] = nameOfGame;
             mergedObj.Merge(mazeObj);
+            while (!this.Model.IsGameBegun(nameOfGame)) { }
             return mergedObj.ToString();
         }
     }
