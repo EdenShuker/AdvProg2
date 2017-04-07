@@ -5,17 +5,16 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
 
 namespace Ex1.Command
 {
-    class SolveMazeCommand : ICommand
+    public class SolveMazeCommand : Command
     {
-        private IModel model;
-
-        public SolveMazeCommand(IModel model)
+        public SolveMazeCommand(IModel model) : base(model)
         {
-            this.model = model;
         }
 
         static string ParseDirections(State<Position> start)
@@ -49,12 +48,16 @@ namespace Ex1.Command
             return builder.ToString();
         }
 
-        public string Execute(string[] args, TcpClient client = null)
+        public override string Execute(string[] args, TcpClient client = null)
         {
             string name = args[0];
             int algorithm = int.Parse(args[1]);
-            Solution<Position> solution = model.SolveMaze(name, algorithm);
-            return solution.ToJSON(name, ParseDirections);
+            Solution<Position> solution = Model.SolveMaze(name, algorithm);
+            JObject solutionObj = JObject.Parse(solution.ToJSON(ParseDirections));
+            JObject mergedObj = new JObject();
+            mergedObj["Name"] = name;
+            mergedObj.Merge(solutionObj);
+            return mergedObj.ToString();
         }
     }
 }

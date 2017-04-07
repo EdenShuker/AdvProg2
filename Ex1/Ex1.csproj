@@ -52,8 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
+    <Compile Include="Command\CloseGameCommand.cs" />
+    <Compile Include="Command\Command.cs" />
     <Compile Include="Command\GenerateMazeCommand.cs" />
+    <Compile Include="Command\JoinToGameCommand.cs" />
+    <Compile Include="Command\ListCommand.cs" />
+    <Compile Include="Command\PlayCommand.cs" />
     <Compile Include="Command\SolveMazeCommand.cs" />
+    <Compile Include="Command\StartGameCommand.cs" />
     <Compile Include="IClientHandler.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="IModel.cs" />

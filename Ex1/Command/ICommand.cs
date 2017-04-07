@@ -2,7 +2,7 @@
 
 namespace Ex1.Command
 {
-    interface ICommand
+    public interface ICommand
     {
         string Execute(string[] args, TcpClient client = null);
     }

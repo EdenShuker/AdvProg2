@@ -9,21 +9,19 @@ using Newtonsoft.Json.Linq;
 
 namespace Ex1.Command
 {
-    public class GenerateMazeCommand : Command
+    public class JoinToGameCommand : Command
     {
-        public GenerateMazeCommand(IModel model) : base(model)
+        public JoinToGameCommand(IModel model) : base(model)
         {
         }
 
-        public override string Execute(string[] args, TcpClient client)
+        public override string Execute(string[] args, TcpClient client = null)
         {
-            string name = args[0];
-            int rows = int.Parse(args[1]);
-            int cols = int.Parse(args[2]);
-            Maze maze = this.Model.GenerateMaze(name, rows, cols);
+            string nameOfGame = args[0];
+            Maze maze = this.Model.JoinTo(nameOfGame);
             JObject mazeObj = JObject.Parse(maze.ToJSON());
             JObject mergedObj = new JObject();
-            mergedObj["Name"] = name;
+            mergedObj["Name"] = nameOfGame;
             mergedObj.Merge(mazeObj);
             return mergedObj.ToString();
         }
