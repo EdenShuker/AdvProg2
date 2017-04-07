@@ -28,8 +28,8 @@ namespace SearchAlgorithmsLib
                 this.EvaluatedNodes++;
                 if (n.Equals(searchable.GetGoalState()))
                 {
-                    // Gaol has been reached.
-                    return new Solution<T>(n);
+                    // Goal has been reached.
+                    return new Solution<T>(n, EvaluatedNodes);
                 }
                 if (!closed.Contains(n))
                 {

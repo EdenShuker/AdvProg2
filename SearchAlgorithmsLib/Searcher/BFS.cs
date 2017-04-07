@@ -28,7 +28,7 @@ namespace SearchAlgorithmsLib
                 if (n.Equals(searchable.GetGoalState()))
                 {
                     // Gaol has been reached.
-                    return new Solution<T>(n);
+                    return new Solution<T>(n, EvaluatedNodes);
                 }
                 // Handle succerssors.
                 List<State<T>> succerssors = searchable.GetAllPossibleStates(n);

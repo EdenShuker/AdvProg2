@@ -22,6 +22,7 @@ namespace SearchAlgorithmsLib
         private State(T data)
         {
             this.Data = data;
+            this.CameFrom = null;
         }
 
         public bool Equals(State<T> s)
