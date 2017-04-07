@@ -55,10 +55,9 @@ namespace SearchAlgorithmsLib
 
         public delegate string PathToString(State<T> start);
 
-        public string ToJSON(string name, PathToString func)
+        public string ToJSON(PathToString func)
         {
             JObject solutionObj = new JObject();
-            solutionObj["Name"] = name;
             solutionObj["Solution"] = func(backTrace.Peek());
             solutionObj["NodesEvaluated"] = evaluatedNodes.ToString();
             return solutionObj.ToString();

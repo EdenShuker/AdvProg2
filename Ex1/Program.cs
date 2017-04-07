@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MazeGeneratorLib;
 using MazeLib;
+using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
 
 namespace Ex1
