@@ -24,5 +24,7 @@ namespace Ex1
         string Play(string move, TcpClient player);
 
         void Close(string nameOfGame);
+
+        bool IsGameBegun(string nameOfGame);
     }
 }
