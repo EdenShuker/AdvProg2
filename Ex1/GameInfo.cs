@@ -31,10 +31,5 @@ namespace Ex1
             player1 = player;
             player2 = null;
         }
-
-        
-
-
-
     }
 }

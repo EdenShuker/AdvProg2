@@ -13,7 +13,7 @@ namespace Ex1
     {
         private Dictionary<string, GameInfo> games;
 
-    
+
         public void Close(string nameOfGame)
         {
             GameInfo game = games[nameOfGame];
