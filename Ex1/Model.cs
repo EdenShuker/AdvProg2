@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using MazeGeneratorLib;
 using MazeLib;
 using SearchAlgorithmsLib;
 
@@ -24,7 +25,8 @@ namespace Ex1
 
         public Maze GenerateMaze(string nameOfMaze, int rows, int cols)
         {
-            Maze maze = new Maze(rows, cols);
+            IMazeGenerator mazeGenerator = new DFSMazeGenerator();
+            Maze maze = mazeGenerator.Generate(rows, cols);
             maze.Name = nameOfMaze;
             mazes.Add(nameOfMaze, new MazeInfo(maze));
             return maze;
@@ -74,11 +76,13 @@ namespace Ex1
             return maze;
         }
 
-        public string Play(string move, TcpClient player)
+        // return - name of game that 'player' takes.
+        public string Play(string direction, TcpClient player)
         {
             PlayerInfo playerInfo = null;
             GameInfo gameInfo = null;
             string nameOfGame = null;
+            // find name of game and game-info of 'player'
             foreach (string nameOfcurrGame in this.unAvailablesGames.Keys)
             {
                 gameInfo = this.unAvailablesGames[nameOfcurrGame];
@@ -89,31 +93,9 @@ namespace Ex1
                     break;
                 }
             }
-            Maze maze = mazes[gameInfo.NameOfMaze].Maze;
-            Position currPosition = playerInfo.Location;
-            int currentRow = currPosition.Row;
-            int currentCol = currPosition.Col;
-            if (move.Equals("right") && currentCol < maze.Cols - 1 &&
-                maze[currentRow, currentCol + 1] == CellType.Free)
-            {
-                playerInfo.Location = new Position(currentRow, currentCol + 1);
-            }
-            else if (move.Equals("left") && currentCol > 0 &&
-                     maze[currentRow, currentCol - 1] == CellType.Free)
-            {
-                playerInfo.Location = new Position(currentRow, currentCol - 1);
-            }
-            else if (move.Equals("up") && currentRow > 0 &&
-                     maze[currentRow - 1, currentCol] == CellType.Free)
-            {
-                playerInfo.Location = new Position(currentRow - 1, currentCol);
-            }
-            else if (move.Equals("down") && currentRow < maze.Rows - 1 &&
-                     maze[currentRow + 1, currentCol] == CellType.Free)
-            {
-                playerInfo.Location = new Position(currentRow + 1, currentCol);
-            }
-            else
+            // Update the player location
+            bool validMove = playerInfo.move(mazes[gameInfo.NameOfMaze].Maze, direction);
+            if (!validMove)
             {
                 return "Invalid Direction";
             }
@@ -179,6 +161,39 @@ namespace Ex1
             {
                 this.Player = player;
                 this.Location = location;
+            }
+
+            // return true for valid move, false otherwise.
+            public bool move(Maze maze, string direction)
+            {
+                int currentRow = this.Location.Row;
+                int currentCol = this.Location.Col;
+                if (direction.Equals("right") && currentCol < maze.Cols - 1 &&
+                    maze[currentRow, currentCol + 1] == CellType.Free)
+                {
+                    this.Location = new Position(currentRow, currentCol + 1);
+                }
+                else if (direction.Equals("left") && currentCol > 0 &&
+                         maze[currentRow, currentCol - 1] == CellType.Free)
+                {
+                    this.Location = new Position(currentRow, currentCol - 1);
+                }
+                else if (direction.Equals("up") && currentRow > 0 &&
+                         maze[currentRow - 1, currentCol] == CellType.Free)
+                {
+                    this.Location = new Position(currentRow - 1, currentCol);
+                }
+                else if (direction.Equals("down") && currentRow < maze.Rows - 1 &&
+                         maze[currentRow + 1, currentCol] == CellType.Free)
+                {
+                    this.Location = new Position(currentRow + 1, currentCol);
+                }
+                else
+                {
+                    // Invalid direction.
+                    return false;
+                }
+                return true;
             }
         }
 

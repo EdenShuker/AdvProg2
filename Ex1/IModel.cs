@@ -21,7 +21,7 @@ namespace Ex1
 
         Maze JoinTo(string nameOfGame, TcpClient player);
 
-        string Play(string move, TcpClient player);
+        string Play(string direction, TcpClient player);
 
         void Close(string nameOfGame);
 
