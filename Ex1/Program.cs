@@ -37,7 +37,8 @@ namespace Ex1
         private static void Search(ISearchable<Position> searchable, ISearcher<Position> searcher, String searcherType)
         {
             Solution<Position> solution = searcher.Search(searchable);
-            Console.WriteLine("{0} solved the maze with {1} evaluated nodes", searcherType, searcher.GetNumberOfNodesEvaluated());
+            Console.WriteLine("{0} solved the maze with {1} evaluated nodes", searcherType,
+                searcher.GetNumberOfNodesEvaluated());
             //PrintSolution(solution);
         }
 
