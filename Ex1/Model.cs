@@ -25,6 +25,7 @@ namespace Ex1
         public Maze GenerateMaze(string nameOfMaze, int rows, int cols)
         {
             Maze maze = new Maze(rows, cols);
+            maze.Name = nameOfMaze;
             mazes.Add(nameOfMaze, new MazeInfo(maze));
             return maze;
         }
@@ -35,17 +36,7 @@ namespace Ex1
             if (mazes[nameOfMaze].Solution == null)
             {
                 ISearchable<Position> searchableMaze = new SearchableMaze(mazes[nameOfMaze].Maze);
-                ISearcher<Position> searcher;
-                // BFS algorithm
-                if (algorithm == 0)
-                {
-                    searcher = new BFS<Position>();
-                }
-                // DFS algorithm
-                else
-                {
-                    searcher = new DFS<Position>();
-                }
+                ISearcher<Position> searcher = SearcherFactory.Create(algorithm);
                 mazes[nameOfMaze].Solution = searcher.Search(searchableMaze);
             }
             return mazes[nameOfMaze].Solution;
