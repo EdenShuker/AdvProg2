@@ -81,11 +81,11 @@ namespace Ex1
             string nameOfGame = null;
             foreach (string nameOfcurrGame in this.unAvailablesGames.Keys)
             {
+                gameInfo = this.unAvailablesGames[nameOfcurrGame];
                 playerInfo = gameInfo.GetPlayer(player);
                 if (player != null)
                 {
                     nameOfGame = nameOfcurrGame;
-                    gameInfo = this.unAvailablesGames[nameOfcurrGame];
                     break;
                 }
             }
@@ -108,7 +108,8 @@ namespace Ex1
             {
                 playerInfo.Location = new Position(currentRow - 1, currentCol);
             }
-            else if (move.Equals("down") && currentRow < maze.Rows - 1 && maze[currentRow + 1, currentCol] == CellType.Free)
+            else if (move.Equals("down") && currentRow < maze.Rows - 1 &&
+                     maze[currentRow + 1, currentCol] == CellType.Free)
             {
                 playerInfo.Location = new Position(currentRow + 1, currentCol);
             }

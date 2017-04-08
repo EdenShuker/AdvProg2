@@ -21,11 +21,7 @@ namespace Ex1.Command
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
             Maze maze = this.Model.GenerateMaze(name, rows, cols);
-            JObject mazeObj = JObject.Parse(maze.ToJSON());
-            JObject mergedObj = new JObject();
-            mergedObj["Name"] = name;
-            mergedObj.Merge(mazeObj);
-            return mergedObj.ToString();
+            return maze.ToJSON();
         }
     }
 }

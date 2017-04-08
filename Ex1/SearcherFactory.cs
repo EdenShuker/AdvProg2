@@ -16,7 +16,7 @@ namespace Ex1
             {
                 return new BFS<Position>();
             }
-            else if (algorithm ==1)
+            else if (algorithm == 1)
             {
                 return new DFS<Position>();
             }
