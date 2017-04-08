@@ -15,7 +15,8 @@ namespace Ex1
 
         public Controller()
         {
-            // TODO: this.model = new Model() --> Implement the model class.
+            this.model = new Model();
+            // Add Commands
             this.commands = new Dictionary<string, ICommand>();
             this.commands.Add("generate", new GenerateMazeCommand(this.model));
             this.commands.Add("solve", new SolveMazeCommand(this.model));

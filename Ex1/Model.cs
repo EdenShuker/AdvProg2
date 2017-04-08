@@ -9,7 +9,6 @@ using SearchAlgorithmsLib;
 
 namespace Ex1
 {
-
     public class Model : IModel
     {
         private Dictionary<string, GameInfo> availablesGames;
@@ -30,14 +29,14 @@ namespace Ex1
             {
                 game = unAvailablesGames[nameOfGame];
                 unAvailablesGames.Remove(nameOfGame);
-                game.InfoPlayer2.Player.Close();
+                game.PlayerInfo2.Player.Close();
             }
             else
             {
                 game = availablesGames[nameOfGame];
                 availablesGames.Remove(nameOfGame);
             }
-            game.Player1.Close();
+            game.PlayerInfo1.Player.Close();
         }
 
         public Maze GenerateMaze(string nameOfMaze, int rows, int cols)
@@ -53,27 +52,61 @@ namespace Ex1
         }
 
 
-
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
             GameInfo game = availablesGames[nameOfGame];
             Maze maze = mazes[game.NameOfMaze].Maze;
-            game.Player2 = player;
-            game.Player2Location = maze.InitialPos;
+            game.PlayerInfo2 = new PlayerInfo(player, maze.InitialPos);
             availablesGames.Remove(nameOfGame);
             unAvailablesGames.Add(nameOfGame, game);
             return maze;
         }
 
 
-
         public string Play(string move, TcpClient player)
         {
-            Position position = null;
-            if(strcmp)
-            throw new NotImplementedException();
+            PlayerInfo playerInfo = null;
+            GameInfo gameInfo = null;
+            string nameOfGame = null;
+            foreach (string nameOfcurrGame in this.unAvailablesGames.Keys)
+            {
+                playerInfo = gameInfo.GetPlayer(player);
+                if (player != null)
+                {
+                    nameOfGame = nameOfcurrGame;
+                    gameInfo = this.unAvailablesGames[nameOfcurrGame];
+                    break;
+                }
+            }
+            Maze maze = mazes[gameInfo.NameOfMaze].Maze;
+            Position currPosition = playerInfo.Location;
+            int currentRow = currPosition.Row;
+            int currentCol = currPosition.Col;
+            if (move.Equals("right") && currentCol < maze.Cols - 1 &&
+                maze[currentRow, currentCol + 1] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow, currentCol + 1);
+            }
+            else if (move.Equals("left") && currentCol > 0 &&
+                maze[currentRow, currentCol - 1] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow, currentCol - 1);
+            }
+            else if (move.Equals("up") && currentRow > 0 &&
+                maze[currentRow - 1, currentCol] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow - 1, currentCol);
+            }
+            else if(move.Equals("down")&& currentRow < maze.Rows - 1 && maze[currentRow + 1, currentCol] == CellType.Free)
+            {
+                playerInfo.Location = new Position(currentRow + 1, currentCol);
+            }
+            else
+            {
+                return "Invalid Direction";
+            }
+            return nameOfGame;
         }
-
 
 
         public Solution<Position> SolveMaze(string nameOfMaze, int algorithm)
@@ -98,13 +131,17 @@ namespace Ex1
             return mazes[nameOfMaze].Solution;
         }
 
-
+        public bool IsGameBegun(string nameOfGame)
+        {
+            return unAvailablesGames.ContainsKey(nameOfGame);
+        }
 
         public Maze StartGame(string nameOfGame, int rows, int cols, TcpClient client)
         {
             string mazeStr = null;
             Maze maze = null;
-            foreach (string nameOfMaze in mazes.Keys) {
+            foreach (string nameOfMaze in mazes.Keys)
+            {
                 maze = mazes[nameOfMaze].Maze;
                 if (maze.Rows == rows && maze.Cols == cols)
                 {
@@ -116,32 +153,18 @@ namespace Ex1
             return maze;
         }
 
-        public bool IsGameBegun(string nameOfGame)
-        {
-            return unAvailablesGames.ContainsKey(nameOfGame);
-        }
-
-        private class PlayerInfo
-        {
-            public TcpClient Player { get; set; }
-            public Position Location { get; set; }
-            public PlayerInfo(TcpClient player, Position location)
-            {
-                Player = player;
-                Location = location;
-            }
-        }
 
         private class GameInfo
         {
             public string NameOfMaze { get; set; }
             public PlayerInfo PlayerInfo1 { get; set; }
             public PlayerInfo PlayerInfo2 { get; set; }
+            public Position Player2Location { get; set; }
 
             public GameInfo(string mazeName, TcpClient player, Position location)
             {
                 NameOfMaze = mazeName;
-                PlayerInfo1 = new PlayerInfo(player, location);
+                this.PlayerInfo1 = new PlayerInfo(player, location);
             }
 
             public PlayerInfo GetPlayer(TcpClient player)
@@ -156,7 +179,18 @@ namespace Ex1
                 }
                 return null;
             }
-            
+        }
+
+        private class PlayerInfo
+        {
+            public TcpClient Player { get; set; }
+            public Position Location { get; set; }
+
+            public PlayerInfo(TcpClient player, Position location)
+            {
+                this.Player = player;
+                this.Location = location;
+            }
         }
 
         private class MazeInfo
@@ -171,6 +205,4 @@ namespace Ex1
             }
         }
     }
-
-    
 }
