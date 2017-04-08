@@ -17,7 +17,6 @@ namespace Ex1
             this.controller = controller;
         }
 
-
         public void HandleClient(TcpClient client)
         {
             new Task(() =>
@@ -35,7 +34,5 @@ namespace Ex1
                 client.Close();
             }).Start();
         }
-
-
     }
 }

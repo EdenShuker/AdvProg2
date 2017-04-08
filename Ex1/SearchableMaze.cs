@@ -26,10 +26,6 @@ namespace Ex1
         public SearchableMaze(Maze maze)
         {
             this.maze = maze;
-            // TODO: Maybe switch the call for the method
-            // TODO: from - State<>.StatePool.Instance.GetState(Pos)
-            // TODO: to   - State<>.GetState(Pos)
-            // TODO: so all of the state-pool implementation will be hidden (and the line wont be long).
             // Extract valid states from the maze.
             for (int i = 0; i < this.maze.Rows; i++)
             {
