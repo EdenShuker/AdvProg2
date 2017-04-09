@@ -13,7 +13,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            string close = null;
+            string command = null;
             do
             {
                 IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
@@ -25,18 +25,15 @@ namespace Client
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
                     // Send data to server
-                    string command = Console.ReadLine();
+                    command = Console.ReadLine();
                     writer.Write(command);
                     Console.Write("data sent to server");
                     // Get result from server
                     string result = reader.ReadString();
                     Console.WriteLine("Result = {0}", result);
                 }
-
-                Console.ReadLine();
                 client.Close();
-            }while()
-            
+            } while (!command.Equals("close"));
         }
     }
 }

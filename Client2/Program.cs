@@ -13,24 +13,27 @@ namespace Client2
     {
         static void Main(string[] args)
         {
+
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
             TcpClient client = new TcpClient();
             client.Connect(ep);
             Console.WriteLine("You are connected");
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
+            NetworkStream stream = client.GetStream();
+            BinaryReader reader = new BinaryReader(stream);
+            BinaryWriter writer = new BinaryWriter(stream);
+            // Send data to server
+            string command = null;
+            string result = null;
+            do
             {
-                // Send data to server
-                string command = Console.ReadLine();
+                command = Console.ReadLine();
                 writer.Write(command);
                 Console.Write("data sent to server");
                 // Get result from server
-                string result = reader.ReadString();
+                result = reader.ReadString();
                 Console.WriteLine("Result = {0}", result);
-            }
-
-            Console.ReadLine();
+            } while (!command.Equals("close"));
+            stream.Dispose();
             client.Close();
         }
     }

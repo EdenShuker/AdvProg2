@@ -13,21 +13,31 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
             TcpListener listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine("Waiting for client connections...");
             TcpClient client = listener.AcceptTcpClient();
             Console.WriteLine("Client connected");
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
+            string str = null;
+            NetworkStream stream = client.GetStream();
+            BinaryReader reader = new BinaryReader(stream);
+            BinaryWriter writer = new BinaryWriter(stream);
+            using (stream)
+            using (reader)
+            using (writer)
             {
-                Console.WriteLine("Waiting for a number");
-                int num = reader.ReadInt32();
-                Console.WriteLine("Number accepted");
-                num *= 2;
-                writer.Write(num);
+                Console.WriteLine("Waiting for a command");
+                str = reader.ReadString();
+                Console.WriteLine("{0}", str);
+                writer.Write("hello");
+            }
+            using (stream)
+            using (reader)
+            {
+                Console.WriteLine("Waiting for a command");
+                str = reader.ReadString();
+                Console.WriteLine("{0}", str);
             }
 
             client.Close();

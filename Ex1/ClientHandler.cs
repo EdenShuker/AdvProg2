@@ -21,19 +21,21 @@ namespace Ex1
         {
             new Task(() =>
             {
+                NetworkStream stream = client.GetStream();
+                BinaryReader reader = new BinaryReader(stream);
+                BinaryWriter writer = new BinaryWriter(stream);
+                string commandLine = null;
+                string result = null;
                 do
                 {
-                    using (NetworkStream stream = client.GetStream())
-                    using (BinaryReader reader = new BinaryReader(stream))
-                    using (BinaryWriter writer = new BinaryWriter(stream))
-                    {
-                        Console.WriteLine("performing task");
-                        string commandLine = reader.ReadString();
-                        Console.WriteLine("Got command: {0}", commandLine);
-                        string result = controller.ExecuteCommand(commandLine, client);
-                        writer.Write(result);
-                    }
+                    Console.WriteLine("performing task");
+                    commandLine = reader.ReadString();
+                    Console.WriteLine("Got command: {0}", commandLine);
+                    result = controller.ExecuteCommand(commandLine, client);
+                    writer.Write(result);
+                    stream.Flush();
                 } while (controller.IsClientInGame(client));
+                stream.Dispose();
                 // Client is not in game (or no longer in game)
                 client.Close();
             }).Start();
