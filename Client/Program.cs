@@ -27,7 +27,7 @@ namespace Client
                     // Send data to server
                     command = Console.ReadLine();
                     writer.Write(command);
-                    Console.Write("data sent to server");
+                    Console.WriteLine("data sent to server");
                     // Get result from server
                     string result = reader.ReadString();
                     Console.WriteLine("Result = {0}", result);
