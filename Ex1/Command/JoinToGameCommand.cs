@@ -19,11 +19,7 @@ namespace Ex1.Command
         {
             string nameOfGame = args[0];
             Maze maze = this.Model.JoinTo(nameOfGame, client);
-            JObject mazeObj = JObject.Parse(maze.ToJSON());
-            JObject mergedObj = new JObject();
-            mergedObj["Name"] = nameOfGame;
-            mergedObj.Merge(mazeObj);
-            return mergedObj.ToString();
+            return maze.ToJSON();
         }
     }
 }

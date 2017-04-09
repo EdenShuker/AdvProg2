@@ -16,7 +16,7 @@ namespace Client
             string command = null;
             do
             {
-                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5556);
                 TcpClient client = new TcpClient();
                 client.Connect(ep);
                 Console.WriteLine("You are connected");
