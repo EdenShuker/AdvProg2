@@ -89,7 +89,7 @@ namespace SearchAlgorithmsLib
                 }
                 // This is a new state, add it to the dictionary.
                 State<T> newState = new State<T>(id);
-                states[id] = newState;
+                states.Add(id, newState);
                 return newState;
             }
 
