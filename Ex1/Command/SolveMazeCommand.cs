@@ -17,13 +17,13 @@ namespace Ex1.Command
         {
         }
 
-        static string ParseDirections(State<Position> start)
+        static string ParseDirections(Stack<State<Position>> path)
         {
             StringBuilder builder = new StringBuilder();
-            Position from = start.Data;
-            while (start.CameFrom != null)
+            Position from = path.Pop().Data;
+            while (path.Count != 0)
             {
-                Position to = start.CameFrom.Data;
+                Position to = path.Pop().Data;
                 string num;
                 if (from.Row > to.Row)
                 {
@@ -42,7 +42,6 @@ namespace Ex1.Command
                     num = "1";
                 }
                 builder.Append(num);
-                start = start.CameFrom;
                 from = to;
             }
             return builder.ToString();
@@ -53,7 +52,8 @@ namespace Ex1.Command
             string name = args[0];
             int algorithm = int.Parse(args[1]);
             Solution<Position> solution = Model.SolveMaze(name, algorithm);
-            JObject solutionObj = JObject.Parse(solution.ToJSON(ParseDirections));
+            string solutionJSON = solution.ToJSON(ParseDirections);
+            JObject solutionObj = JObject.Parse(solutionJSON);
             JObject mergedObj = new JObject();
             mergedObj["Name"] = name;
             mergedObj.Merge(solutionObj);
