@@ -53,12 +53,12 @@ namespace SearchAlgorithmsLib
             return this.backTrace.Pop();
         }
 
-        public delegate string PathToString(State<T> start);
+        public delegate string PathToString(Stack<State<T>> path);
 
         public string ToJSON(PathToString func)
         {
             JObject solutionObj = new JObject();
-            solutionObj["Solution"] = func(backTrace.Peek());
+            solutionObj["Solution"] = func(new Stack<State<T>>(this.backTrace));
             solutionObj["NodesEvaluated"] = evaluatedNodes.ToString();
             return solutionObj.ToString();
         }

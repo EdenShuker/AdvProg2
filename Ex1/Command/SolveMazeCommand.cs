@@ -17,13 +17,13 @@ namespace Ex1.Command
         {
         }
 
-        static string ParseDirections(State<Position> start)
+        static string ParseDirections(Stack<State<Position>> path)
         {
-            StringBuilder builder = new StringBuilder();
-            Position from = start.Data;
-            while (start.CameFrom != null)
+            StringBuilder builder = new StringBuilder(); 
+            Position from = path.
+            while (goal.CameFrom != null)
             {
-                Position to = start.CameFrom.Data;
+                Position to = goal.CameFrom.Data;
                 string num;
                 if (from.Row > to.Row)
                 {
@@ -42,10 +42,12 @@ namespace Ex1.Command
                     num = "1";
                 }
                 builder.Append(num);
-                start = start.CameFrom;
+                goal = goal.CameFrom;
                 from = to;
             }
-            return builder.ToString();
+            string path = builder.ToString();
+            Console.WriteLine(path);
+            return path;
         }
 
         public override string Execute(string[] args, TcpClient client = null)
