@@ -13,7 +13,7 @@ namespace Client2
     {
         static void Main(string[] args)
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
             TcpClient client = new TcpClient();
             client.Connect(ep);
             Console.WriteLine("You are connected");

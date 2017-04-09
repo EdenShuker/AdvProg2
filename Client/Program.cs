@@ -18,13 +18,14 @@ namespace Client
             client.Connect(ep);
             Console.WriteLine("You are connected");
             using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
+            using (StreamReader reader = new StreamReader(stream))
+            using (StreamWriter writer = new StreamWriter(stream))
             {
                 // Send data to server
-                writer.Write("generate maze1 5 5");
+                writer.WriteLine("generate maze1 5 5");
+                Console.WriteLine("data sent to server");
                 // Get result from server
-                string result = reader.ReadString();
+                string result = reader.ReadLine();
                 Console.WriteLine("Result = {0}", result);
             }
             Console.ReadLine();
