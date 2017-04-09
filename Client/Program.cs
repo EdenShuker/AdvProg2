@@ -13,7 +13,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
             TcpClient client = new TcpClient();
             client.Connect(ep);
             Console.WriteLine("You are connected");
@@ -22,11 +22,9 @@ namespace Client
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 // Send data to server
-                Console.Write("Please enter a number: ");
-                int num = int.Parse(Console.ReadLine());
-                writer.Write(num);
+                writer.Write("generate maze1 5 5");
                 // Get result from server
-                int result = reader.ReadInt32();
+                string result = reader.ReadString();
                 Console.WriteLine("Result = {0}", result);
             }
             Console.ReadLine();

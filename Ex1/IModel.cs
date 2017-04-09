@@ -26,5 +26,7 @@ namespace Ex1
         void Close(string nameOfGame);
 
         bool IsGameBegun(string nameOfGame);
+
+        bool IsClientInGame(TcpClient client);
     }
 }

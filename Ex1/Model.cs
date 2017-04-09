@@ -125,6 +125,20 @@ namespace Ex1
         }
 
 
+        public bool IsClientInGame(TcpClient client)
+        {
+            foreach(GameInfo game in unAvailablesGames.Values)
+            {
+                if (game.GetPlayer(client) != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
         private class GameInfo
         {
             public string NameOfMaze { get; set; }

@@ -15,8 +15,9 @@ namespace Ex1
     {
         static void Main(string[] args)
         {
-            ClientHandler clientHadler = new ClientHandler();
-            Server server = new Server(8000, clientHadler);
+            Controller controller = new Controller();
+            ClientHandler clientHadler = new ClientHandler(controller);
+            Server server = new Server(5555, clientHadler);
             server.Start();
             Console.ReadLine();
             server.Stop();

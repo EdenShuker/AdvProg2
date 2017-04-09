@@ -21,18 +21,23 @@ namespace Ex1
         {
             new Task(() =>
             {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamReader reader = new StreamReader(stream))
-                using (StreamWriter writer = new StreamWriter(stream))
+                do
                 {
-                    string commandLine = reader.ReadLine();
-                    Console.WriteLine("Got command: {0}", commandLine);
-                    string result = controller.ExecuteCommand(commandLine, client);
-                    writer.Write(result);
-                }
-                // Should we close the client?
+                    using (NetworkStream stream = client.GetStream())
+                    using (StreamReader reader = new StreamReader(stream))
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        Console.WriteLine("performing task");
+                        string commandLine = reader.ReadLine();
+                        Console.WriteLine("Got command: {0}", commandLine);
+                        string result = controller.ExecuteCommand(commandLine, client);
+                        writer.Write(result);
+                    }
+                } while (controller.IsClientInGame(client));
+                // Client is not in game (or no longer in game)
                 client.Close();
             }).Start();
         }
+
     }
 }

@@ -39,5 +39,10 @@ namespace Ex1
             ICommand command = commands[commandKey];
             return command.Execute(args, client);
         }
+
+        public bool IsClientInGame(TcpClient client)
+        {
+            return model.IsClientInGame(client);
+        }
     }
 }
