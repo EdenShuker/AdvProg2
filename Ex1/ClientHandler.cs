@@ -24,11 +24,11 @@ namespace Ex1
                 do
                 {
                     using (NetworkStream stream = client.GetStream())
-                    using (StreamReader reader = new StreamReader(stream))
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    using (BinaryWriter writer = new BinaryWriter(stream))
                     {
                         Console.WriteLine("performing task");
-                        string commandLine = reader.ReadLine();
+                        string commandLine = reader.ReadString();
                         Console.WriteLine("Got command: {0}", commandLine);
                         string result = controller.ExecuteCommand(commandLine, client);
                         writer.Write(result);
@@ -38,6 +38,5 @@ namespace Ex1
                 client.Close();
             }).Start();
         }
-
     }
 }
