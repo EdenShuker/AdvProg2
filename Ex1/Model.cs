@@ -219,7 +219,7 @@ namespace Ex1
             public MazeInfo(Maze maze)
             {
                 this.Maze = maze;
-                Solution = null;
+                this.Solution = null;
             }
         }
     }
