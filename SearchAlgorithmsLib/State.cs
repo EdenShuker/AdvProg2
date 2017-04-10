@@ -37,7 +37,7 @@ namespace SearchAlgorithmsLib
 
         public static State<T> GetState(T id)
         {
-            return StatePool.Instance.GetState(id);
+            return StatePool<T>.Instance.GetState(id);
         }
 
         /// <summary>

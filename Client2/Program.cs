@@ -14,7 +14,7 @@ namespace Client2
         static void Main(string[] args)
         {
 
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5555);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5556);
             TcpClient client = new TcpClient();
             client.Connect(ep);
             Console.WriteLine("You are connected");
@@ -26,12 +26,15 @@ namespace Client2
             string result = null;
             do
             {
+                Console.WriteLine("enter commmand");
                 command = Console.ReadLine();
                 writer.Write(command);
                 Console.WriteLine("data sent to server");
                 // Get result from server
                 result = reader.ReadString();
                 Console.WriteLine("Result = {0}", result);
+                stream.Flush();
+                command = command.Split(' ')[0];
             } while (!command.Equals("close"));
             stream.Dispose();
             client.Close();

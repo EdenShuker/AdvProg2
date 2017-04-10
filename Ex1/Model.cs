@@ -36,7 +36,6 @@ namespace Ex1
 
         public Solution<Position> SolveMaze(string nameOfGame, int algorithm)
         {
-            // means we don't have the solution
             MazeInfo mazeInfo = null;
             if (SPGames.ContainsKey(nameOfGame))
             {
@@ -59,18 +58,16 @@ namespace Ex1
             return mazeInfo.Solution;
         }
 
-
         public Maze StartGame(string nameOfGame, int rows, int cols, TcpClient client)
         {
             IMazeGenerator generator = new DFSMazeGenerator();
             Maze maze = generator.Generate(rows, cols);
             maze.Name = nameOfGame;
             MultiPlayerGame mpGame = new MultiPlayerGame(maze, client, maze.InitialPos);
-            availablesMPGames.Add(nameOfGame, mpGame);
+            this.availablesMPGames.Add(nameOfGame, mpGame);
             this.playerToGame.Add(client, mpGame);
             return maze;
         }
-
 
         public string[] GetAvailableGames()
         {
@@ -79,14 +76,14 @@ namespace Ex1
 
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
-            MultiPlayerGame mpGame = availablesMPGames[nameOfGame];
-            mpGame.Guest = new PlayerInfo(player, mpGame.Maze.InitialPos);
+            MultiPlayerGame game = availablesMPGames[nameOfGame];
+            Maze maze = game.Maze;
+            game.Guest = new PlayerInfo(player, maze.InitialPos);
             availablesMPGames.Remove(nameOfGame);
-            unAvailablesMPGames.Add(nameOfGame, mpGame);
-            this.playerToGame.Add(player, mpGame);
-            return mpGame.Maze;
+            unAvailablesMPGames.Add(nameOfGame, game);
+            playerToGame.Add(player, game);
+            return maze;
         }
-
 
         // return - name of game that 'player' takes.
         public string Play(string direction, TcpClient player)
@@ -94,15 +91,13 @@ namespace Ex1
             MultiPlayerGame game = playerToGame[player];
             PlayerInfo playerInfo = game.GetPlayer(player);
             // Update the player location
-            bool validMove = playerInfo.move(game.Maze, direction);
+            bool validMove = playerInfo.Move(game.Maze, direction);
             if (!validMove)
             {
                 return "Invalid Direction";
             }
             return game.Maze.Name;
         }
-
-
 
         public void Close(string nameOfGame)
         {
@@ -111,17 +106,15 @@ namespace Ex1
             {
                 game = unAvailablesMPGames[nameOfGame];
                 unAvailablesMPGames.Remove(nameOfGame);
+               playerToGame.Remove(game.Guest.Player);
             }
             else
             {
+                // available games
                 game = availablesMPGames[nameOfGame];
                 availablesMPGames.Remove(nameOfGame);
             }
             playerToGame.Remove(game.Host.Player);
-            if (game.Guest != null)
-            {
-                playerToGame.Remove(game.Guest.Player);
-            }
         }
 
         public bool IsGameBegun(string nameOfGame)
@@ -135,7 +128,17 @@ namespace Ex1
             return playerToGame.ContainsKey(client);
         }
 
+        private class MazeInfo
+        {
+            public Maze Maze { get; set; }
+            public Solution<Position> Solution { get; set; }
 
+            public MazeInfo(Maze maze)
+            {
+                this.Maze = maze;
+                this.Solution = null;
+            }
+        }
 
         private class SinglePlayerGame
         {
@@ -154,9 +157,9 @@ namespace Ex1
             public PlayerInfo Host { get; set; }
             public PlayerInfo Guest { get; set; }
 
-            public MultiPlayerGame(Maze maze, TcpClient player, Position position) : base(maze)
+            public MultiPlayerGame(Maze maze, TcpClient player, Position location) : base(maze)
             {
-                this.Host= new PlayerInfo(player, position);          
+                this.Host = new PlayerInfo(player, location);
             }
 
             public PlayerInfo GetPlayer(TcpClient player)
@@ -165,7 +168,7 @@ namespace Ex1
                 {
                     return Host;
                 }
-                else if (Guest.Player == player)
+                if (Guest.Player == player)
                 {
                     return Guest;
                 }
@@ -173,22 +176,25 @@ namespace Ex1
             }
         }
 
-
-
-
         private class PlayerInfo
         {
             public TcpClient Player { get; set; }
             public Position Location { get; set; }
-
+            public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
             public PlayerInfo(TcpClient player, Position location)
             {
                 this.Player = player;
                 this.Location = location;
             }
 
+            private void OtherPlayerCommitMove(object sender, EventArgs e)
+            {
+                Console.WriteLine("This is called when the event fires.");
+            }
+
+
             // return true for valid move, false otherwise.
-            public bool move(Maze maze, string direction)
+            public bool Move(Maze maze, string direction)
             {
                 int currentRow = this.Location.Row;
                 int currentCol = this.Location.Col;
@@ -218,18 +224,6 @@ namespace Ex1
                     return false;
                 }
                 return true;
-            }
-        }
-
-        private class MazeInfo
-        {
-            public Maze Maze { get; set; }
-            public Solution<Position> Solution { get; set; }
-
-            public MazeInfo(Maze maze)
-            {
-                this.Maze = maze;
-                this.Solution = null;
             }
         }
     }

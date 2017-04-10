@@ -34,6 +34,9 @@ namespace Ex1
                     result = controller.ExecuteCommand(commandLine, client);
                     writer.Write(result);
                     stream.Flush();
+                    //TODO: problem when we enter "list" before "join" because we close 
+                    // the client before joining. maybe we should change the condition 
+                    // "IsClientInGame".
                 } while (controller.IsClientInGame(client));
                 stream.Dispose();
                 // Client is not in game (or no longer in game)
