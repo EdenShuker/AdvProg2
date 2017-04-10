@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Ex1.ModelLib;
 using MazeLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

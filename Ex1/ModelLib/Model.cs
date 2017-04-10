@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using MazeGeneratorLib;
 using MazeLib;
 using SearchAlgorithmsLib;
+using Ex1.MoveEventLib;
 
 namespace Ex1.ModelLib
 {
@@ -92,17 +91,12 @@ namespace Ex1.ModelLib
             PlayerInfo playerInfo = game.GetPlayer(player);
             // Update the player location
             bool validMove = playerInfo.Move(game.Maze, direction);
+            game.Play(direction);
             if (!validMove)
             {
                 return "Invalid Direction";
             }
             return game.Maze.Name;
-        }
-
-
-        private void OtherPlayerCommitMove(object sender, EventArgs e)
-        {
-            Console.WriteLine("This is called when the event fires.");
         }
 
         public void Close(string nameOfGame)
@@ -162,10 +156,22 @@ namespace Ex1.ModelLib
         {
             public PlayerInfo Host { get; set; }
             public PlayerInfo Guest { get; set; }
+            public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
 
             public MultiPlayerGame(Maze maze, TcpClient player, Position location) : base(maze)
             {
                 this.Host = new PlayerInfo(player, location);
+                PlayerMoved += MazeBoard_PlayerMoved;
+            }
+
+            private void MazeBoard_PlayerMoved(object sender, PlayerMovedEventArgs e)
+            {
+                Console.WriteLine($"Player moved in direction: {e.Direction}");
+            }
+
+            public void Play(string direction)
+            {
+                PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
             }
 
             public PlayerInfo GetPlayer(TcpClient player)
@@ -183,7 +189,7 @@ namespace Ex1.ModelLib
         }
 
 
-        public delegate void EventHandler();
+        // Holds Info about player
         private class PlayerInfo
         {
             public TcpClient Player { get; set; }
@@ -194,7 +200,6 @@ namespace Ex1.ModelLib
                 this.Player = player;
                 this.Location = location;
             }
-
 
             // return true for valid move, false otherwise.
             public bool Move(Maze maze, string direction)

@@ -4,13 +4,13 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using Ex1.ControllerLib;
 
-namespace Ex1.View
+namespace Ex1.ViewLib
 {
     class ClientHandler : IClientHandler
     {
         private Controller controller;
 
-        public ClientHandler(Controller controller)
+        public ClientHandler(ControllerLib.Controller controller)
         {
             this.controller = controller;
         }

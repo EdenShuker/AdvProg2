@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Ex1.ModelLib;
 using MazeLib;
 using Newtonsoft.Json.Linq;
-using Ex1.ModelLib;
 
 namespace Ex1.Command
 {
