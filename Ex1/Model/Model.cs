@@ -99,6 +99,12 @@ namespace Ex1
             return game.Maze.Name;
         }
 
+
+        private void OtherPlayerCommitMove(object sender, EventArgs e)
+        {
+            Console.WriteLine("This is called when the event fires.");
+        }
+
         public void Close(string nameOfGame)
         {
             MultiPlayerGame game = null;
@@ -176,20 +182,16 @@ namespace Ex1
             }
         }
 
+
+        public delegate void EventHandler();
         private class PlayerInfo
         {
             public TcpClient Player { get; set; }
-            public Position Location { get; set; }
-            public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
+            public Position Location { get; set; }
             public PlayerInfo(TcpClient player, Position location)
             {
                 this.Player = player;
                 this.Location = location;
-            }
-
-            private void OtherPlayerCommitMove(object sender, EventArgs e)
-            {
-                Console.WriteLine("This is called when the event fires.");
             }
 
 
