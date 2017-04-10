@@ -91,11 +91,12 @@ namespace Ex1.ModelLib
             PlayerInfo playerInfo = game.GetPlayer(player);
             // Update the player location
             bool validMove = playerInfo.Move(game.Maze, direction);
-            game.Play(direction);
+  
             if (!validMove)
             {
                 return "Invalid Direction";
             }
+            game.Play(direction);
             return game.Maze.Name;
         }
 
@@ -156,7 +157,7 @@ namespace Ex1.ModelLib
         {
             public PlayerInfo Host { get; set; }
             public PlayerInfo Guest { get; set; }
-            public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
+            private event EventHandler<PlayerMovedEventArgs> PlayerMoved;
 
             public MultiPlayerGame(Maze maze, TcpClient player, Position location) : base(maze)
             {

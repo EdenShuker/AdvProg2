@@ -51,8 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MoveEventLib\MazeBoard.cs" />
-    <Compile Include="MoveEventLib\MazeBoardListener.cs" />
     <Compile Include="ViewLib\ClientHandler.cs" />
     <Compile Include="Command\CloseGameCommand.cs" />
     <Compile Include="Command\Command.cs" />
