@@ -5,8 +5,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Ex1.View;
 
-namespace Ex1
+namespace Ex1.View
 {
     class Server
     {

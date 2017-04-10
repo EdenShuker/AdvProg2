@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Ex1
+namespace Ex1.Model
 {
     public interface IModel
     {

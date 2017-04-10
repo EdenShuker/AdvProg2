@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using Ex1.Command;
 
-namespace Ex1
+namespace Ex1.Controller
 {
     public class Controller : IController
     {
@@ -15,7 +12,7 @@ namespace Ex1
 
         public Controller()
         {
-            this.model = new Model();
+            this.model = new Model.Model();
             // Add Commands
             this.commands = new Dictionary<string, ICommand>();
             this.commands.Add("generate", new GenerateMazeCommand(this.model));

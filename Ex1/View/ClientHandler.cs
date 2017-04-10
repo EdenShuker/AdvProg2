@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex1
+namespace Ex1.View
 {
     class ClientHandler : IClientHandler
     {
-        private Controller controller;
+        private Controller.Controller controller;
 
-        public ClientHandler(Controller controller)
+        public ClientHandler(Controller.Controller controller)
         {
             this.controller = controller;
         }
