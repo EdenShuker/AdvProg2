@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Ex1.View;
+using Ex1.ViewLib;
 using MazeGeneratorLib;
 using MazeLib;
 using Newtonsoft.Json.Linq;
@@ -16,7 +16,7 @@ namespace Ex1
     {
         static void Main(string[] args)
         {
-            Controller.Controller controller = new Controller.Controller();
+            ControllerLib.Controller controller = new ControllerLib.Controller();
             ClientHandler clientHadler = new ClientHandler(controller);
             Server server = new Server(5556, clientHadler);
             server.Start();

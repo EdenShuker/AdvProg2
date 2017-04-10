@@ -6,7 +6,7 @@ using MazeGeneratorLib;
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Ex1.Model
+namespace Ex1.ModelLib
 {
     public class Model : IModel
     {

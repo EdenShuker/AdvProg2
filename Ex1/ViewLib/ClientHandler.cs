@@ -2,14 +2,15 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Ex1.ControllerLib;
 
-namespace Ex1.View
+namespace Ex1.ViewLib
 {
     class ClientHandler : IClientHandler
     {
-        private Controller.Controller controller;
+        private Controller controller;
 
-        public ClientHandler(Controller.Controller controller)
+        public ClientHandler(ControllerLib.Controller controller)
         {
             this.controller = controller;
         }

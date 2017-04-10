@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Sockets;
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Ex1.Model
+namespace Ex1.ModelLib
 {
     public interface IModel
     {

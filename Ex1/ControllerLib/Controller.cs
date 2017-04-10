@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Net.Sockets;
 using Ex1.Command;
+using Ex1.ModelLib;
 
-namespace Ex1.Controller
+namespace Ex1.ControllerLib
 {
     public class Controller : IController
     {
@@ -12,7 +13,7 @@ namespace Ex1.Controller
 
         public Controller()
         {
-            this.model = new Model.Model();
+            this.model = new Model();
             // Add Commands
             this.commands = new Dictionary<string, ICommand>();
             this.commands.Add("generate", new GenerateMazeCommand(this.model));
