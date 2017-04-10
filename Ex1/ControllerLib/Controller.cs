@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using Ex1.Command;
+using Ex1.ModelLib;
 
-
-namespace Ex1
+namespace Ex1.ControllerLib
 {
     public class Controller : IController
     {

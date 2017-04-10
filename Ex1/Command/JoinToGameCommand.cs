@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
 using Newtonsoft.Json.Linq;
+using Ex1.ModelLib;
 
 namespace Ex1.Command
 {

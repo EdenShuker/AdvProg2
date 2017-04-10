@@ -13,6 +13,6 @@ namespace Ex1
         public PlayerMovedEventArgs(Direction direction)
         {
             Direction = direction;
-        }
+        }
     }
 }

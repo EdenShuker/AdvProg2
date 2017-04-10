@@ -60,12 +60,12 @@
     <Compile Include="Command\PlayCommand.cs" />
     <Compile Include="Command\SolveMazeCommand.cs" />
     <Compile Include="Command\StartGameCommand.cs" />
-    <Compile Include="Controller\Controller.cs" />
+    <Compile Include="ControllerLib\Controller.cs" />
     <Compile Include="View\IClientHandler.cs" />
     <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Controller\IController.cs" />
-    <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\Model.cs" />
+    <Compile Include="ControllerLib\IController.cs" />
+    <Compile Include="ModelLib\IModel.cs" />
+    <Compile Include="ModelLib\Model.cs" />
     <Compile Include="PlayerMovedEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
