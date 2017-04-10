@@ -12,159 +12,169 @@ namespace Ex1
 {
     public class Model : IModel
     {
-        private Dictionary<string, GameInfo> availablesGames;
-        private Dictionary<string, GameInfo> unAvailablesGames;
-        private Dictionary<string, MazeInfo> mazes;
+        private Dictionary<string, MultiPlayerGame> availablesMPGames;
+        private Dictionary<string, MultiPlayerGame> unAvailablesMPGames;
+        private Dictionary<string, SinglePlayerGame> SPGames;
+        private Dictionary<TcpClient, MultiPlayerGame> playerToGame;
 
         public Model()
         {
-            availablesGames = new Dictionary<string, GameInfo>();
-            unAvailablesGames = new Dictionary<string, GameInfo>();
-            mazes = new Dictionary<string, MazeInfo>();
+            availablesMPGames = new Dictionary<string, MultiPlayerGame>();
+            unAvailablesMPGames = new Dictionary<string, MultiPlayerGame>();
+            SPGames = new Dictionary<string, SinglePlayerGame>();
+            playerToGame = new Dictionary<TcpClient, MultiPlayerGame>();
         }
 
-        public Maze GenerateMaze(string nameOfMaze, int rows, int cols)
+        public Maze GenerateMaze(string nameOfGame, int rows, int cols)
         {
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
-            maze.Name = nameOfMaze;
-            mazes.Add(nameOfMaze, new MazeInfo(maze));
+            maze.Name = nameOfGame;
+            SPGames.Add(nameOfGame, new SinglePlayerGame(maze));
             return maze;
         }
 
-        public Solution<Position> SolveMaze(string nameOfMaze, int algorithm)
+        public Solution<Position> SolveMaze(string nameOfGame, int algorithm)
         {
             // means we don't have the solution
-            if (mazes[nameOfMaze].Solution == null)
+            MazeInfo mazeInfo = null;
+            if (SPGames.ContainsKey(nameOfGame))
             {
-                ISearchable<Position> searchableMaze = new SearchableMaze(mazes[nameOfMaze].Maze);
-                ISearcher<Position> searcher = SearcherFactory.Create(algorithm);
-                mazes[nameOfMaze].Solution = searcher.Search(searchableMaze);
+                mazeInfo = SPGames[nameOfGame].MazeInfo;
             }
-            return mazes[nameOfMaze].Solution;
+            else if (availablesMPGames.ContainsKey(nameOfGame))
+            {
+                mazeInfo = availablesMPGames[nameOfGame].MazeInfo;
+            }
+            else if (unAvailablesMPGames.ContainsKey(nameOfGame))
+            {
+                mazeInfo = unAvailablesMPGames[nameOfGame].MazeInfo;
+            }
+            if (mazeInfo.Solution == null)
+            {
+                ISearchable<Position> searchableMaze = new SearchableMaze(mazeInfo.Maze);
+                ISearcher<Position> searcher = SearcherFactory.Create(algorithm);
+                mazeInfo.Solution = searcher.Search(searchableMaze);
+            }
+            return mazeInfo.Solution;
         }
+
 
         public Maze StartGame(string nameOfGame, int rows, int cols, TcpClient client)
         {
-            string mazeStr = null;
-            Maze maze = null;
-            foreach (string nameOfMaze in mazes.Keys)
-            {
-                maze = mazes[nameOfMaze].Maze;
-                if (maze.Rows == rows && maze.Cols == cols)
-                {
-                    mazeStr = nameOfMaze;
-                    break;
-                }
-            }
-            availablesGames.Add(nameOfGame, new GameInfo(mazeStr, client, maze.InitialPos));
+            IMazeGenerator generator = new DFSMazeGenerator();
+            Maze maze = generator.Generate(rows, cols);
+            maze.Name = nameOfGame;
+            MultiPlayerGame mpGame = new MultiPlayerGame(maze, client, maze.InitialPos);
+            availablesMPGames.Add(nameOfGame, mpGame);
+            this.playerToGame.Add(client, mpGame);
             return maze;
         }
 
+
         public string[] GetAvailableGames()
         {
-            return availablesGames.Keys.ToArray();
+            return availablesMPGames.Keys.ToArray();
         }
 
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
-            GameInfo game = availablesGames[nameOfGame];
-            Maze maze = mazes[game.NameOfMaze].Maze;
-            game.PlayerInfo2 = new PlayerInfo(player, maze.InitialPos);
-            availablesGames.Remove(nameOfGame);
-            unAvailablesGames.Add(nameOfGame, game);
-            return maze;
+            MultiPlayerGame mpGame = availablesMPGames[nameOfGame];
+            mpGame.Guest = new PlayerInfo(player, mpGame.Maze.InitialPos);
+            availablesMPGames.Remove(nameOfGame);
+            unAvailablesMPGames.Add(nameOfGame, mpGame);
+            this.playerToGame.Add(player, mpGame);
+            return mpGame.Maze;
         }
+
 
         // return - name of game that 'player' takes.
         public string Play(string direction, TcpClient player)
         {
-            PlayerInfo playerInfo = null;
-            GameInfo gameInfo = null;
-            string nameOfGame = null;
-            // find name of game and game-info of 'player'
-            foreach (string nameOfcurrGame in this.unAvailablesGames.Keys)
-            {
-                gameInfo = this.unAvailablesGames[nameOfcurrGame];
-                playerInfo = gameInfo.GetPlayer(player);
-                if (player != null)
-                {
-                    nameOfGame = nameOfcurrGame;
-                    break;
-                }
-            }
+            MultiPlayerGame game = playerToGame[player];
+            PlayerInfo playerInfo = game.GetPlayer(player);
             // Update the player location
-            bool validMove = playerInfo.move(mazes[gameInfo.NameOfMaze].Maze, direction);
+            bool validMove = playerInfo.move(game.Maze, direction);
             if (!validMove)
             {
                 return "Invalid Direction";
             }
-            return nameOfGame;
+            return game.Maze.Name;
         }
+
+
 
         public void Close(string nameOfGame)
         {
-            GameInfo game = null;
-            if (unAvailablesGames.ContainsKey(nameOfGame))
+            MultiPlayerGame game = null;
+            if (unAvailablesMPGames.ContainsKey(nameOfGame))
             {
-                game = unAvailablesGames[nameOfGame];
-                unAvailablesGames.Remove(nameOfGame);
-                game.PlayerInfo2.Player.Close();
+                game = unAvailablesMPGames[nameOfGame];
+                unAvailablesMPGames.Remove(nameOfGame);
             }
             else
             {
-                game = availablesGames[nameOfGame];
-                availablesGames.Remove(nameOfGame);
+                game = availablesMPGames[nameOfGame];
+                availablesMPGames.Remove(nameOfGame);
             }
-            game.PlayerInfo1.Player.Close();
+            playerToGame.Remove(game.Host.Player);
+            if (game.Guest != null)
+            {
+                playerToGame.Remove(game.Guest.Player);
+            }
         }
 
         public bool IsGameBegun(string nameOfGame)
         {
-            return unAvailablesGames.ContainsKey(nameOfGame);
+            return unAvailablesMPGames.ContainsKey(nameOfGame);
         }
 
 
         public bool IsClientInGame(TcpClient client)
         {
-            foreach(GameInfo game in unAvailablesGames.Values)
-            {
-                if (game.GetPlayer(client) != null)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return playerToGame.ContainsKey(client);
         }
 
 
 
-        private class GameInfo
+        private class SinglePlayerGame
         {
-            public string NameOfMaze { get; set; }
-            public PlayerInfo PlayerInfo1 { get; set; }
-            public PlayerInfo PlayerInfo2 { get; set; }
-            public Position Player2Location { get; set; }
+            public MazeInfo MazeInfo { get; set; }
+            public Maze Maze => MazeInfo.Maze;
+            public Solution<Position> Solution => MazeInfo.Solution;
 
-            public GameInfo(string mazeName, TcpClient player, Position location)
+            public SinglePlayerGame(Maze maze)
             {
-                NameOfMaze = mazeName;
-                this.PlayerInfo1 = new PlayerInfo(player, location);
+                this.MazeInfo = new MazeInfo(maze);
+            }
+        }
+
+        private class MultiPlayerGame : SinglePlayerGame
+        {
+            public PlayerInfo Host { get; set; }
+            public PlayerInfo Guest { get; set; }
+
+            public MultiPlayerGame(Maze maze, TcpClient player, Position position) : base(maze)
+            {
+                this.Host= new PlayerInfo(player, position);          
             }
 
             public PlayerInfo GetPlayer(TcpClient player)
             {
-                if (PlayerInfo1.Player == player)
+                if (Host.Player == player)
                 {
-                    return PlayerInfo1;
+                    return Host;
                 }
-                else if (PlayerInfo2.Player == player)
+                else if (Guest.Player == player)
                 {
-                    return PlayerInfo2;
+                    return Guest;
                 }
                 return null;
             }
         }
+
+
+
 
         private class PlayerInfo
         {

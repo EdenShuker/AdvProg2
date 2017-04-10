@@ -44,9 +44,9 @@ namespace SearchAlgorithmsLib
         /// State Pool holds all the states that have been created.
         /// Singleton class.
         /// </summary>
-        public sealed class StatePool
+        private sealed class StatePool<T>
         {
-            private static volatile StatePool instance;
+            private static volatile StatePool<T> instance;
 
             private static object syncRoot = new object();
 
@@ -57,7 +57,7 @@ namespace SearchAlgorithmsLib
                 this.states = new Dictionary<T, State<T>>();
             }
 
-            public static StatePool Instance
+            public static StatePool<T> Instance
             {
                 get
                 {
@@ -67,7 +67,7 @@ namespace SearchAlgorithmsLib
                         {
                             if (instance == null)
                             {
-                                instance = new StatePool();
+                                instance = new StatePool<T>();
                             }
                         }
                     }
