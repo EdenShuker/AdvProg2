@@ -13,27 +13,41 @@ namespace Client
     {
         static void Main(string[] args)
         {
+
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+            TcpClient client = new TcpClient();
+            client.Connect(ep);
+            Console.WriteLine("You are connected");
+            NetworkStream stream = client.GetStream();
+            BinaryReader reader = new BinaryReader(stream);
+            BinaryWriter writer = new BinaryWriter(stream);
+            // Send data to server
             string command = null;
+            string result = null;
+            string message = null;
+            bool isClose = false;
             do
             {
-                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5556);
-                TcpClient client = new TcpClient();
-                client.Connect(ep);
-                Console.WriteLine("You are connected");
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryReader reader = new BinaryReader(stream))
-                using (BinaryWriter writer = new BinaryWriter(stream))
+                Console.WriteLine("enter commmand");
+                if (!isClose)
                 {
-                    // Send data to server
                     command = Console.ReadLine();
                     writer.Write(command);
                     Console.WriteLine("data sent to server");
                     // Get result from server
-                    string result = reader.ReadString();
+                    result = reader.ReadString();
                     Console.WriteLine("Result = {0}", result);
                 }
-                client.Close();
-            } while (!command.Equals("close"));
+                message = reader.ReadString();
+                Console.WriteLine(message);
+                if (isClose = message.Equals("close client"))
+                {
+                    break;
+                }
+                stream.Flush();
+            } while (true);
+            stream.Dispose();
+            client.Close();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace SearchAlgorithmsLib
 
         public override int GetHashCode()
         {
-            return Data.GetHashCode();
+            return Data.ToString().GetHashCode();
         }
 
         public static State<T> GetState(T id)

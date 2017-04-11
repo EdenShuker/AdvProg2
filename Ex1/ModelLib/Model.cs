@@ -88,16 +88,7 @@ namespace Ex1.ModelLib
         public string Play(string direction, TcpClient player)
         {
             MultiPlayerGame game = playerToGame[player];
-            PlayerInfo playerInfo = game.GetPlayer(player);
-            // Update the player location
-            bool validMove = playerInfo.Move(game.Maze, direction);
-  
-            if (!validMove)
-            {
-                return "Invalid Direction";
-            }
-            game.Play(direction);
-            return game.Maze.Name;
+            return game.Play(direction, player);
         }
 
         public void Close(string nameOfGame)
@@ -170,9 +161,17 @@ namespace Ex1.ModelLib
                 Console.WriteLine($"Player moved in direction: {e.Direction}");
             }
 
-            public void Play(string direction)
+            public string Play(string direction, TcpClient player)
             {
+                PlayerInfo playerInfo = GetPlayer(player);
+                // Update the player location
+                bool validMove = playerInfo.Move(Maze, direction);
+                if (!validMove)
+                {
+                    return "Invalid Direction";
+                }
                 PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
+                return Maze.Name;
             }
 
             public PlayerInfo GetPlayer(TcpClient player)

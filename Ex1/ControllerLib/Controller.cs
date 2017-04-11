@@ -42,5 +42,6 @@ namespace Ex1.ControllerLib
         {
             return model.IsClientInGame(client);
         }
+
     }
 }

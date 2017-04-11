@@ -24,6 +24,7 @@ namespace Ex1.ViewLib
                 BinaryWriter writer = new BinaryWriter(stream);
                 string commandLine = null;
                 string result = null;
+                bool InGame = true;
                 do
                 {
                     Console.WriteLine("performing task");
@@ -32,10 +33,12 @@ namespace Ex1.ViewLib
                     result = controller.ExecuteCommand(commandLine, client);
                     writer.Write(result);
                     stream.Flush();
-                    //TODO: problem when we enter "list" before "join" because we close 
-                    // the client before joining. maybe we should change the condition 
-                    // "IsClientInGame".
-                } while (controller.IsClientInGame(client));
+                    if (InGame = controller.IsClientInGame(client))
+                    {
+                        writer.Write("keep going");
+                    }
+                } while (InGame);
+                writer.Write("close client");
                 stream.Dispose();
                 // Client is not in game (or no longer in game)
                 client.Close();
