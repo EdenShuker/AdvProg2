@@ -53,7 +53,6 @@ namespace Client
                         }
                     }
                 }
-                return;
             }).Start();
         }
 
