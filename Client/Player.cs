@@ -50,6 +50,7 @@ namespace Client
                         if (answer.Equals("close client"))
                         {
                             this.isConnected = false;
+                            Console.WriteLine("Press any key to quit");
                         }
                     }
                 }
@@ -61,16 +62,21 @@ namespace Client
             NetworkStream stream = this.client.GetStream();
             BinaryWriter writer = new BinaryWriter(stream);
             string command = null;
+            int c;
             while (this.isConnected)
             {
-                // check if has something to read from console
-                if (Console.In.Peek() != -1)
+                if ((c = Console.Read()) != -1 && this.isConnected)
                 {
                     command = Console.ReadLine();
+                    StringBuilder builder = new StringBuilder();
+                    builder.Append((char) c);
+                    builder.Append(command);
+                    command = builder.ToString();
+
                     writer.Write(command);
                     Console.WriteLine("data sent to server");
+                    stream.Flush();
                 }
-                stream.Flush();
             }
         }
     }

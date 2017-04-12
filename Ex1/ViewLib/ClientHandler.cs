@@ -10,7 +10,7 @@ namespace Ex1.ViewLib
     {
         private Controller controller;
 
-        public ClientHandler(ControllerLib.Controller controller)
+        public ClientHandler(Controller controller)
         {
             this.controller = controller;
         }
@@ -22,22 +22,20 @@ namespace Ex1.ViewLib
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
                 BinaryWriter writer = new BinaryWriter(stream);
-                string commandLine = null;
-                string result = null;
-                bool InGame = true;
+                bool inGame = true;
                 do
                 {
                     Console.WriteLine("performing task");
-                    commandLine = reader.ReadString();
+                    string commandLine = reader.ReadString();
                     Console.WriteLine("Got command: {0}", commandLine);
-                    result = controller.ExecuteCommand(commandLine, client);
+                    string result = controller.ExecuteCommand(commandLine, client);
                     writer.Write(result);
-                    stream.Flush();
-                    if (InGame = controller.IsClientInGame(client))
+                    if (inGame = controller.IsClientInGame(client))
                     {
                         writer.Write("keep going");
                     }
-                } while (InGame);
+                    stream.Flush();
+                } while (inGame);
                 writer.Write("close client");
                 stream.Dispose();
                 // Client is not in game (or no longer in game)

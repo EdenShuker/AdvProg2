@@ -18,7 +18,6 @@ namespace Client
             Player player = new Player(ip, port);
             player.Start();
 
-            Console.WriteLine("Press any key to quit");
             Console.ReadLine();
         }
     }
