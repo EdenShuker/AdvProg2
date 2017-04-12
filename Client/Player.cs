@@ -51,6 +51,7 @@ namespace Client
                         {
                             this.isConnected = false;
                         }
+
                     }
                 }
             }).Start();
