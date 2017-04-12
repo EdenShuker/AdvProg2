@@ -53,6 +53,7 @@ namespace Client
                         }
                     }
                 }
+                return;
             }).Start();
         }
 
@@ -64,8 +65,9 @@ namespace Client
             while (this.isConnected)
             {
                 // check if has something to read from console
-                if ((command = Console.ReadLine()) != null)
+                if (Console.In.Peek() != -1)
                 {
+                    command = Console.ReadLine();
                     writer.Write(command);
                     Console.WriteLine("data sent to server");
                 }
