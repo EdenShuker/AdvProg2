@@ -72,7 +72,7 @@ namespace Client
                 while (this.isConnected)
                 {
                     // Check if has something to read from stream
-                    if (this.isWaitingForAnswer)
+                    if (this.isWaitingForAnswer && stream.DataAvailable)
                     {
                         string answer = reader.ReadString();
                         if (answer.Split(' ')[0].Equals(endMsg))
