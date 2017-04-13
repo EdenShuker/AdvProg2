@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace Ex1.ViewLib
+namespace ServerProject.ViewLib
 {
     interface IClientHandler
     {

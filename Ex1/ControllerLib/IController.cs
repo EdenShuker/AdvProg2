@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace Ex1.ControllerLib
+namespace ServerProject.ControllerLib
 {
     public interface IController
     {

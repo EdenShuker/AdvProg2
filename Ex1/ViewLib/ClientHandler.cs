@@ -2,9 +2,9 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using Ex1.ControllerLib;
+using ServerProject.ControllerLib;
 
-namespace Ex1.ViewLib
+namespace ServerProject.ViewLib
 {
     class ClientHandler : IClientHandler
     {

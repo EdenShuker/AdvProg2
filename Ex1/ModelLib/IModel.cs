@@ -2,7 +2,7 @@
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Ex1.ModelLib
+namespace ServerProject.ModelLib
 {
     public interface IModel
     {

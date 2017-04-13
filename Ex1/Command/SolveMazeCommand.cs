@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
-using Ex1.ModelLib;
 using MazeLib;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
+using ServerProject.ModelLib;
 
-namespace Ex1.Command
+namespace ServerProject.Command
 {
-    public class SolveMazeCommand : Command
+    public class SolveMazeCommand : ServerProject.Command.Command
     {
         public SolveMazeCommand(IModel model) : base(model)
         {

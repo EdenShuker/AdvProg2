@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace Ex1.Command
+namespace ServerProject.Command
 {
     public interface ICommand
     {

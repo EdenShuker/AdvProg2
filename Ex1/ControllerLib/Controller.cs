@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using Ex1.Command;
-using Ex1.ModelLib;
+using ServerProject.Command;
+using ServerProject.ModelLib;
 
-namespace Ex1.ControllerLib
+namespace ServerProject.ControllerLib
 {
     public class Controller : IController
     {
