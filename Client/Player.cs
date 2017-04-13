@@ -13,6 +13,9 @@ namespace Client
     {
         private TcpClient client;
         private bool isConnected;
+        private bool isWaitingForAnswer;
+        private bool canSendMessage;
+        private HashSet<string> longTermCommands;
 
         public Player(string ip, int port)
         {
@@ -22,13 +25,39 @@ namespace Client
             Console.WriteLine("You are connected");
 
             this.isConnected = true;
+            this.isWaitingForAnswer = false;
+            this.canSendMessage = true;
+
+            this.longTermCommands = new HashSet<string>();
+            this.longTermCommands.Add("start");
+            this.longTermCommands.Add("join");
         }
 
         public void Start()
         {
-            Listen();
-            Talk();
-            this.client.GetStream().Dispose();
+            // Handle first command
+            NetworkStream stream = this.client.GetStream();
+            BinaryReader reader = new BinaryReader(stream);
+            BinaryWriter writer = new BinaryWriter(stream);
+
+            Console.Write("Enter your command: ");
+            string command = Console.ReadLine();
+            writer.Write(command);
+            stream.Flush();
+            Console.WriteLine("Data has been sent to server");
+
+            string answer = reader.ReadString();
+            Console.WriteLine("Result = {0}", answer);
+
+            // Check for long term connection
+            if (this.longTermCommands.Contains(command.Split(' ')[0]))
+            {
+                this.isWaitingForAnswer = true;
+                Listen();
+                Talk();
+            }
+
+            stream.Dispose();
             this.client.Close();
         }
 
