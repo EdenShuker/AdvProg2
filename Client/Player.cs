@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Client
 {
@@ -49,7 +50,7 @@ namespace Client
             string answer = reader.ReadString();
             Console.WriteLine("Result = {0}", answer);
 
-            // Check for long term connection
+            // Check for long term connection (means starting multiplayer game)
             if (this.longTermCommands.Contains(command.Split(' ')[0]))
             {
                 this.isWaitingForAnswer = true;
@@ -65,22 +66,23 @@ namespace Client
         {
             NetworkStream stream = this.client.GetStream();
             BinaryReader reader = new BinaryReader(stream);
+            string endMsg = new JObject().ToString();
             new Task(() =>
             {
                 while (this.isConnected)
                 {
                     // Check if has something to read from stream
-                    if (stream.DataAvailable)
+                    if (this.isWaitingForAnswer)
                     {
                         string answer = reader.ReadString();
-                        Console.WriteLine("Result = {0}", answer);
-
-                        answer = reader.ReadString();
-                        if (answer.Equals("close client"))
+                        if (answer.Split(' ')[0].Equals(endMsg))
                         {
                             this.isConnected = false;
+                            this.canSendMessage = false;
                             Console.WriteLine("Press any key to quit");
+                            break;
                         }
+                        Console.WriteLine("Result = {0}", answer);
                     }
                 }
             }).Start();
@@ -90,21 +92,21 @@ namespace Client
         {
             NetworkStream stream = this.client.GetStream();
             BinaryWriter writer = new BinaryWriter(stream);
-            string command = null;
-            int c;
             while (this.isConnected)
             {
-                if ((c = Console.Read()) != -1 && this.isConnected)
+                if (this.canSendMessage)
                 {
-                    command = Console.ReadLine();
-                    StringBuilder builder = new StringBuilder();
-                    builder.Append((char) c);
-                    builder.Append(command);
-                    command = builder.ToString();
-
+                    Console.Write("Enter your command: ");
+                    string command = Console.ReadLine();
                     writer.Write(command);
-                    Console.WriteLine("data sent to server");
                     stream.Flush();
+                    Console.WriteLine("Data has been sent to server");
+
+                    if (command.Split(' ')[0].Equals("close"))
+                    {
+                        this.isConnected = false;
+                        this.isWaitingForAnswer = false;
+                    }
                 }
             }
         }

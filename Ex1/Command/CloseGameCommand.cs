@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using Newtonsoft.Json.Linq;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -13,7 +14,7 @@ namespace ServerProject.Command
         {
             string nameOfGame = args[0];
             this.Model.Close(nameOfGame);
-            return "";
+            return new JObject().ToString();
         }
     }
 }
