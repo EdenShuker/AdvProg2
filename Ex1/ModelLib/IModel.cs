@@ -23,5 +23,7 @@ namespace ServerProject.ModelLib
         bool IsGameBegun(string nameOfGame);
 
         bool IsClientInGame(TcpClient client);
+
+        TcpClient GetCompetitorOf(TcpClient player);
     }
 }

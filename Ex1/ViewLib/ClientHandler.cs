@@ -21,22 +21,27 @@ namespace ServerProject.ViewLib
             {
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
-                BinaryWriter writer = new BinaryWriter(stream);
                 bool inGame = true;
                 do
                 {
                     Console.WriteLine("performing task");
                     string commandLine = reader.ReadString();
                     Console.WriteLine("Got command: {0}", commandLine);
-                    string result = controller.ExecuteCommand(commandLine, client);
-                    writer.Write(result);
-                    if (inGame = controller.IsClientInGame(client))
+                    AnswerInfo result = controller.ExecuteCommand(commandLine, client);
+                    if (result.IsAnswerForSender)
                     {
-                        writer.Write("keep going");
+                        BinaryWriter writer = new BinaryWriter(stream);
+                        writer.Write(result.Answer);
                     }
+                    else
+                    {
+                        BinaryWriter writer = new BinaryWriter(result.DestClient.GetStream());
+                        writer.Write(result.Answer);
+                        result.DestClient.GetStream().Flush();
+                    }
+                    inGame = controller.IsClientInGame(client);
                     stream.Flush();
                 } while (inGame);
-                writer.Write("close client");
                 stream.Dispose();
                 // Client is not in game (or no longer in game)
                 client.Close();

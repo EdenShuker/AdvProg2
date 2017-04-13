@@ -10,6 +10,7 @@ namespace ServerProject.ControllerLib
     {
         private Dictionary<string, ICommand> commands;
         private IModel model;
+        private Dictionary<string, bool> isCommandToSender;
 
         public Controller()
         {
@@ -23,25 +24,38 @@ namespace ServerProject.ControllerLib
             this.commands.Add("join", new JoinToGameCommand(this.model));
             this.commands.Add("play", new PlayCommand(this.model));
             this.commands.Add("close", new CloseGameCommand(this.model));
+
+            this.isCommandToSender = new Dictionary<string, bool>();
+            this.isCommandToSender.Add("generate", true);
+            this.isCommandToSender.Add("solve", true);
+            this.isCommandToSender.Add("start", true);
+            this.isCommandToSender.Add("list", true);
+            this.isCommandToSender.Add("join", true);
+            this.isCommandToSender.Add("play", false);
+            this.isCommandToSender.Add("close", false);
         }
 
-        public string ExecuteCommand(string commandLine, TcpClient client)
+        public AnswerInfo ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] arr = commandLine.Split(' ');
             string commandKey = arr[0];
             if (!commands.ContainsKey(commandKey))
             {
-                return "Command not found";
+                return new AnswerInfo(true,null, "Command not found");
             }
             string[] args = arr.Skip(1).ToArray();
             ICommand command = commands[commandKey];
-            return command.Execute(args, client);
+            string answer = command.Execute(args, client);
+            if (isCommandToSender[commandKey])
+            {
+                return new AnswerInfo(true,null,answer);
+            }
+            return new AnswerInfo(false, model.GetCompetitorOf(client), answer);
         }
 
         public bool IsClientInGame(TcpClient client)
         {
             return model.IsClientInGame(client);
         }
-
     }
 }

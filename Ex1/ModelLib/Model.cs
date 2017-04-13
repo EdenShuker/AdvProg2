@@ -128,6 +128,12 @@ namespace ServerProject.ModelLib
             return playerToGame.ContainsKey(client);
         }
 
+        public TcpClient GetCompetitorOf(TcpClient player)
+        {
+            MultiPlayerGame game = this.playerToGame[player];
+            return game.GetCompetitorOf(player).Player;
+        }
+
         private class MazeInfo
         {
             public Maze Maze { get; set; }
@@ -191,6 +197,19 @@ namespace ServerProject.ModelLib
                 if (Guest.Player == player)
                 {
                     return Guest;
+                }
+                return null;
+            }
+
+            public PlayerInfo GetCompetitorOf(TcpClient player)
+            {
+                if (Host.Player == player)
+                {
+                    return Guest;
+                }
+                if (Guest.Player == player)
+                {
+                    return Host;
                 }
                 return null;
             }

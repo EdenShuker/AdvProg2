@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerLib\AnswerInfo.cs" />
     <Compile Include="ViewLib\ClientHandler.cs" />
     <Compile Include="Command\CloseGameCommand.cs" />
     <Compile Include="Command\Command.cs" />
