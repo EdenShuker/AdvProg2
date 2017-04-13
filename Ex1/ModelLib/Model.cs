@@ -184,7 +184,7 @@ namespace ServerProject.ModelLib
                 {
                     return "Invalid Direction";
                 }
-                PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
+                //PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
                 return Maze.Name;
             }
 
