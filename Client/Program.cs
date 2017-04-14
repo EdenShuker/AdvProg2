@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Client
 {
@@ -14,7 +15,7 @@ namespace Client
         static void Main(string[] args)
         {
             string ip = "127.0.0.1";
-            int port = 8000;
+            int port = int.Parse(ConfigurationManager.AppSettings["port"]);
             Player player = new Player(ip, port);
             player.Start();
 
