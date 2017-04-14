@@ -18,9 +18,6 @@ namespace Client
             int port = int.Parse(ConfigurationManager.AppSettings["port"]);
             Player player = new Player(ip, port);
             player.Start();
-        
-            Console.Write("Press any key to continue...");
-            Console.ReadLine();
         }
     }
 }

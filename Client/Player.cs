@@ -62,6 +62,10 @@ namespace Client
             this.client.Close();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void Listen()
         {
             NetworkStream stream = this.client.GetStream();
@@ -75,11 +79,11 @@ namespace Client
                     if (this.isWaitingForAnswer && stream.DataAvailable)
                     {
                         string answer = reader.ReadString();
-                        if (answer.Split(' ')[0].Equals(endMsg))
+                        if (answer.Equals(endMsg))
                         {
                             this.isConnected = false;
                             this.canSendMessage = false;
-                            Console.WriteLine("Competitor closed the game");
+                            Console.Write("Competitor closed the game. Press any key to close program...");
                             break;
                         }
                         Console.WriteLine("Result = {0}", answer);

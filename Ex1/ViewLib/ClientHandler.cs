@@ -6,7 +6,7 @@ using ServerProject.ControllerLib;
 
 namespace ServerProject.ViewLib
 {
-    class ClientHandler : IClientHandler
+    public class ClientHandler : IClientHandler
     {
         private Controller controller;
 
@@ -21,35 +21,32 @@ namespace ServerProject.ViewLib
             {
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
-                bool inGame = true;
+                BinaryWriter writer = new BinaryWriter(stream);
                 do
                 {
-                    Console.WriteLine("performing task");
                     string commandLine = reader.ReadString();
                     if (commandLine.Equals("close"))
-                    {
                         break;
-                    }
                     Console.WriteLine("Got command: {0}", commandLine);
-                    AnswerInfo result = controller.ExecuteCommand(commandLine, client);
-                    if (result.IsAnswerForSender)
-                    {
-                        BinaryWriter writer = new BinaryWriter(stream);
-                        writer.Write(result.Answer);
-                    }
-                    else
-                    {
-                        BinaryWriter writer = new BinaryWriter(result.DestClient.GetStream());
-                        writer.Write(result.Answer);
-                        result.DestClient.GetStream().Flush();
-                    }
-                    inGame = controller.IsClientInGame(client);
+                    string result = controller.ExecuteCommand(commandLine, client);
+                    if(!result.Equals("do nothing"))
+                        writer.Write(result);
                     stream.Flush();
-                } while (inGame);
+                } while (controller.IsClientInGame(client));
                 stream.Dispose();
                 // Client is not in game (or no longer in game)
                 client.Close();
             }).Start();
         }
+
+
+        public void SendMesaageToCompetitor(TcpClient client, string message)
+        {
+            NetworkStream stream = client.GetStream();
+            BinaryWriter writer = new BinaryWriter(stream);
+            writer.Write(message);
+            stream.Flush();
+        }
     }
+
 }

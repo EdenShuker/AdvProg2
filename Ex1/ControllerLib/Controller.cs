@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Sockets;
 using ServerProject.Command;
 using ServerProject.ModelLib;
+using ServerProject.ViewLib;
 
 namespace ServerProject.ControllerLib
 {
@@ -10,6 +11,7 @@ namespace ServerProject.ControllerLib
     {
         private Dictionary<string, ICommand> commands;
         private IModel model;
+        public ClientHandler view { set; private get; }
         private Dictionary<string, bool> isCommandToSender;
 
         public Controller()
@@ -35,33 +37,30 @@ namespace ServerProject.ControllerLib
             this.isCommandToSender.Add("close", false);
         }
 
-        public AnswerInfo ExecuteCommand(string commandLine, TcpClient client)
+        public string ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] arr = commandLine.Split(' ');
             string commandKey = arr[0];
             if (!commands.ContainsKey(commandKey))
-            {
-                return new AnswerInfo(true, null, "Command not found");
-            }
-            AnswerInfo answerInfo = null;
-            if (isCommandToSender[commandKey])
-            {
-                answerInfo = new AnswerInfo(true, null);
-            }
-            else
-            {
-                answerInfo = new AnswerInfo(false, model.GetCompetitorOf(client));
-            }
+                return "Command not found";
             string[] args = arr.Skip(1).ToArray();
             ICommand command = commands[commandKey];
+            TcpClient competitor = null;
+            if (!this.isCommandToSender[commandKey])
+                competitor = model.GetCompetitorOf(client);
             string answer = command.Execute(args, client);
-            answerInfo.Answer = answer;
-            return answerInfo;
+            if (!this.isCommandToSender[commandKey])
+            {
+                view.SendMesaageToCompetitor(competitor, answer);
+                answer = "do nothing";
+            }
+            return answer;
         }
 
         public bool IsClientInGame(TcpClient client)
         {
             return model.IsClientInGame(client);
         }
+
     }
 }

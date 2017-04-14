@@ -4,6 +4,6 @@ namespace ServerProject.ControllerLib
 {
     public interface IController
     {
-        AnswerInfo ExecuteCommand(string commandLine, TcpClient client);
+        string ExecuteCommand(string commandLine, TcpClient client);
     }
 }
