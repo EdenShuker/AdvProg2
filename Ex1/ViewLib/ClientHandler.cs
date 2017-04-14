@@ -2,15 +2,15 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using Ex1.ControllerLib;
+using ServerProject.ControllerLib;
 
-namespace Ex1.ViewLib
+namespace ServerProject.ViewLib
 {
     class ClientHandler : IClientHandler
     {
         private Controller controller;
 
-        public ClientHandler(ControllerLib.Controller controller)
+        public ClientHandler(Controller controller)
         {
             this.controller = controller;
         }
@@ -21,24 +21,27 @@ namespace Ex1.ViewLib
             {
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
-                BinaryWriter writer = new BinaryWriter(stream);
-                string commandLine = null;
-                string result = null;
-                bool InGame = true;
+                bool inGame = true;
                 do
                 {
                     Console.WriteLine("performing task");
-                    commandLine = reader.ReadString();
+                    string commandLine = reader.ReadString();
                     Console.WriteLine("Got command: {0}", commandLine);
-                    result = controller.ExecuteCommand(commandLine, client);
-                    writer.Write(result);
-                    stream.Flush();
-                    if (InGame = controller.IsClientInGame(client))
+                    AnswerInfo result = controller.ExecuteCommand(commandLine, client);
+                    if (result.IsAnswerForSender)
                     {
-                        writer.Write("keep going");
+                        BinaryWriter writer = new BinaryWriter(stream);
+                        writer.Write(result.Answer);
                     }
-                } while (InGame);
-                writer.Write("close client");
+                    else
+                    {
+                        BinaryWriter writer = new BinaryWriter(result.DestClient.GetStream());
+                        writer.Write(result.Answer);
+                        result.DestClient.GetStream().Flush();
+                    }
+                    inGame = controller.IsClientInGame(client);
+                    stream.Flush();
+                } while (inGame);
                 stream.Dispose();
                 // Client is not in game (or no longer in game)
                 client.Close();

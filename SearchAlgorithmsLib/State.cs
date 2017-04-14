@@ -92,18 +92,6 @@ namespace SearchAlgorithmsLib
                 states.Add(id, newState);
                 return newState;
             }
-
-            /// <summary>
-            /// Reset the states of the last data caused by the last operations on it.
-            /// </summary>
-            public void ResetStates()
-            {
-                foreach (State<T> stateVal in states.Values)
-                {
-                    stateVal.CameFrom = null;
-                    // TODO: check if the cost of the state need to be initialized.
-                }
-            }
         }
     }
 }

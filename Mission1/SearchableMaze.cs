@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Ex1
+namespace Mission1
 {
     /// <summary>
     /// Maze object that different algorithm can be applied on it.
@@ -103,7 +99,6 @@ namespace Ex1
         /// <returns> cost to transfer between the two. </returns>
         public float GetTransferCost(State<Position> from, State<Position> to)
         {
-            // TODO: check if this method is necessary.
             return 1;
         }
     }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using Ex1.ModelLib;
+﻿using System.Net.Sockets;
+using Newtonsoft.Json.Linq;
+using ServerProject.ModelLib;
 
-namespace Ex1.Command
+namespace ServerProject.Command
 {
     public class CloseGameCommand : Command
     {
@@ -18,7 +14,7 @@ namespace Ex1.Command
         {
             string nameOfGame = args[0];
             this.Model.Close(nameOfGame);
-            return "";
+            return new JObject().ToString();
         }
     }
 }

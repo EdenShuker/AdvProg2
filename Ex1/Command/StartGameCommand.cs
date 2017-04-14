@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using Ex1.ModelLib;
+﻿using System.Net.Sockets;
 using MazeLib;
-using Newtonsoft.Json.Linq;
+using ServerProject.ModelLib;
 
-namespace Ex1.Command
+namespace ServerProject.Command
 {
-    public class StartGameCommand : Command
+    public class StartGameCommand : ServerProject.Command.Command
     {
         public StartGameCommand(IModel model) : base(model)
         {

@@ -2,7 +2,7 @@
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Ex1.ModelLib
+namespace ServerProject.ModelLib
 {
     public interface IModel
     {
@@ -23,5 +23,7 @@ namespace Ex1.ModelLib
         bool IsGameBegun(string nameOfGame);
 
         bool IsClientInGame(TcpClient client);
+
+        TcpClient GetCompetitorOf(TcpClient player);
     }
 }

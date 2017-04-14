@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net.Sockets;
 using MazeGeneratorLib;
 using MazeLib;
+using Mission1;
 using SearchAlgorithmsLib;
-using Ex1.MoveEventLib;
+using ServerProject.MoveEventLib;
 
-namespace Ex1.ModelLib
+namespace ServerProject.ModelLib
 {
     public class Model : IModel
     {
@@ -29,7 +30,14 @@ namespace Ex1.ModelLib
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
             maze.Name = nameOfGame;
-            SPGames.Add(nameOfGame, new SinglePlayerGame(maze));
+            if (SPGames.ContainsKey(nameOfGame))
+            {
+                SPGames[nameOfGame] = new SinglePlayerGame(maze);
+            }
+            else
+            {
+                SPGames.Add(nameOfGame, new SinglePlayerGame(maze));
+            }
             return maze;
         }
 
@@ -98,7 +106,7 @@ namespace Ex1.ModelLib
             {
                 game = unAvailablesMPGames[nameOfGame];
                 unAvailablesMPGames.Remove(nameOfGame);
-               playerToGame.Remove(game.Guest.Player);
+                playerToGame.Remove(game.Guest.Player);
             }
             else
             {
@@ -118,6 +126,12 @@ namespace Ex1.ModelLib
         public bool IsClientInGame(TcpClient client)
         {
             return playerToGame.ContainsKey(client);
+        }
+
+        public TcpClient GetCompetitorOf(TcpClient player)
+        {
+            MultiPlayerGame game = this.playerToGame[player];
+            return game.GetCompetitorOf(player).Player;
         }
 
         private class MazeInfo
@@ -170,7 +184,7 @@ namespace Ex1.ModelLib
                 {
                     return "Invalid Direction";
                 }
-                PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
+                //PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
                 return Maze.Name;
             }
 
@@ -183,6 +197,19 @@ namespace Ex1.ModelLib
                 if (Guest.Player == player)
                 {
                     return Guest;
+                }
+                return null;
+            }
+
+            public PlayerInfo GetCompetitorOf(TcpClient player)
+            {
+                if (Host.Player == player)
+                {
+                    return Guest;
+                }
+                if (Guest.Player == player)
+                {
+                    return Host;
                 }
                 return null;
             }
