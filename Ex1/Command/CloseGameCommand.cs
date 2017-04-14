@@ -16,5 +16,20 @@ namespace ServerProject.Command
             this.Model.Close(nameOfGame);
             return new JObject().ToString();
         }
+
+        public override Checksum Check(string[] args)
+        {
+            Checksum checksum = new Checksum();
+            if (args.Length != 1)
+            {
+                checksum.Valid = false;
+                checksum.ErrorMsg = "Invalid number of arguments";
+            }
+            else
+            {
+                checksum.Valid = true;
+            }
+            return checksum;
+        }
     }
 }

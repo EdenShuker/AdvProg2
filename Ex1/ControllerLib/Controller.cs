@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using Newtonsoft.Json.Linq;
 using ServerProject.Command;
 using ServerProject.ModelLib;
 
@@ -41,8 +42,21 @@ namespace ServerProject.ControllerLib
             string commandKey = arr[0];
             if (!commands.ContainsKey(commandKey))
             {
-                return new AnswerInfo(true, null, "Command not found");
+                JObject errorObj = new JObject();
+                errorObj["Error"] = "Command not found";
+                return new AnswerInfo(true, null, errorObj.ToString());
             }
+
+            string[] args = arr.Skip(1).ToArray();
+            ICommand command = commands[commandKey];
+            Checksum checksum = command.Check(args);
+            if (!checksum.Valid)
+            {
+                JObject errorObj = new JObject();
+                errorObj["Error"] = checksum.ErrorMsg;
+                return new AnswerInfo(true, null, errorObj.ToString());
+            }
+
             AnswerInfo answerInfo = null;
             if (isCommandToSender[commandKey])
             {
@@ -52,8 +66,6 @@ namespace ServerProject.ControllerLib
             {
                 answerInfo = new AnswerInfo(false, model.GetCompetitorOf(client));
             }
-            string[] args = arr.Skip(1).ToArray();
-            ICommand command = commands[commandKey];
             string answer = command.Execute(args, client);
             answerInfo.Answer = answer;
             return answerInfo;

@@ -13,5 +13,7 @@ namespace ServerProject.Command
         }
 
         public abstract string Execute(string[] args, TcpClient client = null);
+
+        public abstract Checksum Check(string[] args);
     }
 }
