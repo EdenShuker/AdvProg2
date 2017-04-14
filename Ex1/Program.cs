@@ -1,6 +1,7 @@
 ﻿using System;
 using ServerProject.ControllerLib;
 using ServerProject.ViewLib;
+using System.Configuration;
 
 namespace ServerProject
 {
