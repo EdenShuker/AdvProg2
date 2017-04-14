@@ -79,7 +79,7 @@ namespace Client
                         {
                             this.isConnected = false;
                             this.canSendMessage = false;
-                            Console.WriteLine("Press any key to quit");
+                            Console.WriteLine("Competitor closed the game");
                             break;
                         }
                         Console.WriteLine("Result = {0}", answer);
@@ -96,8 +96,13 @@ namespace Client
             {
                 if (this.canSendMessage)
                 {
-                    Console.Write("Enter your command: ");
+                    Console.WriteLine("Enter your command: ");
                     string command = Console.ReadLine();
+                    if (!this.isConnected)
+                    {
+                        writer.Write("close");
+                        break;
+                    }
                     writer.Write(command);
                     stream.Flush();
                     Console.WriteLine("Data has been sent to server");

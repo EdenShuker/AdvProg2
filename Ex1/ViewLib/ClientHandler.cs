@@ -26,6 +26,10 @@ namespace ServerProject.ViewLib
                 {
                     Console.WriteLine("performing task");
                     string commandLine = reader.ReadString();
+                    if (commandLine.Equals("close"))
+                    {
+                        break;
+                    }
                     Console.WriteLine("Got command: {0}", commandLine);
                     AnswerInfo result = controller.ExecuteCommand(commandLine, client);
                     if (result.IsAnswerForSender)
