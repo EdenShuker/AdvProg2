@@ -41,16 +41,22 @@ namespace ServerProject.ControllerLib
             string commandKey = arr[0];
             if (!commands.ContainsKey(commandKey))
             {
-                return new AnswerInfo(true,null, "Command not found");
+                return new AnswerInfo(true, null, "Command not found");
+            }
+            AnswerInfo answerInfo = null;
+            if (isCommandToSender[commandKey])
+            {
+                answerInfo = new AnswerInfo(true, null);
+            }
+            else
+            {
+                answerInfo = new AnswerInfo(false, model.GetCompetitorOf(client));
             }
             string[] args = arr.Skip(1).ToArray();
             ICommand command = commands[commandKey];
             string answer = command.Execute(args, client);
-            if (isCommandToSender[commandKey])
-            {
-                return new AnswerInfo(true,null,answer);
-            }
-            return new AnswerInfo(false, model.GetCompetitorOf(client), answer);
+            answerInfo.Answer = answer;
+            return answerInfo;
         }
 
         public bool IsClientInGame(TcpClient client)
