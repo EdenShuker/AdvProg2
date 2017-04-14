@@ -158,6 +158,11 @@ namespace ServerProject.ModelLib
 
         public TcpClient GetCompetitorOf(TcpClient player)
         {
+            // the if below is ugly :(
+            if (!playerToGame.ContainsKey(player))
+            {
+                return null;
+            }
             MultiPlayerGame game = this.playerToGame[player];
             return game.GetCompetitorOf(player).Player;
         }
