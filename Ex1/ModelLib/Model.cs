@@ -12,7 +12,6 @@ namespace ServerProject.ModelLib
 {
     public class Model : IModel
     {
-
         private Dictionary<string, MultiPlayerGame> availablesMPGames;
         private Dictionary<string, MultiPlayerGame> unAvailablesMPGames;
         private Dictionary<string, SinglePlayerGame> SPGames;

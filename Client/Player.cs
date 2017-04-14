@@ -88,6 +88,7 @@ namespace Client
             }).Start();
         }
 
+
         private void Talk()
         {
             NetworkStream stream = this.client.GetStream();
