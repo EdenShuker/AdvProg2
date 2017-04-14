@@ -4,7 +4,7 @@ using ServerProject.ModelLib;
 
 namespace ServerProject.Command
 {
-    public class JoinToGameCommand : ServerProject.Command.Command
+    public class JoinToGameCommand : Command
     {
         public JoinToGameCommand(IModel model) : base(model)
         {
@@ -15,6 +15,21 @@ namespace ServerProject.Command
             string nameOfGame = args[0];
             Maze maze = this.Model.JoinTo(nameOfGame, client);
             return maze.ToJSON();
+        }
+
+        public override Checksum Check(string[] args)
+        {
+            Checksum checksum = new Checksum();
+            if (args.Length != 1)
+            {
+                checksum.Valid = false;
+                checksum.ErrorMsg = "Invalid number of arguments";
+            }
+            else
+            {
+                checksum.Valid = true;
+            }
+            return checksum;
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Client
             Console.WriteLine("Result = {0}", answer);
 
             // Check for long term connection (means starting multiplayer game)
-            if (this.longTermCommands.Contains(command.Split(' ')[0]))
+            if (this.longTermCommands.Contains(command.Split(' ')[0]) && !answer.Contains("Error"))
             {
                 this.isWaitingForAnswer = true;
                 Listen();

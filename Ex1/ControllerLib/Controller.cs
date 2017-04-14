@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using ServerProject.Command;
 using ServerProject.ModelLib;
 using ServerProject.ViewLib;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace ServerProject.ControllerLib
 {
@@ -41,14 +43,36 @@ namespace ServerProject.ControllerLib
         {
             string[] arr = commandLine.Split(' ');
             string commandKey = arr[0];
+            // check if it is existing command
             if (!commands.ContainsKey(commandKey))
                 return "Command not found";
-            string[] args = arr.Skip(1).ToArray();
             ICommand command = commands[commandKey];
+            string[] args = arr.Skip(1).ToArray();
+            // Check if this a valid command
+            Checksum checksum = command.Check(args);
+            if (!checksum.Valid)
+            {
+                JObject errorObj = new JObject();
+                errorObj["Error"] = checksum.ErrorMsg;
+                return errorObj.ToString();
+            }
             TcpClient competitor = null;
+            // get the competitor player
             if (!this.isCommandToSender[commandKey])
                 competitor = model.GetCompetitorOf(client);
-            string answer = command.Execute(args, client);
+            string answer = null;
+            // try to execute the command
+            try
+            {
+                answer = command.Execute(args, client);
+            }
+            catch (Exception e)
+            {
+                JObject errorObj = new JObject();
+                errorObj["Error"] = e.Message;
+                return errorObj.ToString();
+            }
+            // send the message to competitor if necessary.
             if (!this.isCommandToSender[commandKey])
             {
                 view.SendMesaageToCompetitor(competitor, answer);

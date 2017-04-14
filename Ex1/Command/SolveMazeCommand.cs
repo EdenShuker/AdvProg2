@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using MazeLib;
@@ -8,7 +9,7 @@ using ServerProject.ModelLib;
 
 namespace ServerProject.Command
 {
-    public class SolveMazeCommand : ServerProject.Command.Command
+    public class SolveMazeCommand : Command
     {
         public SolveMazeCommand(IModel model) : base(model)
         {
@@ -55,6 +56,30 @@ namespace ServerProject.Command
             mergedObj["Name"] = name;
             mergedObj.Merge(solutionObj);
             return mergedObj.ToString();
+        }
+
+        public override Checksum Check(string[] args)
+        {
+            Checksum checksum = new Checksum();
+            if (args.Length != 2)
+            {
+                checksum.Valid = false;
+                checksum.ErrorMsg = "Invalid number of arguments";
+            }
+            else
+            {
+                try
+                {
+                    int algo = int.Parse(args[1]);
+                    checksum.Valid = true;
+                }
+                catch (Exception)
+                {
+                    checksum.Valid = false;
+                    checksum.ErrorMsg = "Search-Aalgorithm need to be an integer";
+                }
+            }
+            return checksum;
         }
     }
 }
