@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using MazeGeneratorLib;
 using MazeLib;
 using Mission1;
+using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
 using ServerProject.MoveEventLib;
 
@@ -32,7 +33,8 @@ namespace ServerProject.ModelLib
             maze.Name = nameOfGame;
             if (SPGames.ContainsKey(nameOfGame))
             {
-                SPGames[nameOfGame] = new SinglePlayerGame(maze);
+                throw new Exception($"The game '{nameOfGame}' already exists");
+                //SPGames[nameOfGame] = new SinglePlayerGame(maze);
             }
             else
             {
@@ -41,7 +43,7 @@ namespace ServerProject.ModelLib
             return maze;
         }
 
-        public Solution<Position> SolveMaze(string nameOfGame, int algorithm)
+        private MazeInfo GetMazeInfoOf(string nameOfGame)
         {
             MazeInfo mazeInfo = null;
             if (SPGames.ContainsKey(nameOfGame))
@@ -56,6 +58,17 @@ namespace ServerProject.ModelLib
             {
                 mazeInfo = unAvailablesMPGames[nameOfGame].MazeInfo;
             }
+            return mazeInfo;
+        }
+
+        public Solution<Position> SolveMaze(string nameOfGame, int algorithm)
+        {
+            MazeInfo mazeInfo = GetMazeInfoOf(nameOfGame);
+            if (mazeInfo == null)
+            {
+                throw new Exception($"There is no game with the name '{nameOfGame}'");
+            }
+
             if (mazeInfo.Solution == null)
             {
                 ISearchable<Position> searchableMaze = new SearchableMaze(mazeInfo.Maze);
@@ -67,6 +80,10 @@ namespace ServerProject.ModelLib
 
         public Maze StartGame(string nameOfGame, int rows, int cols, TcpClient client)
         {
+            if (GetMazeInfoOf(nameOfGame) != null)
+            {
+                throw new Exception($"The game '{nameOfGame}' already exists");
+            }
             IMazeGenerator generator = new DFSMazeGenerator();
             Maze maze = generator.Generate(rows, cols);
             maze.Name = nameOfGame;
@@ -83,6 +100,10 @@ namespace ServerProject.ModelLib
 
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
+            if (!this.availablesMPGames.ContainsKey(nameOfGame))
+            {
+                throw new Exception($"There is no game with the name '{nameOfGame}'");
+            }
             MultiPlayerGame game = availablesMPGames[nameOfGame];
             Maze maze = game.Maze;
             game.Guest = new PlayerInfo(player, maze.InitialPos);
@@ -95,6 +116,10 @@ namespace ServerProject.ModelLib
         // return - name of game that 'player' takes.
         public string Play(string direction, TcpClient player)
         {
+            if (!playerToGame.ContainsKey(player))
+            {
+                throw new Exception("Player is not in a game, need to be in a game to play");
+            }
             MultiPlayerGame game = playerToGame[player];
             return game.Play(direction, player);
         }
@@ -108,11 +133,14 @@ namespace ServerProject.ModelLib
                 unAvailablesMPGames.Remove(nameOfGame);
                 playerToGame.Remove(game.Guest.Player);
             }
-            else
+            else if (availablesMPGames.ContainsKey(nameOfGame))
             {
-                // available games
                 game = availablesMPGames[nameOfGame];
                 availablesMPGames.Remove(nameOfGame);
+            }
+            else
+            {
+                throw new Exception($"There is no game with the name '{nameOfGame}'");
             }
             playerToGame.Remove(game.Host.Player);
         }
@@ -182,7 +210,7 @@ namespace ServerProject.ModelLib
                 bool validMove = playerInfo.Move(Maze, direction);
                 if (!validMove)
                 {
-                    return "Invalid Direction";
+                    throw new Exception($"Invalid Direction '{direction}'");
                 }
                 //PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
                 return Maze.Name;

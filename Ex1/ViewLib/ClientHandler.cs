@@ -21,7 +21,6 @@ namespace ServerProject.ViewLib
             {
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
-                bool inGame = true;
                 do
                 {
                     Console.WriteLine("performing task");
@@ -43,9 +42,8 @@ namespace ServerProject.ViewLib
                         writer.Write(result.Answer);
                         result.DestClient.GetStream().Flush();
                     }
-                    inGame = controller.IsClientInGame(client);
                     stream.Flush();
-                } while (inGame);
+                } while (controller.IsClientInGame(client));
                 stream.Dispose();
                 // Client is not in game (or no longer in game)
                 client.Close();

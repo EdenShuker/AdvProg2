@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using Newtonsoft.Json.Linq;
@@ -66,8 +67,18 @@ namespace ServerProject.ControllerLib
             {
                 answerInfo = new AnswerInfo(false, model.GetCompetitorOf(client));
             }
-            string answer = command.Execute(args, client);
-            answerInfo.Answer = answer;
+
+            try
+            {
+                string answer = command.Execute(args, client);
+                answerInfo.Answer = answer;
+            }
+            catch (Exception e)
+            {
+                JObject errorObj = new JObject();
+                errorObj["Error"] = e.Message;
+                return new AnswerInfo(true, null, errorObj.ToString());
+            }
             return answerInfo;
         }
 

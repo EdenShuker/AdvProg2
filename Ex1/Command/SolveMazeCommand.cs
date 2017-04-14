@@ -66,15 +66,18 @@ namespace ServerProject.Command
                 checksum.Valid = false;
                 checksum.ErrorMsg = "Invalid number of arguments";
             }
-            try
+            else
             {
-                int algo = int.Parse(args[1]);
-                checksum.Valid = true;
-            }
-            catch (Exception)
-            {
-                checksum.Valid = false;
-                checksum.ErrorMsg = "Search-Aalgorithm need to be an integer";
+                try
+                {
+                    int algo = int.Parse(args[1]);
+                    checksum.Valid = true;
+                }
+                catch (Exception)
+                {
+                    checksum.Valid = false;
+                    checksum.ErrorMsg = "Search-Aalgorithm need to be an integer";
+                }
             }
             return checksum;
         }
