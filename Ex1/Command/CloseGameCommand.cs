@@ -17,8 +17,10 @@ namespace ServerProject.Command
         public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string nameOfGame = args[0];
+            ForwardMessageEventArgs eventArgs =
+                new ForwardMessageEventArgs(this.Model.GetCompetitorOf(client), new JObject().ToString());
             this.Model.Close(nameOfGame);
-            return new ForwardMessageEventArgs(this.Model.GetCompetitorOf(client), new JObject().ToString());
+            return eventArgs;
         }
 
         public override Checksum Check(string[] args)
