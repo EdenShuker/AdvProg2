@@ -19,6 +19,8 @@ namespace ServerProject.ControllerLib
         public IClientHandler View { set; private get; }
         private Dictionary<string, bool> isCommandToSender;
 
+        public event EventHandler<ForwardMessageEventArgs> ForwardMessageEvent;
+
         public Controller()
         {
             this.model = new Model();
@@ -42,58 +44,46 @@ namespace ServerProject.ControllerLib
             this.isCommandToSender.Add("close", false);
         }
 
-        public string ExecuteCommand(string commandLine, TcpClient client)
+        public void ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] arr = commandLine.Split(' ');
             string commandKey = arr[0];
-            // if-1
+
             // check if it is existing command
             if (!commands.ContainsKey(commandKey))
             {
-                JObject errorObj = new JObject();
-                errorObj["Error"] = "Command not found";
-                return errorObj.ToString();
+                HandleErrorOf(client, "Command not found");
+                return;
             }
 
             ICommand command = commands[commandKey];
             string[] args = arr.Skip(1).ToArray();
             // Check if this a valid command
             Checksum checksum = command.Check(args);
-            // if-2
             if (!checksum.Valid)
             {
-                JObject errorObj = new JObject();
-                errorObj["Error"] = checksum.ErrorMsg;
-                return errorObj.ToString();
+                HandleErrorOf(client, checksum.ErrorMsg);
+                return;
             }
 
-            TcpClient competitor = null;
-            // get the competitor player
-            // if-3
-            if (!this.isCommandToSender[commandKey])
-                competitor = model.GetCompetitorOf(client);
-
-            string answer = null;
             // try to execute the command
             try
             {
-                answer = command.Execute(args, client);
+                ForwardMessageEventArgs eventArgs = command.Execute(args, client);
+                this.ForwardMessageEvent?.Invoke(this, eventArgs);
             }
             catch (Exception e)
             {
-                JObject errorObj = new JObject();
-                errorObj["Error"] = e.Message;
-                return errorObj.ToString();
+                HandleErrorOf(client, e.Message);
             }
+        }
 
-            // send the message to competitor if necessary.
-            // if-4
-            if (!this.isCommandToSender[commandKey])
-            {
-                View.WriteMessageTo(competitor, answer);
-                answer = "do nothing";
-            }
-            return answer;
+        private void HandleErrorOf(TcpClient client, string errorMsg)
+        {
+            JObject errorObj = new JObject();
+            errorObj["Error"] = errorMsg;
+            ForwardMessageEventArgs eventArgs = new ForwardMessageEventArgs(client, errorObj.ToString());
+            this.ForwardMessageEvent?.Invoke(this, eventArgs);
         }
 
         /// <summary>

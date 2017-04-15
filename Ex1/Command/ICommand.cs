@@ -1,10 +1,11 @@
 ﻿using System.Net.Sockets;
+using ServerProject.ControllerLib;
 
 namespace ServerProject.Command
 {
     public interface ICommand
     {
-        string Execute(string[] args, TcpClient client = null);
+        ForwardMessageEventArgs Execute(string[] args, TcpClient client = null);
 
         Checksum Check(string[] args);
     }

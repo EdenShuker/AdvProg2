@@ -1,10 +1,13 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 
 namespace ServerProject.ControllerLib
 {
     public interface IController
     {
-        string ExecuteCommand(string commandLine, TcpClient client);
+        event EventHandler<ForwardMessageEventArgs> ForwardMessageEvent;
+
+        void ExecuteCommand(string commandLine, TcpClient client);
 
         bool ProceedConnectionWith(TcpClient client);
     }

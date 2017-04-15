@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using Newtonsoft.Json;
+using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -10,11 +11,11 @@ namespace ServerProject.Command
         {
         }
 
-        public override string Execute(string[] args, TcpClient client = null)
+        public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string[] joinableGames = this.Model.GetAvailableGames();
             // JsonConvert.SerializeObject(arr) will produce something of the form "[arr[0], arr[1], ...]"
-            return JsonConvert.SerializeObject(joinableGames);
+            return new ForwardMessageEventArgs(client, JsonConvert.SerializeObject(joinableGames));
         }
 
         public override Checksum Check(string[] args)

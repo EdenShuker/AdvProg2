@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -12,7 +13,7 @@ namespace ServerProject.Command
             this.Model = model;
         }
 
-        public abstract string Execute(string[] args, TcpClient client = null);
+        public abstract ForwardMessageEventArgs Execute(string[] args, TcpClient client = null);
 
         public abstract Checksum Check(string[] args);
     }

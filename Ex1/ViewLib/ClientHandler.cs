@@ -14,6 +14,7 @@ namespace ServerProject.ViewLib
         public ClientHandler(IController controller)
         {
             this.controller = controller;
+            this.controller.ForwardMessageEvent += ForwardMessage;
         }
 
         public void HandleClient(TcpClient client)
@@ -22,21 +23,18 @@ namespace ServerProject.ViewLib
             {
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
-                BinaryWriter writer = new BinaryWriter(stream);
                 try
                 {
                     do
                     {
                         string commandLine = reader.ReadString();
                         Console.WriteLine("Got command: {0}", commandLine);
-                        string result = controller.ExecuteCommand(commandLine, client);
-                        if (!result.Equals("do nothing"))
-                            writer.Write(result);
-                        stream.Flush();
+                        controller.ExecuteCommand(commandLine, client);
                     } while (controller.ProceedConnectionWith(client));
 
                     // Notify the client about end-of-connection
                     string closeMessage = new JObject().ToString();
+                    BinaryWriter writer = new BinaryWriter(stream);
                     writer.Write(closeMessage);
                     stream.Flush();
                 }
@@ -53,16 +51,11 @@ namespace ServerProject.ViewLib
             }).Start();
         }
 
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="message"></param>
-        public void WriteMessageTo(TcpClient client, string message)
+        public void ForwardMessage(object sender, ForwardMessageEventArgs eventArgs)
         {
-            NetworkStream stream = client.GetStream();
+            NetworkStream stream = eventArgs.Addressee.GetStream();
             BinaryWriter writer = new BinaryWriter(stream);
-            writer.Write(message);
+            writer.Write(eventArgs.Message);
             stream.Flush();
         }
     }

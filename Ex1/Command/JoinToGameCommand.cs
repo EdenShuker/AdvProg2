@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using MazeLib;
+using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -10,11 +11,11 @@ namespace ServerProject.Command
         {
         }
 
-        public override string Execute(string[] args, TcpClient client = null)
+        public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string nameOfGame = args[0];
             Maze maze = this.Model.JoinTo(nameOfGame, client);
-            return maze.ToJSON();
+            return new ForwardMessageEventArgs(client, maze.ToJSON());
         }
 
         public override Checksum Check(string[] args)

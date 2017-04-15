@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using Newtonsoft.Json.Linq;
+using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -9,16 +10,15 @@ namespace ServerProject.Command
     /// </summary>
     public class CloseGameCommand : Command
     {
-
         public CloseGameCommand(IModel model) : base(model)
         {
         }
 
-        public override string Execute(string[] args, TcpClient client = null)
+        public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string nameOfGame = args[0];
             this.Model.Close(nameOfGame);
-            return new JObject().ToString();
+            return new ForwardMessageEventArgs(this.Model.GetCompetitorOf(client), new JObject().ToString());
         }
 
         public override Checksum Check(string[] args)

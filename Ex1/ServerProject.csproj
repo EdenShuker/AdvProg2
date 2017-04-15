@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerLib\ForwardMessageEventArgs.cs" />
     <Compile Include="ModelLib\MultiPlayerGame.cs" />
     <Compile Include="ModelLib\PlayerInfo.cs" />
     <Compile Include="ModelLib\SinglePlayerGame.cs" />

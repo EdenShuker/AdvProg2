@@ -5,6 +5,7 @@ using System.Text;
 using MazeLib;
 using Newtonsoft.Json.Linq;
 using SearchAlgorithmsLib;
+using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -45,7 +46,7 @@ namespace ServerProject.Command
             return builder.ToString();
         }
 
-        public override string Execute(string[] args, TcpClient client = null)
+        public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string name = args[0];
             int algorithm = int.Parse(args[1]);
@@ -55,7 +56,7 @@ namespace ServerProject.Command
             JObject mergedObj = new JObject();
             mergedObj["Name"] = name;
             mergedObj.Merge(solutionObj);
-            return mergedObj.ToString();
+            return new ForwardMessageEventArgs(client, mergedObj.ToString());
         }
 
         public override Checksum Check(string[] args)

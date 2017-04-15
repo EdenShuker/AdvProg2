@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using Newtonsoft.Json.Linq;
+using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
 namespace ServerProject.Command
@@ -10,14 +11,14 @@ namespace ServerProject.Command
         {
         }
 
-        public override string Execute(string[] args, TcpClient client = null)
+        public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string move = args[0];
             string nameOfGame = this.Model.Play(move, client);
             JObject moveObj = new JObject();
             moveObj["Name"] = nameOfGame;
             moveObj["Direction"] = move;
-            return moveObj.ToString();
+            return new ForwardMessageEventArgs(this.Model.GetCompetitorOf(client), moveObj.ToString());
         }
 
         public override Checksum Check(string[] args)
