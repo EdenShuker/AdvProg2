@@ -16,7 +16,7 @@ namespace ServerProject
         static void Main(string[] args)
         {
             Controller controller = new Controller();
-            ClientHandler clientHadler = new ClientHandler(controller);
+            IClientHandler clientHadler = new ClientHandler(controller);
             controller.View = clientHadler;
             int port = int.Parse(ConfigurationManager.AppSettings["port"]);
             Server server = new Server(port, clientHadler);

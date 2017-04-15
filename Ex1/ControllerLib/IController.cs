@@ -6,6 +6,6 @@ namespace ServerProject.ControllerLib
     {
         string ExecuteCommand(string commandLine, TcpClient client);
 
-        bool IsClientInGame(TcpClient client);
+        bool ProceedConnectionWith(TcpClient client);
     }
 }

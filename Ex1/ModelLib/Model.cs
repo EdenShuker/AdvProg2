@@ -12,7 +12,7 @@ using SearchAlgorithmsLib;
 namespace ServerProject.ModelLib
 {
     /// <summary>
-    /// This class responsible on all tha logic of the game.
+    /// This class responsible of all tha logic of the game.
     /// </summary>
     public class Model : IModel
     {

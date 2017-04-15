@@ -46,6 +46,7 @@ namespace ServerProject.ControllerLib
         {
             string[] arr = commandLine.Split(' ');
             string commandKey = arr[0];
+            // if-1
             // check if it is existing command
             if (!commands.ContainsKey(commandKey))
             {
@@ -53,20 +54,25 @@ namespace ServerProject.ControllerLib
                 errorObj["Error"] = "Command not found";
                 return errorObj.ToString();
             }
+
             ICommand command = commands[commandKey];
             string[] args = arr.Skip(1).ToArray();
             // Check if this a valid command
             Checksum checksum = command.Check(args);
+            // if-2
             if (!checksum.Valid)
             {
                 JObject errorObj = new JObject();
                 errorObj["Error"] = checksum.ErrorMsg;
                 return errorObj.ToString();
             }
+
             TcpClient competitor = null;
             // get the competitor player
+            // if-3
             if (!this.isCommandToSender[commandKey])
                 competitor = model.GetCompetitorOf(client);
+
             string answer = null;
             // try to execute the command
             try
@@ -79,7 +85,9 @@ namespace ServerProject.ControllerLib
                 errorObj["Error"] = e.Message;
                 return errorObj.ToString();
             }
+
             // send the message to competitor if necessary.
+            // if-4
             if (!this.isCommandToSender[commandKey])
             {
                 View.WriteMessageTo(competitor, answer);
@@ -93,10 +101,9 @@ namespace ServerProject.ControllerLib
         /// </summary>
         /// <param name="client"></param>
         /// <returns> wether the client is in existing game </returns>
-        public bool IsClientInGame(TcpClient client)
+        public bool ProceedConnectionWith(TcpClient client)
         {
             return model.IsClientInGame(client);
         }
-
     }
 }

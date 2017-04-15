@@ -23,24 +23,35 @@ namespace ServerProject.ViewLib
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
                 BinaryWriter writer = new BinaryWriter(stream);
-                string commandLine = null;
-                do
+                try
                 {
-                    commandLine = reader.ReadString();
-                    if (commandLine.Equals("close"))
-                        break;
-                    Console.WriteLine("Got command: {0}", commandLine);
-                    string result = controller.ExecuteCommand(commandLine, client);
-                    if (!result.Equals("do nothing"))
-                        writer.Write(result);
+                    do
+                    {
+                        string commandLine = reader.ReadString();
+                        Console.WriteLine("Got command: {0}", commandLine);
+                        string result = controller.ExecuteCommand(commandLine, client);
+                        if (!result.Equals("do nothing"))
+                            writer.Write(result);
+                        stream.Flush();
+                    } while (controller.ProceedConnectionWith(client));
+
+                    // Notify the client about end-of-connection
+                    string closeMessage = new JObject().ToString();
+                    writer.Write(closeMessage);
                     stream.Flush();
-                } while (controller.IsClientInGame(client));
-                stream.Dispose();
-                // Client is not in game (or no longer in game)
-                client.Close();
+                }
+                catch (EndOfStreamException)
+                {
+                    // Client has closed the connection, so reading from stream failed
+                }
+                finally
+                {
+                    // Close the connection with the client
+                    stream.Dispose();
+                    client.Close();
+                }
             }).Start();
         }
-
 
         /// <summary>
         ///  
@@ -55,5 +66,4 @@ namespace ServerProject.ViewLib
             stream.Flush();
         }
     }
-
 }
