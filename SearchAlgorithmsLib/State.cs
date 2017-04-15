@@ -18,27 +18,47 @@ namespace SearchAlgorithmsLib
         public double Cost { get; set; }
 
         public State<T> CameFrom { get; set; }
-
+        
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="data"></param>
         private State(T data)
         {
             this.Data = data;
             this.CameFrom = null;
         }
 
+        /// <summary>
+        /// Override Equals method.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns> true if equals, false otherwise. </returns>
         public bool Equals(State<T> s)
         {
             return Data.Equals(s.Data);
         }
 
+        /// <summary>
+        /// Override GetHashCode method.
+        /// </summary>
+        /// <returns> hash code f the object. </returns>
         public override int GetHashCode()
         {
             return Data.ToString().GetHashCode();
         }
 
+        /// <summary>
+        /// Return state given its id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> State out of StatePool </returns>
         public static State<T> GetState(T id)
         {
             return StatePool<T>.Instance.GetState(id);
         }
+
+
 
         /// <summary>
         /// State Pool holds all the states that have been created.
@@ -52,11 +72,17 @@ namespace SearchAlgorithmsLib
 
             private Dictionary<T, State<T>> states;
 
+            /// <summary>
+            /// Constructor.
+            /// </summary>
             private StatePool()
             {
                 this.states = new Dictionary<T, State<T>>();
             }
 
+            /// <summary>
+            /// Get instance of StatePool class.
+            /// </summary>
             public static StatePool<T> Instance
             {
                 get

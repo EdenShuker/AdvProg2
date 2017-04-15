@@ -3,14 +3,15 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using ServerProject.ControllerLib;
+using Newtonsoft.Json.Linq;
 
 namespace ServerProject.ViewLib
 {
     public class ClientHandler : IClientHandler
     {
-        private Controller controller;
+        private IController controller;
 
-        public ClientHandler(Controller controller)
+        public ClientHandler(IController controller)
         {
             this.controller = controller;
         }
@@ -22,14 +23,15 @@ namespace ServerProject.ViewLib
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
                 BinaryWriter writer = new BinaryWriter(stream);
+                string commandLine = null;
                 do
                 {
-                    string commandLine = reader.ReadString();
+                    commandLine = reader.ReadString();
                     if (commandLine.Equals("close"))
                         break;
                     Console.WriteLine("Got command: {0}", commandLine);
                     string result = controller.ExecuteCommand(commandLine, client);
-                    if(!result.Equals("do nothing"))
+                    if (!result.Equals("do nothing"))
                         writer.Write(result);
                     stream.Flush();
                 } while (controller.IsClientInGame(client));
@@ -40,7 +42,12 @@ namespace ServerProject.ViewLib
         }
 
 
-        public void SendMesaageToCompetitor(TcpClient client, string message)
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="message"></param>
+        public void WriteMessageTo(TcpClient client, string message)
         {
             NetworkStream stream = client.GetStream();
             BinaryWriter writer = new BinaryWriter(stream);

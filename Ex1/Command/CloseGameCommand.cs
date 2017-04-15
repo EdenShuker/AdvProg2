@@ -4,8 +4,12 @@ using ServerProject.ModelLib;
 
 namespace ServerProject.Command
 {
+    /// <summary>
+    /// Execute close game command.
+    /// </summary>
     public class CloseGameCommand : Command
     {
+
         public CloseGameCommand(IModel model) : base(model)
         {
         }

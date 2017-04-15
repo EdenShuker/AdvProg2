@@ -2,8 +2,9 @@
 
 namespace ServerProject.ViewLib
 {
-    interface IClientHandler
+    public interface IClientHandler
     {
         void HandleClient(TcpClient client);
+        void WriteMessageTo(TcpClient client, string message);
     }
 }

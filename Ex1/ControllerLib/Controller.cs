@@ -9,11 +9,14 @@ using System;
 
 namespace ServerProject.ControllerLib
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Controller : IController
     {
         private Dictionary<string, ICommand> commands;
         private IModel model;
-        public ClientHandler view { set; private get; }
+        public IClientHandler View { set; private get; }
         private Dictionary<string, bool> isCommandToSender;
 
         public Controller()
@@ -45,7 +48,11 @@ namespace ServerProject.ControllerLib
             string commandKey = arr[0];
             // check if it is existing command
             if (!commands.ContainsKey(commandKey))
-                return "Command not found";
+            {
+                JObject errorObj = new JObject();
+                errorObj["Error"] = "Command not found";
+                return errorObj.ToString();
+            }
             ICommand command = commands[commandKey];
             string[] args = arr.Skip(1).ToArray();
             // Check if this a valid command
@@ -75,12 +82,17 @@ namespace ServerProject.ControllerLib
             // send the message to competitor if necessary.
             if (!this.isCommandToSender[commandKey])
             {
-                view.SendMesaageToCompetitor(competitor, answer);
+                View.WriteMessageTo(competitor, answer);
                 answer = "do nothing";
             }
             return answer;
         }
 
+        /// <summary>
+        /// return if client in game.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns> wether the client is in existing game </returns>
         public bool IsClientInGame(TcpClient client)
         {
             return model.IsClientInGame(client);

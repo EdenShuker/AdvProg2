@@ -55,6 +55,11 @@ namespace SearchAlgorithmsLib
 
         public delegate string PathToString(Stack<State<T>> path);
 
+        /// <summary>
+        /// Create Json object out ogf the solution.
+        /// </summary>
+        /// <param name="func"> function which convert solution path to string </param>
+        /// <returns> JSON object describes th solution. </returns>
         public string ToJSON(PathToString func)
         {
             JObject solutionObj = new JObject();
@@ -63,9 +68,5 @@ namespace SearchAlgorithmsLib
             return solutionObj.ToString();
         }
 
-//        public static Solution<T> FromJSON(string str)
-//        {
-//            // TODO: not sure about the implementation.
-//        }
     }
 }
