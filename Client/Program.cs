@@ -16,7 +16,7 @@ namespace Client
         {
             string ip = "127.0.0.1";
             int port = int.Parse(ConfigurationManager.AppSettings["port"]);
-            Player player = new Player(ip, port);
+            IPlayer player = new Player(ip, port);
             player.Start();
         }
     }

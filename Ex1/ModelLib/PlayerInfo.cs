@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
+﻿using System.Net.Sockets;
 using MazeLib;
 
 namespace ServerProject.ModelLib
 {
-
     /// <summary>
     /// Holds info about the player.
     /// </summary>
-     class PlayerInfo
+    class PlayerInfo
     {
+        /// <summary>
+        /// The player.
+        /// </summary>
         public TcpClient Player { get; set; }
+
+        /// <summary>
+        /// Player's location.
+        /// </summary>
         public Position Location { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="location"></param>
+        /// <param name="player">Player.</param>
+        /// <param name="location">It's location.</param>
         public PlayerInfo(TcpClient player, Position location)
         {
             this.Player = player;
@@ -30,15 +32,15 @@ namespace ServerProject.ModelLib
         /// <summary>
         /// Advance the player in the given direction.
         /// </summary>
-        /// <param name="maze"></param>
-        /// <param name="direction"></param>
-        /// <returns> true for valid move, false otherwise.</returns>
+        /// <param name="maze">The maze of the game that the player participates.</param>
+        /// <param name="direction">Direction to move.</param>
+        /// <returns>True for valid move, false otherwise.</returns>
         public bool Move(Maze maze, string direction)
         {
             // Takes out player current position.
             int currentRow = this.Location.Row;
             int currentCol = this.Location.Col;
-            
+
             // Right
             if (direction.Equals("right") && currentCol < maze.Cols - 1 &&
                 maze[currentRow, currentCol + 1] == CellType.Free)
@@ -72,4 +74,3 @@ namespace ServerProject.ModelLib
         }
     }
 }
-

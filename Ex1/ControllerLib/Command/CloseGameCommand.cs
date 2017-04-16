@@ -1,15 +1,18 @@
 ﻿using System.Net.Sockets;
 using Newtonsoft.Json.Linq;
-using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
-namespace ServerProject.Command
+namespace ServerProject.ControllerLib.Command
 {
     /// <summary>
-    /// Execute close game command.
+    /// Execute close-game command.
     /// </summary>
     public class CloseGameCommand : Command
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="model">Model of server.</param>
         public CloseGameCommand(IModel model) : base(model)
         {
         }
@@ -17,6 +20,7 @@ namespace ServerProject.Command
         public override ForwardMessageEventArgs Execute(string[] args, TcpClient client = null)
         {
             string nameOfGame = args[0];
+            // The addressee of the messgae is the competitor of the given client.
             ForwardMessageEventArgs eventArgs =
                 new ForwardMessageEventArgs(this.Model.GetCompetitorOf(client), new JObject().ToString());
             this.Model.Close(nameOfGame);

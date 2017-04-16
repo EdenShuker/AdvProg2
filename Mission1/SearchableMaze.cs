@@ -18,7 +18,7 @@ namespace Mission1
         /// Constructor.
         /// Extract all the valid states out of the maze.
         /// </summary>
-        /// <param name="maze"> The maze to search on. </param>
+        /// <param name="maze">The maze to search on.</param>
         public SearchableMaze(Maze maze)
         {
             this.maze = maze;
@@ -38,7 +38,7 @@ namespace Mission1
         /// <summary>
         /// Get the position of the initial state.
         /// </summary>
-        /// <returns> state. </returns>
+        /// <returns>state.</returns>
         public State<Position> GetInitialState()
         {
             return State<Position>.GetState(this.maze.InitialPos);
@@ -47,7 +47,7 @@ namespace Mission1
         /// <summary>
         /// Get the position of the goal state.
         /// </summary>
-        /// <returns> state. </returns>
+        /// <returns>state.</returns>
         public State<Position> GetGoalState()
         {
             return State<Position>.GetState(this.maze.GoalPos);
@@ -57,8 +57,8 @@ namespace Mission1
         /// Create a list with all the possible states that can be accessed by the given state.
         /// Only valid (free cell) states will be added to the list.
         /// </summary>
-        /// <param name="s"> general state. </param>
-        /// <returns> List of states. </returns>
+        /// <param name="s">General state.</param>
+        /// <returns>List of states.</returns>
         public List<State<Position>> GetAllPossibleStates(State<Position> s)
         {
             List<State<Position>> possibleStatesList = new List<State<Position>>();

@@ -19,6 +19,7 @@ namespace SearchAlgorithmsLib
         /// <returns> Solution to the problem. </returns>
         public override Solution<T> Search(ISearchable<T> searchable)
         {
+            // Start from initial state.
             Stack<State<T>> openStates = new Stack<State<T>>();
             openStates.Push(searchable.GetInitialState());
             HashSet<State<T>> closed = new HashSet<State<T>>();
@@ -28,7 +29,7 @@ namespace SearchAlgorithmsLib
                 this.EvaluatedNodes++;
                 if (n.Equals(searchable.GetGoalState()))
                 {
-                    // Gaol has been reached.
+                    // Goal has been reached.
                     return new Solution<T>(n, EvaluatedNodes);
                 }
                 if (!closed.Contains(n))

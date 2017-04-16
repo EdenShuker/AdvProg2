@@ -9,20 +9,28 @@ namespace SearchAlgorithmsLib
     /// <summary>
     /// Generic state that holds some data.
     /// </summary>
-    /// <typeparam name="T"> Kind of state. </typeparam>
+    /// <typeparam name="T"> The kind of state. </typeparam>
     public class State<T>
     {
-
+        /// <summary>
+        /// Data that the state holds.
+        /// </summary>
         public T Data { get; set; }
 
+        /// <summary>
+        /// Cost of the state.
+        /// </summary>
         public double Cost { get; set; }
 
+        /// <summary>
+        /// The state where it came from.
+        /// </summary>
         public State<T> CameFrom { get; set; }
-        
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Data to hold in the current state.</param>
         private State(T data)
         {
             this.Data = data;
@@ -51,14 +59,12 @@ namespace SearchAlgorithmsLib
         /// <summary>
         /// Return state given its id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id of state will be the data that the states holds.</param>
         /// <returns> State out of StatePool </returns>
         public static State<T> GetState(T id)
         {
             return StatePool<T>.Instance.GetState(id);
         }
-
-
 
         /// <summary>
         /// State Pool holds all the states that have been created.
@@ -66,10 +72,19 @@ namespace SearchAlgorithmsLib
         /// </summary>
         private sealed class StatePool<T>
         {
+            /// <summary>
+            /// Instance of the state-pool.
+            /// </summary>
             private static volatile StatePool<T> instance;
 
+            /// <summary>
+            /// Object to use for the lock.
+            /// </summary>
             private static object syncRoot = new object();
 
+            /// <summary>
+            /// Dictionary that maps data of state to the state that holds it.
+            /// </summary>
             private Dictionary<T, State<T>> states;
 
             /// <summary>

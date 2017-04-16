@@ -1,12 +1,15 @@
 ﻿using System.Net.Sockets;
 using Newtonsoft.Json.Linq;
-using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
-namespace ServerProject.Command
+namespace ServerProject.ControllerLib.Command
 {
     public class PlayCommand : Command
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="model">Model of server.</param>
         public PlayCommand(IModel model) : base(model)
         {
         }
@@ -18,6 +21,7 @@ namespace ServerProject.Command
             JObject moveObj = new JObject();
             moveObj["Name"] = nameOfGame;
             moveObj["Direction"] = move;
+            // The adderssee of the message is the competitor of the given client.
             return new ForwardMessageEventArgs(this.Model.GetCompetitorOf(client), moveObj.ToString());
         }
 

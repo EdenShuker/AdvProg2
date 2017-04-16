@@ -27,7 +27,7 @@ namespace SearchAlgorithmsLib
                 closed.Add(n);
                 if (n.Equals(searchable.GetGoalState()))
                 {
-                    // Gaol has been reached.
+                    // Goal has been reached.
                     return new Solution<T>(n, EvaluatedNodes);
                 }
                 // Handle succerssors.
@@ -41,6 +41,7 @@ namespace SearchAlgorithmsLib
                         s.Cost = newPathCost;
                         AddToOpenList(s);
                     }
+                    // Cheapest path was found.
                     else if (newPathCost < s.Cost)
                     {
                         s.Cost = newPathCost;

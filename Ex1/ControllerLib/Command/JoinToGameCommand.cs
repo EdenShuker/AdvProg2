@@ -1,12 +1,15 @@
 ﻿using System.Net.Sockets;
 using MazeLib;
-using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
-namespace ServerProject.Command
+namespace ServerProject.ControllerLib.Command
 {
     public class JoinToGameCommand : Command
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="model">Model of server.</param>
         public JoinToGameCommand(IModel model) : base(model)
         {
         }

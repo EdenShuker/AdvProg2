@@ -9,7 +9,7 @@ namespace SearchAlgorithmsLib
     /// <summary>
     /// Searcher interface.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of object to search on.</typeparam>
     public interface ISearcher<T>
     {
         /// <summary>

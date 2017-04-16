@@ -5,16 +5,15 @@ using SearchAlgorithmsLib;
 namespace ServerProject
 {
     /// <summary>
-    /// Create an ISearcher object according to the specifued algorithm.
+    /// Create an ISearcher object according to the specified algorithm.
     /// </summary>
     public class SearcherFactory
     {
-
         /// <summary>
         /// Create a DFS searcher for 0 and BFS searcher for 1.
         /// </summary>
-        /// <param name="algorithm"></param>
-        /// <returns></returns>
+        /// <param name="algorithm">Number represents the search-algorithm.</param>
+        /// <returns>ISearcher object.</returns>
         public static ISearcher<Position> Create(int algorithm)
         {
             if (algorithm == 0)

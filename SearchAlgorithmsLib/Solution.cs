@@ -10,7 +10,7 @@ namespace SearchAlgorithmsLib
     /// <summary>
     /// Represents the solution of general problem.
     /// </summary>
-    /// <typeparam name="T"> Kind of problem. </typeparam>
+    /// <typeparam name="T"> The kind of problem. </typeparam>
     public class Solution<T>
     {
         /// <summary>
@@ -18,8 +18,16 @@ namespace SearchAlgorithmsLib
         /// </summary>
         private Stack<State<T>> backTrace;
 
+        /// <summary>
+        /// Number of nodes that the was checked till the solution was reached.
+        /// </summary>
         private int evaluatedNodes;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="state">Goal state.</param>
+        /// <param name="numEvaluatedNodes">Number of nodes that the was checked till the solution was reached.</param>
         public Solution(State<T> state, int numEvaluatedNodes)
         {
             this.backTrace = new Stack<State<T>>();
@@ -48,15 +56,21 @@ namespace SearchAlgorithmsLib
         {
             if (backTrace.Count == 0)
             {
+                // All states of the solution was popped.
                 return null;
             }
             return this.backTrace.Pop();
         }
 
+        /// <summary>
+        /// Produce a string-representation of the solution.
+        /// </summary>
+        /// <param name="path">Stack of states.</param>
+        /// <returns>String representation of the solution.</returns>
         public delegate string PathToString(Stack<State<T>> path);
 
         /// <summary>
-        /// Create Json object out ogf the solution.
+        /// Create Json object out of the solution.
         /// </summary>
         /// <param name="func"> function which convert solution path to string </param>
         /// <returns> JSON object describes th solution. </returns>
@@ -67,6 +81,5 @@ namespace SearchAlgorithmsLib
             solutionObj["NodesEvaluated"] = evaluatedNodes.ToString();
             return solutionObj.ToString();
         }
-
     }
 }

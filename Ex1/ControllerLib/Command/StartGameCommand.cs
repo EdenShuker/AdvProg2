@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Net.Sockets;
 using MazeLib;
-using ServerProject.ControllerLib;
 using ServerProject.ModelLib;
 
-namespace ServerProject.Command
+namespace ServerProject.ControllerLib.Command
 {
     public class StartGameCommand : Command
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="model">Model of server.</param>
         public StartGameCommand(IModel model) : base(model)
         {
         }
@@ -18,6 +21,7 @@ namespace ServerProject.Command
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
             Maze maze = this.Model.StartGame(nameOfGame, rows, cols, client);
+            // Hold till the game begin.
             while (!this.Model.IsGameBegun(nameOfGame)) ;
             return new ForwardMessageEventArgs(client, maze.ToJSON());
         }
