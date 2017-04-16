@@ -81,6 +81,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MazeObjectAdapterLib\MazeObjectAdapterLib.csproj">
+      <Project>{346adf8f-4624-4065-8c51-84930ac55242}</Project>
+      <Name>MazeObjectAdapterLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mission1\Mission1.csproj">
       <Project>{DBC3CE5A-0E5C-40A8-BF9C-E1FF4425D2A5}</Project>
       <Name>Mission1</Name>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using MazeGeneratorLib;
 using MazeLib;
-using Mission1;
+using MazeObjectAdapterLib;
 using SearchAlgorithmsLib;
 
 

@@ -2,7 +2,7 @@
 using MazeLib;
 using SearchAlgorithmsLib;
 
-namespace Mission1
+namespace MazeObjectAdapterLib
 {
     /// <summary>
     /// Maze object that different algorithm can be applied on it.
