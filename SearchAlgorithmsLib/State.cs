@@ -10,7 +10,7 @@ namespace SearchAlgorithmsLib
     /// Generic state that holds some data.
     /// </summary>
     /// <typeparam name="T"> The kind of state. </typeparam>
-    public class State<T>
+    public class State<T> : IComparable
     {
         /// <summary>
         /// Data that the state holds.
@@ -64,6 +64,22 @@ namespace SearchAlgorithmsLib
         public static State<T> GetState(T id)
         {
             return StatePool<T>.Instance.GetState(id);
+        }
+
+        /// <summary>
+        /// Compare this object with the given.
+        /// </summary>
+        /// <param name="obj">The object to compare with.</param>
+        /// <returns>Compare result according to the cost of both states.</returns>
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+            State<T> other = obj as State<T>;
+            if (other != null)
+                return this.Cost.CompareTo(other.Cost);
+            else
+                throw new NullReferenceException();
         }
 
         /// <summary>
