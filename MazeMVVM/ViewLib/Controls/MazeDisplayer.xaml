@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MazeMVVM.ViewLib.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid x:Name="gr">
+    <Grid x:Name="grid" Height="400" Width="400" ShowGridLines="True" HorizontalAlignment="Center" VerticalAlignment="Center">
         
     </Grid>
 </UserControl>

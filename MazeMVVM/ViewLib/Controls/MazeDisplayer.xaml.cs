@@ -23,29 +23,23 @@ namespace MazeMVVM.ViewLib.Controls
     /// </summary>
     public partial class MazeDisplayer : UserControl
     {
+        // TODO: how to get the maze
+        // TODO: setters don't work
         public string MazeStr { get; set; }
         // the position of the image 
         public string PlayerPosition { get; set; }
         public string ImagePath { get; set; }
 
-        private Grid grid;
-        private List<ColumnDefinition> gridCols;
-        private List<RowDefinition> gridRows;
-        private Label[] walls;
-        private Image PlayerDisplayer;
-
         public MazeDisplayer()
         {
             InitializeComponent();
-            this.gridCols = new List<ColumnDefinition>();
-            this.gridRows = new List<RowDefinition>();
             DFSMazeGenerator generator = new DFSMazeGenerator();
             Maze demoMaze = generator.Generate(10, 10);
             this.MazeStr = demoMaze.ToJSON();
             if (this.MazeStr != null)
             {
                 Maze maze = Maze.FromJSON(this.MazeStr);
-                CreateGrid(maze.Rows, maze.Cols);
+                AdjustGrid(maze.Rows, maze.Cols);
                 // Add walls as labels
                 for (int i = 0; i < maze.Cols; i++)
                 {
@@ -58,45 +52,38 @@ namespace MazeMVVM.ViewLib.Controls
                             Grid.SetRow(lb, j);
                             Grid.SetColumn(lb, i);
                             // Add the labels as grid's children
-                            this.grid.Children.Add(lb);
+                           grid.Children.Add(lb);
                         }
                     }
                 }
-                this.PlayerPosition = maze.InitialPos.ToString();
-                //this.PlayerDisplayer = new Image();
-                //ImageSourceConverter converter = new ImageSourceConverter();
-                //this.PlayerDisplayer.Source = (ImageSource)converter.ConvertFromString(this.ImagePath);
-                //Grid.SetRow(this.PlayerDisplayer, maze.InitialPos.Row);
-                //Grid.SetColumn(this.PlayerDisplayer, maze.InitialPos.Col);
-                //this.grid.Children.Add(this.PlayerDisplayer);
+                Image player = new Image();
+                BitmapImage logo = new BitmapImage();
+                logo.BeginInit();
+                logo.UriSource = new Uri("C:/Users/Eden/Source/Repos/AdvProg2/MazeMVVM/minion.gif");
+                logo.EndInit();
+                player.Source = logo;
+                Grid.SetRow(player, maze.InitialPos.Row);
+                Grid.SetColumn(player, maze.InitialPos.Col);
+                grid.Children.Add(player);
+
             }
         }
 
-        private void CreateGrid(int numRows, int numCols)
+        private void AdjustGrid(int numRows, int numCols)
         {
-            this.grid = new Grid();
-            this.grid.Width = 400;
-            this.grid.Height = 400;
-            this.grid.HorizontalAlignment = HorizontalAlignment.Center;
-            this.grid.VerticalAlignment = VerticalAlignment.Bottom;
-            this.grid.ShowGridLines = true;
-            gr.Children.Add(this.grid);
-
             int i;
             // Create Columns
             for (i = 0; i < numCols; i++)
             {
                 ColumnDefinition gridCol = new ColumnDefinition();
-                this.grid.ColumnDefinitions.Add(gridCol);
-                this.gridCols.Add(gridCol);
+                grid.ColumnDefinitions.Add(gridCol);
             }
 
             // Create Rows
             for (i = 0; i < numRows; i++)
             {
                 RowDefinition gridRow = new RowDefinition();
-                this.grid.RowDefinitions.Add(gridRow);
-                this.gridRows.Add(gridRow);
+                grid.RowDefinitions.Add(gridRow);
             }
         }
 

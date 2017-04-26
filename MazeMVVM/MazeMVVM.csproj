@@ -76,6 +76,7 @@
     <Compile Include="ViewLib\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelLib\GameViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,9 +134,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModelLib\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="mazeLogo.png" />
   </ItemGroup>
