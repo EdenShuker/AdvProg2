@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SearcherFactory.cs" />
     <Compile Include="Searcher\BFS.cs" />
     <Compile Include="Searcher\DFS.cs" />
     <Compile Include="ISearchable .cs" />

@@ -33,11 +33,11 @@ namespace SearchAlgorithmsLib
         List<State<T>> GetAllPossibleStates(State<T> s);
 
         /// <summary>
-        /// TODO: complete documentation.
+        /// Get the cost to transfer state 'from' to state 'to'.
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <returns></returns>
+        /// <param name="from">Source state.</param>
+        /// <param name="to">Destination state.</param>
+        /// <returns>Cost.</returns>
         float GetTransferCost(State<T> from, State<T> to);
     }
 }

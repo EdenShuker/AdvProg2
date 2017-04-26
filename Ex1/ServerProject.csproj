@@ -71,7 +71,6 @@
     <Compile Include="MoveEventLib\PlayerMovedEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearcherFactory.cs" />
     <Compile Include="ViewLib\Server.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mission1\Mission1.csproj">
-      <Project>{DBC3CE5A-0E5C-40A8-BF9C-E1FF4425D2A5}</Project>
-      <Name>Mission1</Name>
+    <ProjectReference Include="..\MazeObjectAdapterLib\MazeObjectAdapterLib.csproj">
+      <Project>{493f2f59-fa57-486c-b148-80c085d392c6}</Project>
+      <Name>MazeObjectAdapterLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\SearchAlgorithmsLib\SearchAlgorithmsLib.csproj">
       <Project>{0e153b38-bf07-4285-a0c8-e384506cb250}</Project>

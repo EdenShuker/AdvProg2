@@ -9,35 +9,67 @@ namespace SearchAlgorithmsLib
     /// <summary>
     /// Generic state that holds some data.
     /// </summary>
-    /// <typeparam name="T"> Kind of state. </typeparam>
-    public class State<T>
+    /// <typeparam name="T"> The kind of state. </typeparam>
+    public class State<T>: IComparable
     {
-
+        /// <summary>
+        /// Data that the state holds.
+        /// </summary>
         public T Data { get; set; }
 
+        /// <summary>
+        /// Cost of the state.
+        /// </summary>
         public double Cost { get; set; }
 
+        /// <summary>
+        /// The state where it came from.
+        /// </summary>
         public State<T> CameFrom { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="data">Data to hold in the current state.</param>
         private State(T data)
         {
             this.Data = data;
             this.CameFrom = null;
         }
 
+        /// <summary>
+        /// Override Equals method.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns> true if equals, false otherwise. </returns>
         public bool Equals(State<T> s)
         {
             return Data.Equals(s.Data);
         }
 
+        /// <summary>
+        /// Override GetHashCode method.
+        /// </summary>
+        /// <returns> hash code f the object. </returns>
         public override int GetHashCode()
         {
             return Data.ToString().GetHashCode();
         }
 
+        /// <summary>
+        /// Return state given its id.
+        /// </summary>
+        /// <param name="id">Id of state will be the data that the states holds.</param>
+        /// <returns> State out of StatePool </returns>
         public static State<T> GetState(T id)
         {
             return StatePool<T>.Instance.GetState(id);
+        }
+
+        public int CompareTo(object other)
+        {
+            State<T> otherState = other as State<T>;
+            return this.Cost.CompareTo(otherState.Cost);
         }
 
         /// <summary>
@@ -46,17 +78,32 @@ namespace SearchAlgorithmsLib
         /// </summary>
         private sealed class StatePool<T>
         {
+            /// <summary>
+            /// Instance of the state-pool.
+            /// </summary>
             private static volatile StatePool<T> instance;
 
+            /// <summary>
+            /// Object to use for the lock.
+            /// </summary>
             private static object syncRoot = new object();
 
+            /// <summary>
+            /// Dictionary that maps data of state to the state that holds it.
+            /// </summary>
             private Dictionary<T, State<T>> states;
 
+            /// <summary>
+            /// Constructor.
+            /// </summary>
             private StatePool()
             {
                 this.states = new Dictionary<T, State<T>>();
             }
 
+            /// <summary>
+            /// Get instance of StatePool class.
+            /// </summary>
             public static StatePool<T> Instance
             {
                 get

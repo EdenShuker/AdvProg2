@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Sockets;
 using MazeGeneratorLib;
 using MazeLib;
-using Mission1;
 using SearchAlgorithmsLib;
 using ServerProject.MoveEventLib;
+using MazeObjectAdapterLib;
 
 namespace ServerProject.ModelLib
 {
@@ -59,7 +59,7 @@ namespace ServerProject.ModelLib
             if (mazeInfo.Solution == null)
             {
                 ISearchable<Position> searchableMaze = new SearchableMaze(mazeInfo.Maze);
-                ISearcher<Position> searcher = SearcherFactory.Create(algorithm);
+                ISearcher<Position> searcher = SearcherFactory<Position>.Create(algorithm);
                 mazeInfo.Solution = searcher.Search(searchableMaze);
             }
             return mazeInfo.Solution;
