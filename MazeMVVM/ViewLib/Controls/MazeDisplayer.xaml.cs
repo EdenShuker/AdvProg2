@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MazeLib;
+using MazeGeneratorLib;
+using Newtonsoft.Json;
 
 namespace MazeMVVM.ViewLib.Controls
 {
@@ -24,16 +26,22 @@ namespace MazeMVVM.ViewLib.Controls
         public string MazeStr { get; set; }
         // the position of the image 
         public string PlayerPosition { get; set; }
-        public Image PlayerDisplayer { get; set; }
+        public string ImagePath { get; set; }
 
         private Grid grid;
         private List<ColumnDefinition> gridCols;
         private List<RowDefinition> gridRows;
         private Label[] walls;
+        private Image PlayerDisplayer;
 
         public MazeDisplayer()
         {
             InitializeComponent();
+            this.gridCols = new List<ColumnDefinition>();
+            this.gridRows = new List<RowDefinition>();
+            DFSMazeGenerator generator = new DFSMazeGenerator();
+            Maze demoMaze = generator.Generate(10, 10);
+            this.MazeStr = demoMaze.ToJSON();
             if (this.MazeStr != null)
             {
                 Maze maze = Maze.FromJSON(this.MazeStr);
@@ -54,6 +62,13 @@ namespace MazeMVVM.ViewLib.Controls
                         }
                     }
                 }
+                this.PlayerPosition = maze.InitialPos.ToString();
+                //this.PlayerDisplayer = new Image();
+                //ImageSourceConverter converter = new ImageSourceConverter();
+                //this.PlayerDisplayer.Source = (ImageSource)converter.ConvertFromString(this.ImagePath);
+                //Grid.SetRow(this.PlayerDisplayer, maze.InitialPos.Row);
+                //Grid.SetColumn(this.PlayerDisplayer, maze.InitialPos.Col);
+                //this.grid.Children.Add(this.PlayerDisplayer);
             }
         }
 
@@ -65,6 +80,7 @@ namespace MazeMVVM.ViewLib.Controls
             this.grid.HorizontalAlignment = HorizontalAlignment.Center;
             this.grid.VerticalAlignment = VerticalAlignment.Bottom;
             this.grid.ShowGridLines = true;
+            gr.Children.Add(this.grid);
 
             int i;
             // Create Columns
@@ -84,7 +100,7 @@ namespace MazeMVVM.ViewLib.Controls
             }
         }
 
-        
+
     }
 }
 

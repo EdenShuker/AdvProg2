@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MazeMVVM.ViewLib"
+        xmlns:Controls="clr-namespace:MazeMVVM.ViewLib.Controls"
         mc:Ignorable="d"
-        Title="SPGameWindow" Height="300" Width="300">
+        Title="SPGameWindow" Height="500" Width="480">
     <Grid>
-        
+        <Controls:MazeDisplayer/>
     </Grid>
 </Window>

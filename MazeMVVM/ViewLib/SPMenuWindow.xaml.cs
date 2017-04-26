@@ -26,6 +26,9 @@ namespace MazeMVVM.ViewLib
 
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
+            var newForm = new SPGameWindow();
+            newForm.Show();
+            this.Close();
 
         }
     }
