@@ -52,25 +52,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControllerLib\AnswerInfo.cs" />
-    <Compile Include="ViewLib\ClientHandler.cs" />
-    <Compile Include="Command\CloseGameCommand.cs" />
-    <Compile Include="Command\Command.cs" />
-    <Compile Include="Command\GenerateMazeCommand.cs" />
-    <Compile Include="Command\JoinToGameCommand.cs" />
-    <Compile Include="Command\ListCommand.cs" />
-    <Compile Include="Command\PlayCommand.cs" />
-    <Compile Include="Command\SolveMazeCommand.cs" />
-    <Compile Include="Command\StartGameCommand.cs" />
+    <Compile Include="ControllerLib\Command\CloseGameCommand.cs" />
+    <Compile Include="ControllerLib\Command\Command.cs" />
+    <Compile Include="ControllerLib\Command\GenerateMazeCommand.cs" />
+    <Compile Include="ControllerLib\Command\ICommand.cs" />
+    <Compile Include="ControllerLib\Command\JoinToGameCommand.cs" />
+    <Compile Include="ControllerLib\Command\ListCommand.cs" />
+    <Compile Include="ControllerLib\Command\PlayCommand.cs" />
+    <Compile Include="ControllerLib\Command\SolveMazeCommand.cs" />
+    <Compile Include="ControllerLib\Command\StartGameCommand.cs" />
     <Compile Include="ControllerLib\Controller.cs" />
-    <Compile Include="ViewLib\IClientHandler.cs" />
-    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="ControllerLib\ForwardMessageEventArgs.cs" />
     <Compile Include="ControllerLib\IController.cs" />
     <Compile Include="ModelLib\IModel.cs" />
     <Compile Include="ModelLib\Model.cs" />
-    <Compile Include="MoveEventLib\PlayerMovedEventArgs.cs" />
+    <Compile Include="ModelLib\MultiPlayerGame.cs" />
+    <Compile Include="ModelLib\PlayerInfo.cs" />
+    <Compile Include="ModelLib\SinglePlayerGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewLib\ClientHandler.cs" />
+    <Compile Include="ViewLib\IClientHandler.cs" />
     <Compile Include="ViewLib\Server.cs" />
   </ItemGroup>
   <ItemGroup>

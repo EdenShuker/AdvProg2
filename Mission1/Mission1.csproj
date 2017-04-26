@@ -50,10 +50,19 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchableMaze.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MazeObjectAdapterLib\MazeObjectAdapterLib.csproj">
+      <Project>{493f2f59-fa57-486c-b148-80c085d392c6}</Project>
+      <Name>MazeObjectAdapterLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchAlgorithmsLib\SearchAlgorithmsLib.csproj">
+      <Project>{0e153b38-bf07-4285-a0c8-e384506cb250}</Project>
+      <Name>SearchAlgorithmsLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

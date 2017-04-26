@@ -4,19 +4,41 @@ using System.Linq;
 using System.Net.Sockets;
 using MazeGeneratorLib;
 using MazeLib;
-using SearchAlgorithmsLib;
-using ServerProject.MoveEventLib;
 using MazeObjectAdapterLib;
+using SearchAlgorithmsLib;
+
 
 namespace ServerProject.ModelLib
 {
+    /// <summary>
+    /// This class responsible of all tha logic of the game.
+    /// </summary>
     public class Model : IModel
     {
+        /// <summary>
+        /// Dictionary that maps name of game, that players can join, to its multiplayer-game.
+        /// </summary>
         private Dictionary<string, MultiPlayerGame> availablesMPGames;
+
+        /// <summary>
+        /// Dictionary that maps name of game, that players can not join (has 2 players inside),
+        /// to its multiplayer-game.
+        /// </summary>
         private Dictionary<string, MultiPlayerGame> unAvailablesMPGames;
+
+        /// <summary>
+        /// Dictionary that maps name of game to its singleplayer-game.
+        /// </summary>
         private Dictionary<string, SinglePlayerGame> SPGames;
+
+        /// <summary>
+        /// Dictionary that maps client to the multiplayer game that he participates.
+        /// </summary>
         private Dictionary<TcpClient, MultiPlayerGame> playerToGame;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Model()
         {
             availablesMPGames = new Dictionary<string, MultiPlayerGame>();
@@ -27,23 +49,28 @@ namespace ServerProject.ModelLib
 
         public Maze GenerateMaze(string nameOfGame, int rows, int cols)
         {
+            if (SPGames.ContainsKey(nameOfGame))
+            {
+                // The game is already exist in the system.
+                throw new Exception($"The game '{nameOfGame}' already exists");
+            }
+            // Generate a maze with the given size.
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
             maze.Name = nameOfGame;
-            if (SPGames.ContainsKey(nameOfGame))
-            {
-                SPGames[nameOfGame] = new SinglePlayerGame(maze);
-            }
-            else
-            {
-                SPGames.Add(nameOfGame, new SinglePlayerGame(maze));
-            }
+            SPGames.Add(nameOfGame, new SinglePlayerGame(maze));
             return maze;
         }
 
-        public Solution<Position> SolveMaze(string nameOfGame, int algorithm)
+        /// <summary>
+        /// Return the maze-info of the specified game.
+        /// </summary>
+        /// <param name="nameOfGame">Name of game.</param>
+        /// <returns>MazeInfo, null if the game is not exist.</returns>
+        private MazeInfo GetMazeInfoOf(string nameOfGame)
         {
             MazeInfo mazeInfo = null;
+            // Search in all dictionaries.
             if (SPGames.ContainsKey(nameOfGame))
             {
                 mazeInfo = SPGames[nameOfGame].MazeInfo;
@@ -56,8 +83,19 @@ namespace ServerProject.ModelLib
             {
                 mazeInfo = unAvailablesMPGames[nameOfGame].MazeInfo;
             }
+            return mazeInfo;
+        }
+
+        public Solution<Position> SolveMaze(string nameOfGame, int algorithm)
+        {
+            MazeInfo mazeInfo = GetMazeInfoOf(nameOfGame);
+            if (mazeInfo == null)
+            {
+                throw new Exception($"There is no game with the name '{nameOfGame}'");
+            }
             if (mazeInfo.Solution == null)
             {
+                // Solution is not inside the cache, so create one.
                 ISearchable<Position> searchableMaze = new SearchableMaze(mazeInfo.Maze);
                 ISearcher<Position> searcher = SearcherFactory<Position>.Create(algorithm);
                 mazeInfo.Solution = searcher.Search(searchableMaze);
@@ -67,10 +105,17 @@ namespace ServerProject.ModelLib
 
         public Maze StartGame(string nameOfGame, int rows, int cols, TcpClient client)
         {
+            if (GetMazeInfoOf(nameOfGame) != null)
+            {
+                // The game is already exist in the system.
+                throw new Exception($"The game '{nameOfGame}' already exists");
+            }
+            // Generate a maze with the given size.
             IMazeGenerator generator = new DFSMazeGenerator();
             Maze maze = generator.Generate(rows, cols);
             maze.Name = nameOfGame;
             MultiPlayerGame mpGame = new MultiPlayerGame(maze, client, maze.InitialPos);
+            // Add the game to the suitable dictionaries.
             this.availablesMPGames.Add(nameOfGame, mpGame);
             this.playerToGame.Add(client, mpGame);
             return maze;
@@ -83,20 +128,40 @@ namespace ServerProject.ModelLib
 
         public Maze JoinTo(string nameOfGame, TcpClient player)
         {
+            if (!this.availablesMPGames.ContainsKey(nameOfGame))
+            {
+                // The game is not exist in the system.
+                throw new Exception($"There is no game with the name '{nameOfGame}'");
+            }
+            // Assign the player to the needed game.
             MultiPlayerGame game = availablesMPGames[nameOfGame];
             Maze maze = game.Maze;
             game.Guest = new PlayerInfo(player, maze.InitialPos);
+            // Remove the game from the available games and add it to the unavailable games.
             availablesMPGames.Remove(nameOfGame);
             unAvailablesMPGames.Add(nameOfGame, game);
             playerToGame.Add(player, game);
             return maze;
         }
 
-        // return - name of game that 'player' takes.
         public string Play(string direction, TcpClient player)
         {
+            if (!playerToGame.ContainsKey(player))
+            {
+                // Player tried to move although he is not participate in any game.
+                throw new Exception("Player is not in a game, need to be in a game to play");
+            }
+            // Find the player-info of the player.
             MultiPlayerGame game = playerToGame[player];
-            return game.Play(direction, player);
+            PlayerInfo playerInfo = game.GetPlayer(player);
+            // Update the player location.
+            bool validMove = playerInfo.Move(game.Maze, direction);
+            if (!validMove)
+            {
+                // The direction of the player was invalid.
+                throw new Exception($"Invalid Direction '{direction}'");
+            }
+            return game.Maze.Name;
         }
 
         public void Close(string nameOfGame)
@@ -104,15 +169,21 @@ namespace ServerProject.ModelLib
             MultiPlayerGame game = null;
             if (unAvailablesMPGames.ContainsKey(nameOfGame))
             {
+                // Close multiplayer game with 2 players.
                 game = unAvailablesMPGames[nameOfGame];
                 unAvailablesMPGames.Remove(nameOfGame);
                 playerToGame.Remove(game.Guest.Player);
             }
-            else
+            else if (availablesMPGames.ContainsKey(nameOfGame))
             {
-                // available games
+                // Close multiplayer game with one player.
                 game = availablesMPGames[nameOfGame];
                 availablesMPGames.Remove(nameOfGame);
+            }
+            else
+            {
+                // The game with the given name is not exist in the system.
+                throw new Exception($"There is no game with the name '{nameOfGame}'");
             }
             playerToGame.Remove(game.Host.Player);
         }
@@ -122,7 +193,6 @@ namespace ServerProject.ModelLib
             return unAvailablesMPGames.ContainsKey(nameOfGame);
         }
 
-
         public bool IsClientInGame(TcpClient client)
         {
             return playerToGame.ContainsKey(client);
@@ -130,135 +200,38 @@ namespace ServerProject.ModelLib
 
         public TcpClient GetCompetitorOf(TcpClient player)
         {
+            if (!playerToGame.ContainsKey(player))
+            {
+                // Player is not participate in any game.
+                return null;
+            }
             MultiPlayerGame game = this.playerToGame[player];
             return game.GetCompetitorOf(player).Player;
         }
 
-        private class MazeInfo
+        /// <summary>
+        /// Class holds info about a maze.
+        /// </summary>
+        public class MazeInfo
         {
+            /// <summary>
+            /// Maze.
+            /// </summary>
             public Maze Maze { get; set; }
+
+            /// <summary>
+            /// The maze's solution.
+            /// </summary>
             public Solution<Position> Solution { get; set; }
 
+            /// <summary>
+            /// Constructor.
+            /// </summary>
+            /// <param name="maze">The maze to save.</param>
             public MazeInfo(Maze maze)
             {
                 this.Maze = maze;
                 this.Solution = null;
-            }
-        }
-
-        private class SinglePlayerGame
-        {
-            public MazeInfo MazeInfo { get; set; }
-            public Maze Maze => MazeInfo.Maze;
-            public Solution<Position> Solution => MazeInfo.Solution;
-
-            public SinglePlayerGame(Maze maze)
-            {
-                this.MazeInfo = new MazeInfo(maze);
-            }
-        }
-
-        private class MultiPlayerGame : SinglePlayerGame
-        {
-            public PlayerInfo Host { get; set; }
-            public PlayerInfo Guest { get; set; }
-            private event EventHandler<PlayerMovedEventArgs> PlayerMoved;
-
-            public MultiPlayerGame(Maze maze, TcpClient player, Position location) : base(maze)
-            {
-                this.Host = new PlayerInfo(player, location);
-                PlayerMoved += MazeBoard_PlayerMoved;
-            }
-
-            private void MazeBoard_PlayerMoved(object sender, PlayerMovedEventArgs e)
-            {
-                Console.WriteLine($"Player moved in direction: {e.Direction}");
-            }
-
-            public string Play(string direction, TcpClient player)
-            {
-                PlayerInfo playerInfo = GetPlayer(player);
-                // Update the player location
-                bool validMove = playerInfo.Move(Maze, direction);
-                if (!validMove)
-                {
-                    return "Invalid Direction";
-                }
-                //PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
-                return Maze.Name;
-            }
-
-            public PlayerInfo GetPlayer(TcpClient player)
-            {
-                if (Host.Player == player)
-                {
-                    return Host;
-                }
-                if (Guest.Player == player)
-                {
-                    return Guest;
-                }
-                return null;
-            }
-
-            public PlayerInfo GetCompetitorOf(TcpClient player)
-            {
-                if (Host.Player == player)
-                {
-                    return Guest;
-                }
-                if (Guest.Player == player)
-                {
-                    return Host;
-                }
-                return null;
-            }
-        }
-
-
-        // Holds Info about player
-        private class PlayerInfo
-        {
-            public TcpClient Player { get; set; }
-            public Position Location { get; set; }
-
-            public PlayerInfo(TcpClient player, Position location)
-            {
-                this.Player = player;
-                this.Location = location;
-            }
-
-            // return true for valid move, false otherwise.
-            public bool Move(Maze maze, string direction)
-            {
-                int currentRow = this.Location.Row;
-                int currentCol = this.Location.Col;
-                if (direction.Equals("right") && currentCol < maze.Cols - 1 &&
-                    maze[currentRow, currentCol + 1] == CellType.Free)
-                {
-                    this.Location = new Position(currentRow, currentCol + 1);
-                }
-                else if (direction.Equals("left") && currentCol > 0 &&
-                         maze[currentRow, currentCol - 1] == CellType.Free)
-                {
-                    this.Location = new Position(currentRow, currentCol - 1);
-                }
-                else if (direction.Equals("up") && currentRow > 0 &&
-                         maze[currentRow - 1, currentCol] == CellType.Free)
-                {
-                    this.Location = new Position(currentRow - 1, currentCol);
-                }
-                else if (direction.Equals("down") && currentRow < maze.Rows - 1 &&
-                         maze[currentRow + 1, currentCol] == CellType.Free)
-                {
-                    this.Location = new Position(currentRow + 1, currentCol);
-                }
-                else
-                {
-                    // Invalid direction.
-                    return false;
-                }
-                return true;
             }
         }
     }
