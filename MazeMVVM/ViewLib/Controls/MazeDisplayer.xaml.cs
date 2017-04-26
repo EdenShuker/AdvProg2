@@ -86,8 +86,9 @@ namespace MazeMVVM.ViewLib.Controls
                 grid.RowDefinitions.Add(gridRow);
             }
         }
-
-
     }
 }
+
+
+
 
