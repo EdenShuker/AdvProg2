@@ -28,5 +28,16 @@ namespace MazeMVVM.ModelLib
         {
             throw new NotImplementedException();
         }
+
+
+        /// <summary>
+        /// In multiPlayer game we must update other player we made a move.
+        /// </summary>
+        /// <param name="direction"></param>
+        override public void Move(Direction direction)
+        {
+            base.Move(direction);
+            this.client.write("move " + direction);
+        }
     }
 }
