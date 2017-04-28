@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeMVVM.ViewModelLib
 {
-    public class GameViewModel
+    interface IViewModel
     {
-        public GameViewModel()
-        {
-
-        }
     }
 }

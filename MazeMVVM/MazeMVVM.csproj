@@ -67,6 +67,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ModelLib\Client.cs" />
+    <Compile Include="ModelLib\IClient.cs" />
+    <Compile Include="ModelLib\IPlayerModel.cs" />
+    <Compile Include="ModelLib\MultiPlayerModel.cs" />
+    <Compile Include="ModelLib\PlayerModel.cs" />
+    <Compile Include="ModelLib\SinglePlayerModel.cs" />
     <Compile Include="ViewLib\Controls\MazeDisplayer.xaml.cs">
       <DependentUpon>MazeDisplayer.xaml</DependentUpon>
     </Compile>
@@ -76,7 +82,7 @@
     <Compile Include="ViewLib\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelLib\GameViewModel.cs" />
+    <Compile Include="ViewModelLib\IViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,10 +109,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModelLib\IPlayer.cs" />
-    <Compile Include="ModelLib\MultiPlayer.cs" />
-    <Compile Include="ModelLib\Player.cs" />
-    <Compile Include="ModelLib\SinglePlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
