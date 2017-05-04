@@ -23,12 +23,34 @@ namespace MazeMVVM.ViewLib.Controls
     /// </summary>
     public partial class MazeDisplayer : UserControl
     {
-        // TODO: how to get the maze
-        // TODO: setters don't work
+
         public string MazeStr { get; set; }
-        // the position of the image 
-        public string PlayerPosition { get; set; }
-        public string ImagePath { get; set; }
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public string MazeName { get; set; }
+        public string InitialPos { get; set; }
+        public string GoalPos { get; set; }
+        public string PlayerImageFile { get; set; }
+        public string ExitImageFile { get; set; }
+        private Image playerImg;
+        private string currPos;
+        public string CurrPos
+        {
+            get
+            {
+                return currPos; ;
+            }
+            set
+            {
+                currPos = value;
+                string[] dim = currPos.Split(',');
+                int row = Int32.Parse(dim[0]);
+                int col = Int32.Parse(dim[1]);
+                Grid.SetRow(playerImg, row);
+                Grid.SetColumn(playerImg, col);
+            }
+        }
+
 
         public MazeDisplayer()
         {
@@ -52,7 +74,7 @@ namespace MazeMVVM.ViewLib.Controls
                             Grid.SetRow(lb, j);
                             Grid.SetColumn(lb, i);
                             // Add the labels as grid's children
-                           grid.Children.Add(lb);
+                            grid.Children.Add(lb);
                         }
                     }
                 }

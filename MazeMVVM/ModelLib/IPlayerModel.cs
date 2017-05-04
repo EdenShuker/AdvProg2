@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
 
+
 namespace MazeMVVM.ModelLib
 {
     public interface IPlayerModel: INotifyPropertyChanged
@@ -14,7 +15,7 @@ namespace MazeMVVM.ModelLib
         void Disconnect();
         void Start();
         void Move(Direction direction);
-        void SolveMaze();
+        string SolveMaze();
         void RestartGame();
 
         // Properties

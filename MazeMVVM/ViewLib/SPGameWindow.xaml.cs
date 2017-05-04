@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MazeMVVM.ModelLib;
+using MazeMVVM.ViewModelLib;
 
 namespace MazeMVVM.ViewLib
 {
@@ -19,9 +21,13 @@ namespace MazeMVVM.ViewLib
     /// </summary>
     public partial class SPGameWindow : Window
     {
-        public SPGameWindow()
+        private SPViewModel vm;
+
+        public SPGameWindow(SinglePlayerModel model)
         {
             InitializeComponent();
+            vm = new SPViewModel(model);
+            DataContext = vm;
         }
     }
 }

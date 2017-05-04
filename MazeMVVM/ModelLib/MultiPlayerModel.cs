@@ -37,7 +37,17 @@ namespace MazeMVVM.ModelLib
         override public void Move(Direction direction)
         {
             base.Move(direction);
-            this.client.write("move " + direction);
+            this.Client.write("move " + direction);
+        }
+
+        public override void RestartGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string SolveMaze()
+        {
+            throw new NotImplementedException();
         }
     }
 }

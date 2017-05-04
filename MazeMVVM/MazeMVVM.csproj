@@ -82,7 +82,7 @@
     <Compile Include="ViewLib\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelLib\IViewModel.cs" />
+    <Compile Include="ViewModelLib\SPViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,7 +136,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MazeObjectAdapterLib\MazeObjectAdapterLib.csproj">
+      <Project>{493f2f59-fa57-486c-b148-80c085d392c6}</Project>
+      <Name>MazeObjectAdapterLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchAlgorithmsLib\SearchAlgorithmsLib.csproj">
+      <Project>{0e153b38-bf07-4285-a0c8-e384506cb250}</Project>
+      <Name>SearchAlgorithmsLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="mazeLogo.png" />
   </ItemGroup>
