@@ -26,8 +26,8 @@ namespace MazeMVVM.ViewLib
         public SPGameWindow(SinglePlayerModel model)
         {
             InitializeComponent();
-            vm = new SPViewModel(model);
-            DataContext = vm;
+            //vm = new SPViewModel(model);
+            //DataContext = vm;
         }
     }
 }

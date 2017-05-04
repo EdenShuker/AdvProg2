@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MazeMVVM.ModelLib;
 
 namespace MazeMVVM.ViewLib
 {
@@ -26,7 +27,7 @@ namespace MazeMVVM.ViewLib
 
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
-            var newForm = new SPGameWindow();
+            var newForm = new SPGameWindow(null);
             newForm.Show();
             this.Close();
 

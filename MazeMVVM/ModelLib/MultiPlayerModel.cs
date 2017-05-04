@@ -24,7 +24,7 @@ namespace MazeMVVM.ModelLib
 
         public MultiPlayerModel(IClient client) : base(client) { }
 
-        public override void Start()
+        public void Start()
         {
             throw new NotImplementedException();
         }
@@ -40,12 +40,12 @@ namespace MazeMVVM.ModelLib
             this.Client.write("move " + direction);
         }
 
-        public override void RestartGame()
+        public void RestartGame()
         {
             throw new NotImplementedException();
         }
 
-        public override string SolveMaze()
+        public string SolveMaze()
         {
             throw new NotImplementedException();
         }
