@@ -24,6 +24,41 @@ namespace MazeMVVM.ViewLib.Controls
     public partial class MazeDisplayer : UserControl
     {
 
+
+        public string MazeStr
+        {
+            get { return (string) GetValue(MazeStrProperty); }
+            set { SetValue(MazeStrProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MazeStr.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MazeStrProperty =
+            DependencyProperty.Register("MazeStr", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("..."));
+
+
+
+        public string InitPos
+        {
+            get { return (string) GetValue(InitPosProperty); }
+            set { SetValue(InitPosProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for InitPos.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty InitPosProperty =
+            DependencyProperty.Register("InitPos", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("0"));
+
+
+        public string GoalPos
+        {
+            get { return (string) GetValue(GoalPosProperty); }
+            set { SetValue(GoalPosProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GoalPos.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GoalPosProperty =
+            DependencyProperty.Register("GoalPos", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("0"));
+
+
         public int Rows
         {
             get { return (int)GetValue(RowsProperty); }
@@ -48,10 +83,6 @@ namespace MazeMVVM.ViewLib.Controls
         }
         public static readonly DependencyProperty MazeNameProperty = DependencyProperty.Register
            ("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("maze"));
-
-
-
-
 
         public MazeDisplayer()
         {

@@ -27,12 +27,11 @@ namespace MazeMVVM.ViewLib
 
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
-            SinglePlayerModel model = new SinglePlayerModel(new Client(),
-                Int32.Parse(textBRows.Text), Int32.Parse(textBCols.Text), textBName.Text);
+            SinglePlayerModel model = new SinglePlayerModel(new Client(), textBName.Text,
+                int.Parse(textBRows.Text), int.Parse(textBCols.Text));
             var newForm = new SPGameWindow(model);
             newForm.Show();
             this.Close();
-
         }
     }
 }
