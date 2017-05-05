@@ -27,7 +27,9 @@ namespace MazeMVVM.ViewLib
 
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
-            var newForm = new SPGameWindow(null);
+            SinglePlayerModel model = new SinglePlayerModel(new Client(),
+                Int32.Parse(textBRows.Text), Int32.Parse(textBCols.Text), textBName.Text);
+            var newForm = new SPGameWindow(model);
             newForm.Show();
             this.Close();
 

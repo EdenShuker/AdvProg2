@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="SPGameWindow" Height="500" Width="480">
     <Grid>
-        <Controls:MazeDisplayer x:Name="mazeBoard" Rows="5" Cols="5"/>
+        <Controls:MazeDisplayer x:Name="mazeBoard" MazeName="{Binding VM_MazeName}" Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}"/>
     </Grid>
 </Window>
