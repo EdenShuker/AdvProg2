@@ -47,18 +47,15 @@ namespace MazeMVVM.ViewLib.Controls
             set { tb.Text = value; }
         }
         public static readonly DependencyProperty MazeNameProperty = DependencyProperty.Register
-           ("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata(0));
+           ("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("maze"));
 
 
-   
+
 
 
         public MazeDisplayer()
         {
             InitializeComponent();
-            AdjustGrid();
-           
-
         }
 
         private void AdjustGrid()
