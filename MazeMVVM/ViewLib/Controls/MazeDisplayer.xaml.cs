@@ -23,18 +23,14 @@ namespace MazeMVVM.ViewLib.Controls
     /// </summary>
     public partial class MazeDisplayer : UserControl
     {
-
-
         public string MazeStr
         {
             get { return (string) GetValue(MazeStrProperty); }
             set { SetValue(MazeStrProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MazeStr.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MazeStrProperty =
             DependencyProperty.Register("MazeStr", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("..."));
-
 
 
         public string InitPos
@@ -43,7 +39,6 @@ namespace MazeMVVM.ViewLib.Controls
             set { SetValue(InitPosProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for InitPos.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty InitPosProperty =
             DependencyProperty.Register("InitPos", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("0"));
 
@@ -54,39 +49,44 @@ namespace MazeMVVM.ViewLib.Controls
             set { SetValue(GoalPosProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for GoalPos.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GoalPosProperty =
             DependencyProperty.Register("GoalPos", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("0"));
 
 
         public int Rows
         {
-            get { return (int)GetValue(RowsProperty); }
+            get { return (int) GetValue(RowsProperty); }
             set { SetValue(RowsProperty, value); }
         }
+
         public static readonly DependencyProperty RowsProperty = DependencyProperty.Register
             ("Rows", typeof(int), typeof(MazeDisplayer), new PropertyMetadata(0));
 
 
         public int Cols
         {
-            get { return (int)GetValue(ColsProperty); }
+            get { return (int) GetValue(ColsProperty); }
             set { SetValue(ColsProperty, value); }
         }
+
         public static readonly DependencyProperty ColsProperty = DependencyProperty.Register
             ("Cols", typeof(int), typeof(MazeDisplayer), new PropertyMetadata(0));
 
+
         public string MazeName
         {
-            get { return tb.Text.ToString(); }
-            set { tb.Text = value; }
+            get { return (string) GetValue(MazeNameProperty); }
+            set { SetValue(MazeNameProperty, value); }
         }
-        public static readonly DependencyProperty MazeNameProperty = DependencyProperty.Register
-           ("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("maze"));
+
+        public static readonly DependencyProperty MazeNameProperty =
+            DependencyProperty.Register("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("maze"));
+
 
         public MazeDisplayer()
         {
             InitializeComponent();
+            AdjustGrid();
         }
 
         private void AdjustGrid()
@@ -107,7 +107,39 @@ namespace MazeMVVM.ViewLib.Controls
             }
             grid.ShowGridLines = true;
         }
+
+        private void DrawBlocks(object sender, RoutedEventArgs e)
+        {
+            string str = MazeStr;
+            for (int i = 0; i < Rows; i++)
+            {
+                for (int j = 0; j < Cols; j++)
+                {
+                    // blockDescription will be 0(free block) or 1
+                    int index = Cols * i + j;
+                    char curr = str[index];
+                    TextBlock block = new TextBlock();
+                    if (curr == '*' || curr == '#')
+                    {
+                        block.Background = Brushes.White;
+                    }
+                    else
+                    {
+                        int blockDescription = int.Parse(curr.ToString());
+                        if (blockDescription == 0)
+                        {
+                            block.Background = Brushes.White;
+                        }
+                        else
+                        {
+                            block.Background = Brushes.Black;
+                        }
+                    }
+                    Grid.SetRow(block, i);
+                    Grid.SetColumn(block, j);
+                    grid.Children.Add(block);
+                }
+            }
+        }
     }
 }
-
-

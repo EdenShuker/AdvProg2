@@ -23,7 +23,22 @@ namespace MazeMVVM.ViewModelLib
                 delegate (Object sender, PropertyChangedEventArgs e) { NotifyPropertyChanged("VM_" + e.PropertyName); };
         }
 
-        public string VM_MazeStr => model.Maze.ToString();
+        public string VM_MazeStr
+        {
+            get
+            {
+                string mazeStr = model.Maze.ToString();
+                StringBuilder builder = new StringBuilder();
+                foreach (char c in mazeStr)
+                {
+                    if (c != '\r' && c != '\n')
+                    {
+                        builder.Append(c);
+                    }
+                }
+                return builder.ToString();
+            }
+        }
 
         public int VM_Rows => model.Maze.Rows;
 
