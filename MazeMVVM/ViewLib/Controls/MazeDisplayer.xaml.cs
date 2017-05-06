@@ -83,10 +83,31 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("maze"));
 
 
+        public string PlayerImageFile
+        {
+            get { return (string) GetValue(PlayerImageFileProperty); }
+            set { SetValue(PlayerImageFileProperty, value); }
+        }
+
+        public static readonly DependencyProperty PlayerImageFileProperty =
+            DependencyProperty.Register("PlayerImageFile", typeof(string), typeof(MazeDisplayer),
+                new PropertyMetadata("..."));
+
+
+        public string ExitImageFile
+        {
+            get { return (string) GetValue(ExitImageFileProperty); }
+            set { SetValue(ExitImageFileProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExitImageFileProperty =
+            DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeDisplayer),
+                new PropertyMetadata("..."));
+
+
         public MazeDisplayer()
         {
             InitializeComponent();
-            AdjustGrid();
         }
 
         private void AdjustGrid()
@@ -108,7 +129,7 @@ namespace MazeMVVM.ViewLib.Controls
             grid.ShowGridLines = true;
         }
 
-        private void DrawBlocks(object sender, RoutedEventArgs e)
+        private void DrawBlocks()
         {
             string str = MazeStr;
             for (int i = 0; i < Rows; i++)
@@ -118,21 +139,21 @@ namespace MazeMVVM.ViewLib.Controls
                     // blockDescription will be 0(free block) or 1
                     int index = Cols * i + j;
                     char curr = str[index];
-                    TextBlock block = new TextBlock();
+                    Label block = new Label();
                     if (curr == '*' || curr == '#')
                     {
-                        block.Background = Brushes.White;
+                        block.Background = new SolidColorBrush(Colors.White);
                     }
                     else
                     {
                         int blockDescription = int.Parse(curr.ToString());
                         if (blockDescription == 0)
                         {
-                            block.Background = Brushes.White;
+                            block.Background = new SolidColorBrush(Colors.White);
                         }
                         else
                         {
-                            block.Background = Brushes.Black;
+                            block.Background = new SolidColorBrush(Colors.Black);
                         }
                     }
                     Grid.SetRow(block, i);
@@ -140,6 +161,31 @@ namespace MazeMVVM.ViewLib.Controls
                     grid.Children.Add(block);
                 }
             }
+
+            LoadImageTo(InitPos, PlayerImageFile);
+            LoadImageTo(GoalPos, ExitImageFile);
+        }
+
+        private void LoadImageTo(string position, string imagePath)
+        {
+            Image player = new Image();
+            BitmapImage logo = new BitmapImage();
+            logo.BeginInit();
+            // The image path is good only because the minion is in the current project,
+            // need to check what happens when the file will be somewhere else.
+            logo.UriSource = new Uri("/" + imagePath, UriKind.Relative);
+            logo.EndInit();
+            player.Source = logo;
+            int index = InitPos.IndexOf(",");
+            Grid.SetRow(player, int.Parse(position.Substring(1, index - 1)));
+            Grid.SetColumn(player, int.Parse(position.Substring(index + 1, position.Length - index - 2)));
+            grid.Children.Add(player);
+        }
+
+        private void MazeDisplayer_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            AdjustGrid();
+            DrawBlocks();
         }
     }
 }
