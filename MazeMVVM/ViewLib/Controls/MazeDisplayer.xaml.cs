@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MazeLib;
 using MazeGeneratorLib;
+using MazeMVVM.ViewModelLib;
 using Newtonsoft.Json;
 
 namespace MazeMVVM.ViewLib.Controls
@@ -104,6 +105,10 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeDisplayer),
                 new PropertyMetadata("..."));
 
+        private Position currentPosition;
+        private Image playerImage;
+
+        public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
 
         public MazeDisplayer()
         {
@@ -161,9 +166,8 @@ namespace MazeMVVM.ViewLib.Controls
                     grid.Children.Add(block);
                 }
             }
-
-            LoadImageTo(InitPos, PlayerImageFile);
             LoadImageTo(GoalPos, ExitImageFile);
+            LoadImageTo(InitPos, PlayerImageFile);
         }
 
         private void LoadImageTo(string position, string imagePath)
@@ -177,8 +181,12 @@ namespace MazeMVVM.ViewLib.Controls
             logo.EndInit();
             player.Source = logo;
             int index = InitPos.IndexOf(",");
-            Grid.SetRow(player, int.Parse(position.Substring(1, index - 1)));
-            Grid.SetColumn(player, int.Parse(position.Substring(index + 1, position.Length - index - 2)));
+            int row = int.Parse(position.Substring(1, index - 1));
+            int col = int.Parse(position.Substring(index + 1, position.Length - index - 2));
+            this.currentPosition = new Position(row, col);
+            this.playerImage = player;
+            Grid.SetRow(player, row);
+            Grid.SetColumn(player, col);
             grid.Children.Add(player);
         }
 
@@ -186,6 +194,58 @@ namespace MazeMVVM.ViewLib.Controls
         {
             AdjustGrid();
             DrawBlocks();
+        }
+
+        private void MazeDisplayer_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            Direction direction;
+            switch (e.Key)
+            {
+                case Key.Left:
+                    direction = Direction.Left;
+                    break;
+                case Key.Right:
+                    direction = Direction.Right;
+                    break;
+                case Key.Up:
+                    direction = Direction.Up;
+                    break;
+                case Key.Down:
+                    direction = Direction.Down;
+                    break;
+                default:
+                    direction = Direction.Unknown;
+                    break;
+            }
+            PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
+        }
+
+        public void UpdatePlayerLocation(Direction direction)
+        {
+            grid.Children.Remove(playerImage); // --> dont know if needed to remove and add
+            // or just change the row/col of Grid-object
+            switch (direction)
+            {
+                case Direction.Left:
+                    this.currentPosition.Col -= 1;
+                    break;
+                case Direction.Right:
+                    this.currentPosition.Col += 1;
+                    break;
+                case Direction.Up:
+                    this.currentPosition.Row -= 1;
+                    break;
+                case Direction.Down:
+                    this.currentPosition.Row += 1;
+                    break;
+                default:
+                    break;
+            }
+            Grid.SetRow(playerImage, currentPosition.Row);
+            Grid.SetColumn(playerImage, currentPosition.Col);
+            grid.Children.Add(playerImage);
+            SPViewModel viewModel = this.DataContext as SPViewModel;
+            viewModel?.Move(direction);
         }
     }
 }

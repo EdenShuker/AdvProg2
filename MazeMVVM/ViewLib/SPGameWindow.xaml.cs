@@ -22,12 +22,14 @@ namespace MazeMVVM.ViewLib
     public partial class SPGameWindow : Window
     {
         private SPViewModel vm;
+        private MazeDisplayerListener listener;
 
         public SPGameWindow(SinglePlayerModel model)
         {
             InitializeComponent();
             vm = new SPViewModel(model);
             this.DataContext = vm;
+            this.listener = new MazeDisplayerListener(mazeBoard);
         }
     }
 }

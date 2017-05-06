@@ -75,7 +75,7 @@ namespace MazeMVVM.ModelLib
         /// Change Player position according thi direction given.
         /// </summary>
         /// <param name="direction"> Direction of movement </param>
-        virtual public void Move(Direction direction)
+        public virtual void Move(Direction direction)
         {
             // Takes out player current position.
             int currentRow = Pos.Row;
