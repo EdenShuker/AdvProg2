@@ -21,8 +21,8 @@
             <TextBlock x:Name="textBlock1" Grid.Row="1" HorizontalAlignment="Left"  Text="Maze rows:"  Width="100" Height="20" FontSize="15"/>
             <TextBlock x:Name="textBlock2" Grid.Row="2" HorizontalAlignment="Left"  Text="Maze columns:"  Width="100" Height="20" FontSize="15"/>
             <TextBox x:Name="textBName" Grid.Column="1" HorizontalAlignment="Left" Height="23"  Text="TextBox" Width="130"/>
-            <TextBox x:Name="textBRows" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Left" Height="23" Text="TextBox" Width="130"/>
-            <TextBox x:Name="textBCols" Grid.Column="1"  Grid.Row="2" HorizontalAlignment="Left" Height="23" Text="TextBox"  Width="130"/>
+            <TextBox x:Name="textBRows" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Left" Height="23" Text="5" Width="130"/>
+            <TextBox x:Name="textBCols" Grid.Column="1"  Grid.Row="2" HorizontalAlignment="Left" Height="23" Text="5"  Width="130"/>
         </Grid>
         <Image Width="150" Height="44" Canvas.Left="65" Canvas.Top="15" Source="../mazeLogo.png"/>
         <Button x:Name="bStart" Content="Start Game"  FontSize="14" Canvas.Left="105" Canvas.Bottom="20"  Width="86" Height="29" Click="bStart_Click"/>

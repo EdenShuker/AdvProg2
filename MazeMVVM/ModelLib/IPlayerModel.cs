@@ -6,13 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
 
+
 namespace MazeMVVM.ModelLib
 {
-    interface IPlayer: INotifyPropertyChanged
+    public interface IPlayerModel: INotifyPropertyChanged
     {
+        void Connect(string ip, int port);
+        void Disconnect();
         void Start();
         void Move(Direction direction);
         string SolveMaze();
         void RestartGame();
+
+        // Properties
+        Position Pos { get; set; }
+        Maze Maze { get; set; }
     }
 }
