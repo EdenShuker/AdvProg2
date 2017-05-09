@@ -10,7 +10,7 @@ using MazeMVVM.ModelLib;
 
 namespace MazeMVVM.ViewModelLib
 {
-    class SPViewModel : INotifyPropertyChanged
+    public class SPViewModel : INotifyPropertyChanged
     {
         private SinglePlayerModel model;
 
@@ -81,8 +81,8 @@ namespace MazeMVVM.ViewModelLib
         }
 
         public Maze VM_Maze => model.Maze;
-        private Position position;
 
+        private Position position;
         public Position VM_Pos
         {
             get { return position; }
@@ -101,6 +101,7 @@ namespace MazeMVVM.ViewModelLib
         public void Move(Direction direction)
         {
             this.model.Move(direction);
+            //this.VM_Pos = this.model.Pos;
         }
     }
 }

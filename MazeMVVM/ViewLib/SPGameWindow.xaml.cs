@@ -29,7 +29,7 @@ namespace MazeMVVM.ViewLib
             InitializeComponent();
             vm = new SPViewModel(model);
             this.DataContext = vm;
-            this.listener = new MazeDisplayerListener(mazeBoard);
+            this.listener = new MazeDisplayerListener(mazeBoard, vm);
         }
     }
 }

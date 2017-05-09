@@ -105,7 +105,9 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeDisplayer),
                 new PropertyMetadata("..."));
 
-        private Position currentPosition;
+
+
+        public Position CurrentPosition;
         private Image playerImage;
 
         public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
@@ -183,7 +185,7 @@ namespace MazeMVVM.ViewLib.Controls
             int index = InitPos.IndexOf(",");
             int row = int.Parse(position.Substring(1, index - 1));
             int col = int.Parse(position.Substring(index + 1, position.Length - index - 2));
-            this.currentPosition = new Position(row, col);
+            this.CurrentPosition = new Position(row, col);
             this.playerImage = player;
             Grid.SetRow(player, row);
             Grid.SetColumn(player, col);
@@ -194,6 +196,8 @@ namespace MazeMVVM.ViewLib.Controls
         {
             AdjustGrid();
             DrawBlocks();
+            Window window = Window.GetWindow(this);
+            window.KeyDown += MazeDisplayer_OnKeyDown;
         }
 
         private void MazeDisplayer_OnKeyDown(object sender, KeyEventArgs e)
@@ -220,32 +224,10 @@ namespace MazeMVVM.ViewLib.Controls
             PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
         }
 
-        public void UpdatePlayerLocation(Direction direction)
+        public void UpdatePlayerLocation()
         {
-            grid.Children.Remove(playerImage); // --> dont know if needed to remove and add
-            // or just change the row/col of Grid-object
-            switch (direction)
-            {
-                case Direction.Left:
-                    this.currentPosition.Col -= 1;
-                    break;
-                case Direction.Right:
-                    this.currentPosition.Col += 1;
-                    break;
-                case Direction.Up:
-                    this.currentPosition.Row -= 1;
-                    break;
-                case Direction.Down:
-                    this.currentPosition.Row += 1;
-                    break;
-                default:
-                    break;
-            }
-            Grid.SetRow(playerImage, currentPosition.Row);
-            Grid.SetColumn(playerImage, currentPosition.Col);
-            grid.Children.Add(playerImage);
-            SPViewModel viewModel = this.DataContext as SPViewModel;
-            viewModel?.Move(direction);
+            Grid.SetRow(playerImage, CurrentPosition.Row);
+            Grid.SetColumn(playerImage, CurrentPosition.Col);
         }
     }
 }
