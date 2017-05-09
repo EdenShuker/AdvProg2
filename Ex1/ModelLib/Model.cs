@@ -97,7 +97,7 @@ namespace ServerProject.ModelLib
             {
                 // Solution is not inside the cache, so create one.
                 ISearchable<Position> searchableMaze = new SearchableMaze(mazeInfo.Maze);
-                ISearcher<Position> searcher = SearcherFactory.Create(algorithm);
+                ISearcher<Position> searcher = SearcherFactory<Position>.Create(algorithm);
                 mazeInfo.Solution = searcher.Search(searchableMaze);
             }
             return mazeInfo.Solution;

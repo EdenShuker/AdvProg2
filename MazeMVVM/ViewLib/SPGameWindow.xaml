@@ -1,0 +1,16 @@
+﻿<Window x:Class="MazeMVVM.ViewLib.SPGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MazeMVVM.ViewLib"
+        xmlns:Controls="clr-namespace:MazeMVVM.ViewLib.Controls"
+        mc:Ignorable="d"
+        Title="SPGameWindow" Height="500" Width="480">
+    <Grid>
+        <Controls:MazeDisplayer x:Name="mazeBoard" MazeStr="{Binding VM_MazeStr}" InitPos="{Binding VM_InitialPos}"
+                                GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
+                                Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
+                                ExitImageFile="Exit.png"/>
+    </Grid>
+</Window>
