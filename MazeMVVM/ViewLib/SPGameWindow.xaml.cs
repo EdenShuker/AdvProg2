@@ -31,5 +31,22 @@ namespace MazeMVVM.ViewLib
             this.DataContext = vm;
             this.listener = new MazeDisplayerListener(mazeBoard, vm);
         }
+
+        private void btnRestart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSolve_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            win.Show();
+            this.Close();
+        }
     }
 }

@@ -10,11 +10,9 @@ using MazeMVVM.ModelLib;
 
 namespace MazeMVVM.ViewModelLib
 {
-    public class SPViewModel : INotifyPropertyChanged
+    public class SPViewModel : ViewModel
     {
         private SinglePlayerModel model;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public SPViewModel(SinglePlayerModel singlePlayerModel)
         {
@@ -80,28 +78,15 @@ namespace MazeMVVM.ViewModelLib
             }
         }
 
-        public Maze VM_Maze => model.Maze;
-
-        private Position position;
         public Position VM_Pos
         {
-            get { return position; }
-            set
-            {
-                model.Pos = value;
-                position = value;
-            }
-        }
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            get { return model.Pos; }
         }
 
         public void Move(Direction direction)
         {
             this.model.Move(direction);
-            //this.VM_Pos = this.model.Pos;
         }
+
     }
 }

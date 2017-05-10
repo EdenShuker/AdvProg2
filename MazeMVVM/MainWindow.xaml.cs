@@ -30,7 +30,7 @@ namespace MazeMVVM
         {
             var newForm = new SPMenuWindow();
             newForm.Show();
-            this.Close();
+            this.Hide();
 
         }
 
