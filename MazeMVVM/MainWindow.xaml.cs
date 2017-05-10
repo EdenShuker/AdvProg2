@@ -31,7 +31,6 @@ namespace MazeMVVM
             var newForm = new SPMenuWindow();
             newForm.Show();
             this.Hide();
-
         }
 
         private void bMP_Click(object sender, RoutedEventArgs e)
