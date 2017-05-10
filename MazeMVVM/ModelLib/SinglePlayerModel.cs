@@ -14,7 +14,7 @@ namespace MazeMVVM.ModelLib
     {
         public SinglePlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
         {
-            this.Connect("127.0.0.1", 8000);
+            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.write($"generate {nameOfGame} {rows} {cols}");
             this.Maze = Maze.FromJSON(this.Client.read());
             this.Pos = this.Maze.InitialPos;
@@ -28,8 +28,8 @@ namespace MazeMVVM.ModelLib
 
         public string SolveMaze()
         {
-            this.Connect("127.0.0.1", 8000);
-            this.Client.write($"solve {this.Maze.Name}");
+            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
+            this.Client.write($"solve {this.Maze.Name} {Properties.Settings.Default.SearchAlgorithm}");
             JObject solution = JObject.Parse(this.Client.read());
             this.Disconnect();
             return solution["Solution"].ToString();

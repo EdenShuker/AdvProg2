@@ -68,23 +68,31 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MazeDisplayerListener.cs" />
+    <Compile Include="ModelLib\ApplicationSettingsModel.cs" />
     <Compile Include="ModelLib\Client.cs" />
     <Compile Include="ModelLib\IClient.cs" />
     <Compile Include="ModelLib\IPlayerModel.cs" />
+    <Compile Include="ModelLib\ISettingsModel.cs" />
     <Compile Include="ModelLib\MultiPlayerModel.cs" />
     <Compile Include="ModelLib\PlayerModel.cs" />
+    <Compile Include="ModelLib\Settings.cs" />
     <Compile Include="ModelLib\SinglePlayerModel.cs" />
     <Compile Include="ViewLib\Controls\MazeDisplayer.xaml.cs">
       <DependentUpon>MazeDisplayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewLib\PlayerMovedEventArgs.cs" />
+    <Compile Include="ViewLib\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewLib\SPGameWindow.xaml.cs">
       <DependentUpon>SPGameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewLib\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelLib\SettingsViewModel.cs" />
     <Compile Include="ViewModelLib\SPViewModel.cs" />
+    <Compile Include="ViewModelLib\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +108,10 @@
     <Page Include="ViewLib\Controls\MazeDisplayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewLib\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ViewLib\SPGameWindow.xaml">
       <SubType>Designer</SubType>

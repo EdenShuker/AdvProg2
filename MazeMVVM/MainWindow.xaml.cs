@@ -41,7 +41,9 @@ namespace MazeMVVM
 
         private void bSettings_Click(object sender, RoutedEventArgs e)
         {
-
+            var newForm = new SettingsWindow();
+            newForm.Show();
+            this.Hide();
         }
     }
 }
