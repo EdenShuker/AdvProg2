@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
 using MazeMVVM.ModelLib;
+using MazeMVVM.ViewLib;
+using MazeMVVM.ViewLib.Controls;
 
 namespace MazeMVVM.ViewModelLib
 {
@@ -57,10 +59,7 @@ namespace MazeMVVM.ViewModelLib
             get { return model.Maze.InitialPos.ToString(); }
             set
             {
-                int i = value.IndexOf(",", StringComparison.Ordinal);
-                int x = int.Parse(value.Substring(0, i));
-                int y = int.Parse(value.Substring(i + 1));
-                model.Maze.InitialPos = new Position(x, y);
+                model.Maze.InitialPos = StringToPosition(value);
                 NotifyPropertyChanged("VM_InitialPos");
             }
         }
@@ -70,23 +69,37 @@ namespace MazeMVVM.ViewModelLib
             get { return model.Maze.GoalPos.ToString(); }
             set
             {
-                int i = value.IndexOf(",", StringComparison.Ordinal);
-                int x = int.Parse(value.Substring(0, i));
-                int y = int.Parse(value.Substring(i + 1));
-                model.Maze.GoalPos = new Position(x, y);
+                model.Maze.GoalPos = StringToPosition(value);
                 NotifyPropertyChanged("VM_GoalPos");
             }
         }
 
-        public Position VM_Pos
+        public string VM_Pos
         {
-            get { return model.Pos; }
+            get { return model.Pos.ToString(); }
+            set
+            {
+                model.Pos = StringToPosition(value);
+                NotifyPropertyChanged("VM_Pos");
+            }
         }
 
-        public void Move(Direction direction)
+        private Position StringToPosition(string position)
         {
-            this.model.Move(direction);
+            int index = position.IndexOf(",", StringComparison.Ordinal);
+            int row = int.Parse(position.Substring(1, index - 1));
+            int col = int.Parse(position.Substring(index + 1, position.Length - index - 2));
+            return new Position(row, col);
         }
 
+        public void Subscribe(MazeDisplayer mazeDisplayer)
+        {
+            mazeDisplayer.PlayerMoved += PlayerMovedOnBoard;
+        }
+
+        private void PlayerMovedOnBoard(object sender, PlayerMovedEventArgs e)
+        {
+            this.model.Move(e.Direction);
+        }
     }
 }

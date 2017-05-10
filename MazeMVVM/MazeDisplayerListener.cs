@@ -23,9 +23,8 @@ namespace MazeMVVM
 
         private void MazeDisplayer_PlayerMoved(object sender, PlayerMovedEventArgs e)
         {
-            this.viewModel.Move(e.Direction);
-            this.mazeDisplayer.CurrentPosition = this.viewModel.VM_Pos;
-            this.mazeDisplayer.UpdatePlayerLocation();
+            //this.viewModel.Move(e.Direction);
+            //this.mazeDisplayer.CurrentPosition = this.viewModel.VM_Pos;
         }
     }
 }

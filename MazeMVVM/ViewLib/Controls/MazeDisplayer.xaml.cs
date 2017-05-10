@@ -107,7 +107,15 @@ namespace MazeMVVM.ViewLib.Controls
 
 
 
-        public Position CurrentPosition;
+        public string CurrPosition
+        {
+            get { return (string) GetValue(CurrPositionProperty); }
+            set { SetValue(CurrPositionProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrPositionProperty =
+            DependencyProperty.Register("CurrPosition", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("(0,0)"));
+
         private Image playerImage;
 
         public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
@@ -182,14 +190,19 @@ namespace MazeMVVM.ViewLib.Controls
             logo.UriSource = new Uri("/" + imagePath, UriKind.Relative);
             logo.EndInit();
             player.Source = logo;
-            int index = InitPos.IndexOf(",");
+            Position currPosition = StringToPosition(position);
+            this.playerImage = player;
+            Grid.SetRow(player, currPosition.Row);
+            Grid.SetColumn(player, currPosition.Col);
+            grid.Children.Add(player);
+        }
+
+        private Position StringToPosition(string position)
+        {
+            int index = position.IndexOf(",", StringComparison.Ordinal);
             int row = int.Parse(position.Substring(1, index - 1));
             int col = int.Parse(position.Substring(index + 1, position.Length - index - 2));
-            this.CurrentPosition = new Position(row, col);
-            this.playerImage = player;
-            Grid.SetRow(player, row);
-            Grid.SetColumn(player, col);
-            grid.Children.Add(player);
+            return new Position(row, col);
         }
 
         private void MazeDisplayer_OnLoaded(object sender, RoutedEventArgs e)
@@ -222,14 +235,9 @@ namespace MazeMVVM.ViewLib.Controls
                     break;
             }
             PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
-        }
-
-        public void UpdatePlayerLocation()
-        {
-            Grid.SetRow(playerImage, CurrentPosition.Row);
-            Grid.SetColumn(playerImage, CurrentPosition.Col);
+            Position position = StringToPosition(CurrPosition);
+            Grid.SetRow(playerImage, position.Row);
+            Grid.SetColumn(playerImage, position.Col);
         }
     }
 }
-
-
