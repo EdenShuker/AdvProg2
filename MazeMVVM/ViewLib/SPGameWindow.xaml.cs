@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,10 +44,15 @@ namespace MazeMVVM.ViewLib
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            MainWindow win = (MainWindow) Application.Current.MainWindow;
             win.Show();
             this.Close();
         }
 
+        private void SPGameWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            MainWindow win = (MainWindow) Application.Current.MainWindow;
+            win.Show();
+        }
     }
 }

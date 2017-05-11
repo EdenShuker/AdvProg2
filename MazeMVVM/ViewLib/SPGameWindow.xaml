@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:MazeMVVM.ViewLib"
         xmlns:Controls="clr-namespace:MazeMVVM.ViewLib.Controls"
         mc:Ignorable="d"
-        Title="SPGameWindow" Height="500" Width="480">
-    <Viewbox>
+        Title="SPGameWindow" Height="500" Width="480"
+        Closing="SPGameWindow_OnClosing">
+    <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Button x:Name="btnRestart" Content="Restart game"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnRestart_Click"/>
-        <Button x:Name="btnSolve" Content="Solve maze" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnSolve_Click"/>
-        <Button x:Name="btnMenu" Content="Main menu" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnMenu_Click"/>
-
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="btnRestart" Content="Restart game"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnRestart_Click"/>
+            <Button x:Name="btnSolve" Content="Solve maze" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnSolve_Click"/>
+            <Button x:Name="btnMenu" Content="Main menu" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnMenu_Click"/>
 
             <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="1" Grid.ColumnSpan="3" MazeStr="{Binding VM_MazeStr}" InitPos="{Binding VM_InitialPos}"
                                 GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"

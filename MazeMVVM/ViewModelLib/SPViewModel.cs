@@ -47,11 +47,6 @@ namespace MazeMVVM.ViewModelLib
         public string VM_MazeName
         {
             get { return model.Maze.Name; }
-            set
-            {
-                model.Maze.Name = value;
-                NotifyPropertyChanged("VM_MazeName");
-            }
         }
 
         public string VM_InitialPos
@@ -91,6 +86,5 @@ namespace MazeMVVM.ViewModelLib
         {
             this.model.RestartGame();
         }
-       
     }
 }

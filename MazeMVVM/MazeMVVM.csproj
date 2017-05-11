@@ -67,7 +67,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MazeDisplayerListener.cs" />
     <Compile Include="ModelLib\ApplicationSettingsModel.cs" />
     <Compile Include="ModelLib\Client.cs" />
     <Compile Include="ModelLib\IClient.cs" />
