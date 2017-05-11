@@ -33,7 +33,7 @@ namespace MazeMVVM.ViewLib
 
         private void btnRestart_Click(object sender, RoutedEventArgs e)
         {
-
+            vm.RestartGame();
         }
 
         private void btnSolve_Click(object sender, RoutedEventArgs e)
@@ -47,5 +47,6 @@ namespace MazeMVVM.ViewLib
             win.Show();
             this.Close();
         }
+
     }
 }

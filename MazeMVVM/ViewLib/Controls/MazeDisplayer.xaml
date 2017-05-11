@@ -8,6 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="MazeDisplayer_OnLoaded" KeyDown="MazeDisplayer_OnKeyDown" PreviewKeyDown="MazeDisplayer_OnKeyDown">
-    <Grid x:Name="grid" Height="400" Width="400" ShowGridLines="True" HorizontalAlignment="Center" VerticalAlignment="Center">
-    </Grid>
+    <Viewbox>
+        <Grid x:Name="grid" Height="400" Width="400" ShowGridLines="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+        </Grid>
+    </Viewbox>
 </UserControl>

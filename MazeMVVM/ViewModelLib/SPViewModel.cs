@@ -57,31 +57,16 @@ namespace MazeMVVM.ViewModelLib
         public string VM_InitialPos
         {
             get { return model.Maze.InitialPos.ToString(); }
-            set
-            {
-                model.Maze.InitialPos = StringToPosition(value);
-                NotifyPropertyChanged("VM_InitialPos");
-            }
         }
 
         public string VM_GoalPos
         {
             get { return model.Maze.GoalPos.ToString(); }
-            set
-            {
-                model.Maze.GoalPos = StringToPosition(value);
-                NotifyPropertyChanged("VM_GoalPos");
-            }
         }
 
         public string VM_Pos
         {
             get { return model.Pos.ToString(); }
-            set
-            {
-                model.Pos = StringToPosition(value);
-                NotifyPropertyChanged("VM_Pos");
-            }
         }
 
         private Position StringToPosition(string position)
@@ -101,5 +86,11 @@ namespace MazeMVVM.ViewModelLib
         {
             this.model.Move(e.Direction);
         }
+
+        public void RestartGame()
+        {
+            this.model.RestartGame();
+        }
+       
     }
 }
