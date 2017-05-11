@@ -16,6 +16,7 @@ using MazeLib;
 using MazeGeneratorLib;
 using MazeMVVM.ViewModelLib;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace MazeMVVM.ViewLib.Controls
 {
@@ -120,6 +121,7 @@ namespace MazeMVVM.ViewLib.Controls
 
         public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
 
+
         public MazeDisplayer()
         {
             InitializeComponent();
@@ -197,7 +199,7 @@ namespace MazeMVVM.ViewLib.Controls
             grid.Children.Add(player);
         }
 
-        private Position StringToPosition(string position)
+        static private Position StringToPosition(string position)
         {
             int index = position.IndexOf(",", StringComparison.Ordinal);
             int row = int.Parse(position.Substring(1, index - 1));
@@ -238,6 +240,14 @@ namespace MazeMVVM.ViewLib.Controls
             Position position = StringToPosition(CurrPosition);
             Grid.SetRow(playerImage, position.Row);
             Grid.SetColumn(playerImage, position.Col);
+            if (CurrPosition == GoalPos)
+            {
+                var win = new MessageWindow();
+                win.Message = "YOU WON!";
+                win.Show();
+            }
         }
+
+        
     }
 }
