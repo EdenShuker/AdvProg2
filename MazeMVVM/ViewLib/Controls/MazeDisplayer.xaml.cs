@@ -16,7 +16,6 @@ using MazeLib;
 using MazeGeneratorLib;
 using MazeMVVM.ViewModelLib;
 using Newtonsoft.Json;
-using System.ComponentModel;
 
 namespace MazeMVVM.ViewLib.Controls
 {
@@ -106,8 +105,6 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeDisplayer),
                 new PropertyMetadata("..."));
 
-
-
         public string CurrPosition
         {
             get { return (string) GetValue(CurrPositionProperty); }
@@ -115,12 +112,28 @@ namespace MazeMVVM.ViewLib.Controls
         }
 
         public static readonly DependencyProperty CurrPositionProperty =
-            DependencyProperty.Register("CurrPosition", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("(0,0)"));
+            DependencyProperty.Register("CurrPosition", typeof(string), typeof(MazeDisplayer),
+                new PropertyMetadata(PosChanged));
+
+        static void PosChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MazeDisplayer mazeDisplayer = d as MazeDisplayer;
+            mazeDisplayer?.UpdatePlayerLocation((string) e.NewValue);
+        }
+
+        public void UpdatePlayerLocation(string positionStr)
+        {
+            if (this.playerImage != null)
+            {
+                Position position = StringToPosition(positionStr);
+                Grid.SetRow(playerImage, position.Row);
+                Grid.SetColumn(playerImage, position.Col);
+            }
+        }
 
         private Image playerImage;
 
         public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
-
 
         public MazeDisplayer()
         {
@@ -199,7 +212,7 @@ namespace MazeMVVM.ViewLib.Controls
             grid.Children.Add(player);
         }
 
-        static private Position StringToPosition(string position)
+        private static Position StringToPosition(string position)
         {
             int index = position.IndexOf(",", StringComparison.Ordinal);
             int row = int.Parse(position.Substring(1, index - 1));
@@ -237,17 +250,12 @@ namespace MazeMVVM.ViewLib.Controls
                     break;
             }
             PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
-            Position position = StringToPosition(CurrPosition);
-            Grid.SetRow(playerImage, position.Row);
-            Grid.SetColumn(playerImage, position.Col);
-            if (CurrPosition == GoalPos)
+            if (this.CurrPosition == this.GoalPos)
             {
-                var win = new MessageWindow();
-                win.Message = "YOU WON!";
-                win.Show();
+                MessageWindow msgWindow = new MessageWindow();
+                msgWindow.Msg = "Winner";
+                msgWindow.Show();
             }
         }
-
-        
     }
 }

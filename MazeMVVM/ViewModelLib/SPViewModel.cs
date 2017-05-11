@@ -61,10 +61,7 @@ namespace MazeMVVM.ViewModelLib
 
         public string VM_Pos
         {
-            get
-            {
-                return model.Pos.ToString();
-            }
+            get { return model.Pos.ToString(); }
         }
 
         private Position StringToPosition(string position)
@@ -90,6 +87,6 @@ namespace MazeMVVM.ViewModelLib
             this.model.RestartGame();
         }
 
-
+        
     }
 }

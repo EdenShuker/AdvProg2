@@ -23,7 +23,7 @@ namespace MazeMVVM.ModelLib
 
         public void RestartGame()
         {
-            this.Pos = this.Maze.InitialPos;
+            Pos = this.Maze.InitialPos;
         }
 
         public string SolveMaze()

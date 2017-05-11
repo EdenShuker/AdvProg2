@@ -19,8 +19,7 @@ namespace MazeMVVM.ViewLib
     /// </summary>
     public partial class MessageWindow : Window
     {
-
-        public string Message { get; set; }
+        public string Msg { get; set; }
 
         public MessageWindow()
         {
