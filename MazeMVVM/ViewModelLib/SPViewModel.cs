@@ -9,6 +9,7 @@ using MazeLib;
 using MazeMVVM.ModelLib;
 using MazeMVVM.ViewLib;
 using MazeMVVM.ViewLib.Controls;
+using System.Threading;
 
 namespace MazeMVVM.ViewModelLib
 {
@@ -87,6 +88,34 @@ namespace MazeMVVM.ViewModelLib
             this.model.RestartGame();
         }
 
+        public void SolveMaze()
+        {
+            string solution = this.model.SolveMaze();
+            foreach(char c in solution)
+            {
+                Direction direction;
+                switch (c)
+                {
+                    case '0':
+                        direction = Direction.Left;
+                        break;
+                    case '1':
+                        direction = Direction.Right;
+                        break;
+                    case '2':
+                        direction = Direction.Up;
+                        break;
+                    case '3':
+                        direction = Direction.Down;
+                        break;
+                    default:
+                        direction = Direction.Unknown;
+                        break;
+                }
+                this.model.Move(direction);
+                Thread.Sleep(500);
+            }
+        }
         
     }
 }

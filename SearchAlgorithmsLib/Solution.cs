@@ -77,9 +77,20 @@ namespace SearchAlgorithmsLib
         public string ToJSON(PathToString func)
         {
             JObject solutionObj = new JObject();
-            solutionObj["Solution"] = func(new Stack<State<T>>(this.backTrace));
+            solutionObj["Solution"] = func(CopyStack(this.backTrace));
             solutionObj["NodesEvaluated"] = evaluatedNodes.ToString();
             return solutionObj.ToString();
+        }
+
+        public Stack<State<T>> CopyStack(Stack<State<T>> source)
+        {
+            Stack<State<T>> tmp = new Stack<State<T>>(source);
+            Stack<State<T>> copy = new Stack<State<T>>();
+            while (tmp.Count > 0)
+            {
+                copy.Push(tmp.Pop());
+            }
+            return copy;
         }
     }
 }

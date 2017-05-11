@@ -39,7 +39,7 @@ namespace MazeMVVM.ViewLib
 
         private void btnSolve_Click(object sender, RoutedEventArgs e)
         {
-
+            vm.SolveMaze();
         }
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)

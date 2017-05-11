@@ -38,7 +38,7 @@ namespace ServerProject.ControllerLib.Command
                     num = "2";
                 }
                 // Down.
-                else if (from.Row > to.Row)
+                else if (from.Row < to.Row)
                 {
                     num = "3";
                 }

@@ -257,5 +257,7 @@ namespace MazeMVVM.ViewLib.Controls
                 msgWindow.Show();
             }
         }
+
+
     }
 }

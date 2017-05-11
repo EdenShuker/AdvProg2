@@ -18,7 +18,10 @@ namespace MazeMVVM.ModelLib
             this.Client.write($"generate {nameOfGame} {rows} {cols}");
             this.Maze = Maze.FromJSON(this.Client.read());
             this.Pos = this.Maze.InitialPos;
-            this.Disconnect();
+            if (this.Client.read() == new JObject().ToString())
+            {
+                this.Disconnect();
+            }
         }
 
         public void RestartGame()
@@ -31,7 +34,10 @@ namespace MazeMVVM.ModelLib
             this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.write($"solve {this.Maze.Name} {Properties.Settings.Default.SearchAlgorithm}");
             JObject solution = JObject.Parse(this.Client.read());
-            this.Disconnect();
+            if (this.Client.read() == new JObject().ToString())
+            {
+                this.Disconnect();
+            }
             return solution["Solution"].ToString();
         }
     }
