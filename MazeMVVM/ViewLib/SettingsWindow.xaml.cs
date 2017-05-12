@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace MazeMVVM.ViewLib
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        // VM
         private SettingsViewModel vm;
+        private bool isButtonPressed;
 
         /// <summary>
         /// Constructor.
@@ -34,6 +35,7 @@ namespace MazeMVVM.ViewLib
             vm = new SettingsViewModel(model);
             // define vm as data context
             this.DataContext = vm;
+            this.isButtonPressed = false;
         }
 
         /// <summary>
@@ -43,10 +45,9 @@ namespace MazeMVVM.ViewLib
         /// <param name="e"></param>
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            this.isButtonPressed = true;
             vm.SaveSettings();
-            Window win = Application.Current.MainWindow;
-            win.Show();
-            this.Close();
+            BackToMenu();
         }
 
         /// <summary>
@@ -57,9 +58,24 @@ namespace MazeMVVM.ViewLib
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.isButtonPressed = true;
+            BackToMenu();
+        }
+
+        private void BackToMenu()
+        {
             Window win = Application.Current.MainWindow;
             win.Show();
             this.Close();
+        }
+
+        private void SettingsWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            if (!this.isButtonPressed)
+            {
+                Window window = Application.Current.MainWindow;
+                window.Close();
+            }
         }
     }
 }

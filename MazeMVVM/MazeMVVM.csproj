@@ -74,7 +74,6 @@
     <Compile Include="ModelLib\ISettingsModel.cs" />
     <Compile Include="ModelLib\MultiPlayerModel.cs" />
     <Compile Include="ModelLib\PlayerModel.cs" />
-    <Compile Include="ModelLib\Settings.cs" />
     <Compile Include="ModelLib\SinglePlayerModel.cs" />
     <Compile Include="ViewLib\Controls\MazeDisplayer.xaml.cs">
       <DependentUpon>MazeDisplayer.xaml</DependentUpon>

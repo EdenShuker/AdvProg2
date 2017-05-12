@@ -8,8 +8,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="MazeDisplayer_OnLoaded" KeyDown="MazeDisplayer_OnKeyDown" PreviewKeyDown="MazeDisplayer_OnKeyDown">
-    <Viewbox  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid x:Name="grid" Height="400" Width="400" ShowGridLines="True" HorizontalAlignment="Center" VerticalAlignment="Center">
-        </Grid>
+    <!--<Viewbox  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Width="50">
+            <Grid x:Name="grid" Height="400" Width="400" ShowGridLines="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+            </Grid>
+        </Canvas>
+    </Viewbox>-->
+    <Viewbox Margin="3">
+        <Canvas x:Name="Canvas" Height="400" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center"></Canvas>
     </Viewbox>
 </UserControl>
+
+
+

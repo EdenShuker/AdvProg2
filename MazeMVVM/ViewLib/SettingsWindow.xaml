@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MazeMVVM.ViewLib"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="300" Width="300">
+        Title="SettingsWindow" Height="300" Width="300"
+        Closing="SettingsWindow_OnClosing">
     <Grid TextBlock.FontSize="14" Height="250" Width="280" HorizontalAlignment="Center" VerticalAlignment="Center" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

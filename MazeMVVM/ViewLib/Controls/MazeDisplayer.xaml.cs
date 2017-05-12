@@ -106,7 +106,6 @@ namespace MazeMVVM.ViewLib.Controls
                 new PropertyMetadata("..."));
 
 
-
         public string MsgWhenGoalReached
         {
             get { return (string) GetValue(MsgWhenGoalReachedProperty); }
@@ -114,7 +113,8 @@ namespace MazeMVVM.ViewLib.Controls
         }
 
         public static readonly DependencyProperty MsgWhenGoalReachedProperty =
-            DependencyProperty.Register("MsgWhenGoalReached", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("Message..."));
+            DependencyProperty.Register("MsgWhenGoalReached", typeof(string), typeof(MazeDisplayer),
+                new PropertyMetadata("Message..."));
 
         public string CurrPosition
         {
@@ -132,13 +132,15 @@ namespace MazeMVVM.ViewLib.Controls
             mazeDisplayer?.UpdatePlayerLocation((string) e.NewValue);
         }
 
+        private double blockWidth;
+        private double blockHeight;
+
         public void UpdatePlayerLocation(string positionStr)
         {
             if (this.playerImage != null)
             {
                 Position position = StringToPosition(positionStr);
-                Grid.SetRow(playerImage, position.Row);
-                Grid.SetColumn(playerImage, position.Col);
+                ReplaceObject(this.playerImage, position.Row, position.Col);
             }
             // Check if player reached the goal
             if (this.CurrPosition == this.GoalPos)
@@ -147,6 +149,12 @@ namespace MazeMVVM.ViewLib.Controls
                 msgWindow.Msg = this.MsgWhenGoalReached;
                 msgWindow.Show();
             }
+        }
+
+        private void ReplaceObject(UIElement element, double fromLeft, double fromTop)
+        {
+            Canvas.SetTop(element, fromLeft * this.blockHeight);
+            Canvas.SetLeft(element, fromTop * this.blockWidth);
         }
 
         private Image playerImage;
@@ -158,55 +166,45 @@ namespace MazeMVVM.ViewLib.Controls
             InitializeComponent();
         }
 
-        private void AdjustGrid()
+        private void MazeDisplayer_OnLoaded(object sender, RoutedEventArgs e)
         {
-            int i;
-            // Create Columns
-            for (i = 0; i < Cols; i++)
-            {
-                ColumnDefinition gridCol = new ColumnDefinition();
-                grid.ColumnDefinitions.Add(gridCol);
-            }
-
-            // Create Rows
-            for (i = 0; i < Rows; i++)
-            {
-                RowDefinition gridRow = new RowDefinition();
-                grid.RowDefinitions.Add(gridRow);
-            }
-            grid.ShowGridLines = true;
+            this.blockWidth = Canvas.Width / Cols;
+            this.blockHeight = Canvas.Height / Rows;
+            DrawComponents();
+            Window window = Window.GetWindow(this);
+            window.KeyDown += MazeDisplayer_OnKeyDown;
         }
 
-        private void DrawBlocks()
+        private void DrawComponents()
         {
             string str = MazeStr;
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)
                 {
-                    // blockDescription will be 0(free block) or 1
+                    Rectangle rectangle = new Rectangle();
+                    rectangle.Width = blockWidth;
+                    rectangle.Height = blockHeight;
                     int index = Cols * i + j;
                     char curr = str[index];
-                    Label block = new Label();
                     if (curr == '*' || curr == '#')
                     {
-                        block.Background = new SolidColorBrush(Colors.White);
+                        rectangle.Fill = new SolidColorBrush(Colors.White);
                     }
                     else
                     {
                         int blockDescription = int.Parse(curr.ToString());
                         if (blockDescription == 0)
                         {
-                            block.Background = new SolidColorBrush(Colors.White);
+                            rectangle.Fill = new SolidColorBrush(Colors.White);
                         }
                         else
                         {
-                            block.Background = new SolidColorBrush(Colors.Black);
+                            rectangle.Fill = new SolidColorBrush(Colors.Black);
                         }
                     }
-                    Grid.SetRow(block, i);
-                    Grid.SetColumn(block, j);
-                    grid.Children.Add(block);
+                    ReplaceObject(rectangle, i, j);
+                    Canvas.Children.Add(rectangle);
                 }
             }
             LoadImageTo(GoalPos, ExitImageFile);
@@ -216,6 +214,8 @@ namespace MazeMVVM.ViewLib.Controls
         private void LoadImageTo(string position, string imagePath)
         {
             Image player = new Image();
+            player.Width = blockWidth;
+            player.Height = blockHeight;
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
             // The image path is good only because the minion is in the current project,
@@ -225,9 +225,9 @@ namespace MazeMVVM.ViewLib.Controls
             player.Source = logo;
             Position currPosition = StringToPosition(position);
             this.playerImage = player;
-            Grid.SetRow(player, currPosition.Row);
-            Grid.SetColumn(player, currPosition.Col);
-            grid.Children.Add(player);
+
+            ReplaceObject(player, currPosition.Row, currPosition.Col);
+            Canvas.Children.Add(player);
         }
 
         private static Position StringToPosition(string position)
@@ -236,14 +236,6 @@ namespace MazeMVVM.ViewLib.Controls
             int row = int.Parse(position.Substring(1, index - 1));
             int col = int.Parse(position.Substring(index + 1, position.Length - index - 2));
             return new Position(row, col);
-        }
-
-        private void MazeDisplayer_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AdjustGrid();
-            DrawBlocks();
-            Window window = Window.GetWindow(this);
-            window.KeyDown += MazeDisplayer_OnKeyDown;
         }
 
         private void MazeDisplayer_OnKeyDown(object sender, KeyEventArgs e)
