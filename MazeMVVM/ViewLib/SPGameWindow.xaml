@@ -11,22 +11,28 @@
     <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button x:Name="btnRestart" Content="Restart game"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnRestart_Click"/>
-            <Button x:Name="btnSolve" Content="Solve maze" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnSolve_Click"/>
-            <Button x:Name="btnMenu" Content="Main menu" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="80" Height="24" Click="btnMenu_Click"/>
+            <Button x:Name="btnRestart" Content="Restart game" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Width="80" Height="24" Click="btnRestart_Click" />
+            <Button x:Name="btnSolve" Content="Solve maze" Grid.Column="1" HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom" Width="80" Height="24" Click="btnSolve_Click" />
+            <Button x:Name="btnMenu" Content="Main menu" Grid.Column="2" HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom" Width="80" Height="24" Click="btnMenu_Click" />
 
-            <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="1" Grid.ColumnSpan="3" MazeStr="{Binding VM_MazeStr}" InitPos="{Binding VM_InitialPos}"
-                                GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
-                                Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
-                                ExitImageFile="Exit.png" CurrPosition="{Binding VM_Pos}"/>
+            <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="1" Grid.ColumnSpan="3" MazeStr="{Binding VM_MazeStr}"
+                                    InitPos="{Binding VM_InitialPos}"
+                                    GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
+                                    ExitImageFile="Exit.png"
+                                    CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}"
+                                    MsgWhenGoalReached="Winner!" />
         </Grid>
     </Viewbox>
 </Window>

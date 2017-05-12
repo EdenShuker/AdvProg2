@@ -44,7 +44,7 @@ namespace MazeMVVM.ViewLib
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             vm.SaveSettings();
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            Window win = Application.Current.MainWindow;
             win.Show();
             this.Close();
         }
@@ -57,10 +57,9 @@ namespace MazeMVVM.ViewLib
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            Window win = Application.Current.MainWindow;
             win.Show();
             this.Close();
         }
-
     }
 }

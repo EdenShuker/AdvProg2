@@ -23,6 +23,7 @@ namespace MazeMVVM.ViewLib
     public partial class SPGameWindow : Window
     {
         private SPViewModel vm;
+        private bool isBackToMenuButtonPressed;
 
         public SPGameWindow(SinglePlayerModel model)
         {
@@ -30,6 +31,7 @@ namespace MazeMVVM.ViewLib
             vm = new SPViewModel(model);
             vm.Subscribe(mazeBoard);
             this.DataContext = vm;
+            this.isBackToMenuButtonPressed = false;
         }
 
         private void btnRestart_Click(object sender, RoutedEventArgs e)
@@ -44,15 +46,19 @@ namespace MazeMVVM.ViewLib
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow win = (MainWindow) Application.Current.MainWindow;
+            this.isBackToMenuButtonPressed = true;
+            Window win = Application.Current.MainWindow;
             win.Show();
             this.Close();
         }
 
         private void SPGameWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            MainWindow win = (MainWindow) Application.Current.MainWindow;
-            win.Show();
+            if (!this.isBackToMenuButtonPressed)
+            {
+                Window window = Application.Current.MainWindow;
+                window.Close();
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace MazeMVVM.ViewModelLib
         {
             this.model = singlePlayerModel;
             model.PropertyChanged +=
-                delegate (Object sender, PropertyChangedEventArgs e) { NotifyPropertyChanged("VM_" + e.PropertyName); };
+                delegate(Object sender, PropertyChangedEventArgs e) { NotifyPropertyChanged("VM_" + e.PropertyName); };
         }
 
         public string VM_MazeStr
@@ -88,10 +88,10 @@ namespace MazeMVVM.ViewModelLib
             this.model.RestartGame();
         }
 
-        public void SolveMaze()
+        public async void SolveMaze()
         {
             string solution = this.model.SolveMaze();
-            foreach(char c in solution)
+            foreach (char c in solution)
             {
                 Direction direction;
                 switch (c)
@@ -113,9 +113,8 @@ namespace MazeMVVM.ViewModelLib
                         break;
                 }
                 this.model.Move(direction);
-                Thread.Sleep(500);
+                await Task.Delay(400);
             }
         }
-        
     }
 }

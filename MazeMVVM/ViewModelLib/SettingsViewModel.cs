@@ -20,7 +20,6 @@ namespace MazeMVVM.ViewModelLib
             this.model = model;
         }
 
-
         public string ServerIP
         {
             get { return model.ServerIP; }
@@ -30,7 +29,6 @@ namespace MazeMVVM.ViewModelLib
                 NotifyPropertyChanged("ServerIP");
             }
         }
-
 
         public int ServerPort
         {
@@ -44,24 +42,17 @@ namespace MazeMVVM.ViewModelLib
 
         public int MazeRows
         {
-            get
-            {
-                return model.MazeRows;
-            }
+            get { return model.MazeRows; }
             set
             {
                 model.MazeRows = value;
                 NotifyPropertyChanged("MazeRows");
             }
-
         }
 
         public int MazeCols
         {
-            get
-            {
-                return model.MazeCols;
-            }
+            get { return model.MazeCols; }
             set
             {
                 model.MazeCols = value;
@@ -71,10 +62,7 @@ namespace MazeMVVM.ViewModelLib
 
         public int SearchAlgorithm
         {
-            get
-            {
-                return model.SearchAlgorithm;
-            }
+            get { return model.SearchAlgorithm; }
             set
             {
                 this.model.SearchAlgorithm = value;
