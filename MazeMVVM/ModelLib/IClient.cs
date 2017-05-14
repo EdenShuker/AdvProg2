@@ -12,5 +12,6 @@ namespace MazeMVVM.ModelLib
         void write(string command);
         string read();  // blocking call 
         void disconnect();
+        bool IsConnected();
     }
 }

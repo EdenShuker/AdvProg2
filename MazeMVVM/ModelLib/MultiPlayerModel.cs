@@ -1,4 +1,5 @@
 ﻿using MazeLib;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,27 @@ namespace MazeMVVM.ModelLib
             }
         }
 
-        public MultiPlayerModel(IClient client) : base(client) { }
-
-        public void Start()
-        {
-            throw new NotImplementedException();
+        // for starting a game
+        public MultiPlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client) {
+            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
+            this.Client.write($"start {nameOfGame} {rows} {cols}");
+            // at the moment when it get the game it means the game started.
+            this.Maze = Maze.FromJSON(this.Client.read());
+            this.Pos = this.PosOtherPlayer = this.Maze.InitialPos;
+            Start();
         }
+
+        // for joining a game
+        public MultiPlayerModel(IClient client, string nameOfGame) : base(client) {
+            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
+            this.Client.write($"join {nameOfGame}");
+            this.Maze = Maze.FromJSON(this.Client.read());
+            this.Pos = this.PosOtherPlayer = this.Maze.InitialPos;
+            Start();
+        }
+
+
+
 
 
         /// <summary>
@@ -40,14 +56,34 @@ namespace MazeMVVM.ModelLib
             this.Client.write("move " + direction);
         }
 
-        public void RestartGame()
+    
+
+
+        private void Start()
         {
-            throw new NotImplementedException();
+            new Task(() =>
+            {
+                string endMsg = new JObject().ToString();
+                while (Client.IsConnected())
+                {
+                    string answer = Client.read();
+                    if (answer.Equals(endMsg))
+                    {
+                        // End of connection.
+                        Client.disconnect();
+                        break;
+                    }
+                    JObject msg = JObject.Parse(answer);
+                    if (msg["Direction"] != null)
+                    {
+                        // change other player position.
+                    }
+                    // sleep
+                }
+            }).Start();
         }
 
-        public string SolveMaze()
-        {
-            throw new NotImplementedException();
-        }
+
+
     }
 }

@@ -69,5 +69,10 @@ namespace MazeMVVM.ModelLib
             BinaryWriter writer = new BinaryWriter(stream);
             writer.Write(command);
         }
+
+        bool IClient.IsConnected()
+        {
+            return this.isConnected;
+        }
     }
 }

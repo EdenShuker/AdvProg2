@@ -75,11 +75,17 @@
     <Compile Include="ModelLib\MultiPlayerModel.cs" />
     <Compile Include="ModelLib\PlayerModel.cs" />
     <Compile Include="ModelLib\SinglePlayerModel.cs" />
+    <Compile Include="ViewLib\Controls\GameStartMenu.xaml.cs">
+      <DependentUpon>GameStartMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewLib\Controls\MazeDisplayer.xaml.cs">
       <DependentUpon>MazeDisplayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewLib\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewLib\MPMenuWindow.xaml.cs">
+      <DependentUpon>MPMenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewLib\PlayerMovedEventArgs.cs" />
     <Compile Include="ViewLib\SettingsWindow.xaml.cs">
@@ -106,11 +112,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ViewLib\Controls\GameStartMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewLib\Controls\MazeDisplayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewLib\MessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewLib\MPMenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
