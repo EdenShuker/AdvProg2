@@ -28,17 +28,16 @@ namespace MazeMVVM.ViewLib
         public SPMenuWindow()
         {
             InitializeComponent();
-            this.Rows = Properties.Settings.Default.MazeRows;
-            this.Cols = Properties.Settings.Default.MazeCols;
             this.isButtonPressed = false;
             this.DataContext = this;
+            StartMenu.bStart.Click += bStart_Click;
         }
 
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
             this.isButtonPressed = true;
-            SinglePlayerModel model = new SinglePlayerModel(new Client(), textBName.Text,
-                int.Parse(textBRows.Text), int.Parse(textBCols.Text));
+            SinglePlayerModel model = new SinglePlayerModel(new Client(), StartMenu.MazeName,
+                StartMenu.Rows, StartMenu.Cols);
             var newForm = new SPGameWindow(model);
             newForm.Show();
             this.Close();

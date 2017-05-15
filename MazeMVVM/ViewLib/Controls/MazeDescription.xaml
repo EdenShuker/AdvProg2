@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="MazeMVVM.ViewLib.Controls.MazeDescription"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MazeMVVM.ViewLib.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="MazeDescription_OnLoaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="textBlock"  HorizontalAlignment="Left"  Text="Maze name:" Width="100" Height="20" FontSize="15"/>
+        <TextBlock x:Name="textBlock1" Grid.Row="1" HorizontalAlignment="Left"  Text="Maze rows:"  Width="100" Height="20" FontSize="15"/>
+        <TextBlock x:Name="textBlock2" Grid.Row="2" HorizontalAlignment="Left"  Text="Maze columns:"  Width="100" Height="20" FontSize="15"/>
+        <TextBox x:Name="textBName" Text="{Binding MazeName}" Grid.Column="1" HorizontalAlignment="Left" Height="23" Width="130"/>
+        <TextBox x:Name="textBRows" Text="{Binding Rows}" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Left" Height="23" Width="130"/>
+        <TextBox x:Name="textBCols" Text="{Binding Cols}" Grid.Column="1"  Grid.Row="2" HorizontalAlignment="Left" Height="23" Width="130"/>
+    </Grid>
+</UserControl>

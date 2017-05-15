@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MazeMVVM.ViewLib.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="190" d:DesignWidth="300">
+             d:DesignHeight="190" d:DesignWidth="300"
+             Loaded="GameStartMenu_OnLoaded">
     <Canvas>
         <Grid Width="270" Height="131" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="15" Canvas.Left="18">
             <Grid.RowDefinitions>
@@ -20,10 +21,10 @@
             <TextBlock x:Name="textBlock"  HorizontalAlignment="Left"  Text="Maze name:" Width="100" Height="20" FontSize="15"/>
             <TextBlock x:Name="textBlock1" Grid.Row="1" HorizontalAlignment="Left"  Text="Maze rows:"  Width="100" Height="20" FontSize="15"/>
             <TextBlock x:Name="textBlock2" Grid.Row="2" HorizontalAlignment="Left"  Text="Maze columns:"  Width="100" Height="20" FontSize="15"/>
-            <TextBox x:Name="textBName" Grid.Column="1" HorizontalAlignment="Left" Height="23"  Text="TextBox" Width="130"/>
+            <TextBox x:Name="textBName" Grid.Column="1" HorizontalAlignment="Left" Height="23"  Text="{Binding MazeName}" Width="130"/>
             <TextBox x:Name="textBRows" Grid.Column="1"  Grid.Row="1" HorizontalAlignment="Left" Height="23" Text="{Binding Rows}" Width="130"/>
             <TextBox x:Name="textBCols" Grid.Column="1"  Grid.Row="2" HorizontalAlignment="Left" Height="23" Text="{Binding Cols}"  Width="130"/>
         </Grid>
-        <Button x:Name="bStart" Content="Start Game"  FontSize="14" Canvas.Left="98" Canvas.Bottom="20"  Width="86" Height="29" Click="bStart_Click" Canvas.Top="151"/>
+        <Button x:Name="bStart" Content="Start Game"  FontSize="14" Canvas.Left="98" Canvas.Bottom="20"  Width="86" Height="29" Canvas.Top="151"/>
     </Canvas>
 </UserControl>

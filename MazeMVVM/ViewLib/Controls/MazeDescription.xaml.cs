@@ -16,13 +16,11 @@ using System.Windows.Shapes;
 namespace MazeMVVM.ViewLib.Controls
 {
     /// <summary>
-    /// Interaction logic for GameStartMenu.xaml
+    /// Interaction logic for MazeDescription.xaml
     /// </summary>
-    public partial class GameStartMenu : UserControl
+    public partial class MazeDescription : UserControl
     {
-        public delegate void StartOnClick(object sender, RoutedEventArgs e);
-
-        public GameStartMenu()
+        public MazeDescription()
         {
             InitializeComponent();
             this.DataContext = this;
@@ -35,8 +33,8 @@ namespace MazeMVVM.ViewLib.Controls
         }
 
         public static readonly DependencyProperty MazeNameProperty =
-            DependencyProperty.Register("MazeName", typeof(string), typeof(GameStartMenu), new PropertyMetadata("name"));
-
+            DependencyProperty.Register("MazeName", typeof(string), typeof(MazeDescription),
+                new PropertyMetadata("name"));
 
         public int Rows
         {
@@ -45,8 +43,7 @@ namespace MazeMVVM.ViewLib.Controls
         }
 
         public static readonly DependencyProperty RowsProperty =
-            DependencyProperty.Register("Rows", typeof(int), typeof(GameStartMenu), new PropertyMetadata(0));
-
+            DependencyProperty.Register("Rows", typeof(int), typeof(MazeDescription), new PropertyMetadata(0));
 
         public int Cols
         {
@@ -55,9 +52,9 @@ namespace MazeMVVM.ViewLib.Controls
         }
 
         public static readonly DependencyProperty ColsProperty =
-            DependencyProperty.Register("Cols", typeof(int), typeof(GameStartMenu), new PropertyMetadata(0));
+            DependencyProperty.Register("Cols", typeof(int), typeof(MazeDescription), new PropertyMetadata(0));
 
-        private void GameStartMenu_OnLoaded(object sender, RoutedEventArgs e)
+        private void MazeDescription_OnLoaded(object sender, RoutedEventArgs e)
         {
             this.Rows = Properties.Settings.Default.MazeRows;
             this.Cols = Properties.Settings.Default.MazeCols;
