@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MazeMVVM.ViewModelLib;
 using MazeMVVM.ModelLib;
+using MazeMVVM.ModelLib.Settings;
 using MazeMVVM.ViewModelLib.Settings;
 
 namespace MazeMVVM.ViewLib

@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
-using MazeMVVM.ModelLib;
 using MazeMVVM.ViewLib;
 using MazeMVVM.ViewLib.Controls;
-using System.Threading;
+using MazeMVVM.ModelLib.Player;
 
 namespace MazeMVVM.ViewModelLib
 {
-    public class SPViewModel : ViewModel
+    public class SPViewModel : PlayerViewModel, ISPViewModel
     {
-        private SinglePlayerModel model;
+        private ISinglePlayerModel model;
 
-        public SPViewModel(SinglePlayerModel singlePlayerModel)
+        public SPViewModel(ISinglePlayerModel singlePlayerModel) : base(singlePlayerModel)
         {
             this.model = singlePlayerModel;
-            model.PropertyChanged +=
-                delegate(Object sender, PropertyChangedEventArgs e) { NotifyPropertyChanged("VM_" + e.PropertyName); };
         }
 
         public string VM_MazeStr

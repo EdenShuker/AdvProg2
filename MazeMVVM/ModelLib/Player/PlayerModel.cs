@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using MazeLib;
-using SearchAlgorithmsLib;
+using MazeMVVM.ModelLib.Communication;
 
-namespace MazeMVVM.ModelLib
+namespace MazeMVVM.ModelLib.Player
 {
-    public abstract class PlayerModel : INotifyPropertyChanged
+    public abstract class PlayerModel : IPlayerModel
     {
         protected IClient Client;
         protected volatile bool Stop;

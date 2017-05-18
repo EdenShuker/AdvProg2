@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MazeMVVM.ModelLib;
+using MazeMVVM.ModelLib.Player;
 using MazeMVVM.ViewModelLib;
 
 namespace MazeMVVM.ViewLib

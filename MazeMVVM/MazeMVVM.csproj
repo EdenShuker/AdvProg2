@@ -67,14 +67,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ModelLib\ApplicationSettingsModel.cs" />
-    <Compile Include="ModelLib\Client.cs" />
-    <Compile Include="ModelLib\IClient.cs" />
-    <Compile Include="ModelLib\IPlayerModel.cs" />
-    <Compile Include="ModelLib\ISettingsModel.cs" />
-    <Compile Include="ModelLib\MultiPlayerModel.cs" />
-    <Compile Include="ModelLib\PlayerModel.cs" />
-    <Compile Include="ModelLib\SinglePlayerModel.cs" />
+    <Compile Include="ModelLib\Settings\ApplicationSettingsModel.cs" />
+    <Compile Include="ModelLib\Communication\Client.cs" />
+    <Compile Include="ModelLib\Communication\IClient.cs" />
+    <Compile Include="ModelLib\Player\IPlayerModel.cs" />
+    <Compile Include="ModelLib\Settings\ISettingsModel.cs" />
+    <Compile Include="ModelLib\Player\ISinglePlayerModel.cs" />
+    <Compile Include="ModelLib\Player\MultiPlayerModel.cs" />
+    <Compile Include="ModelLib\Player\PlayerModel.cs" />
+    <Compile Include="ModelLib\Player\SinglePlayerModel.cs" />
     <Compile Include="ViewLib\Controls\GameStartMenu.xaml.cs">
       <DependentUpon>GameStartMenu.xaml</DependentUpon>
     </Compile>
@@ -97,6 +98,8 @@
     <Compile Include="ViewLib\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelLib\ISPViewModel.cs" />
+    <Compile Include="ViewModelLib\PlayerViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\ISettingsViewModel.cs" />
     <Compile Include="ViewModelLib\SPViewModel.cs" />

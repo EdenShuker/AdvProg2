@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MazeLib;
+﻿using MazeLib;
+using MazeMVVM.ModelLib.Communication;
 using Newtonsoft.Json.Linq;
-using SearchAlgorithmsLib;
 
-namespace MazeMVVM.ModelLib
+namespace MazeMVVM.ModelLib.Player
 {
-    public class SinglePlayerModel : PlayerModel
+    public class SinglePlayerModel : PlayerModel, ISinglePlayerModel
     {
         public SinglePlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
         {

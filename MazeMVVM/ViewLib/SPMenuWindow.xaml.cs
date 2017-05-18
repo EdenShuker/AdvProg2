@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MazeMVVM.ModelLib;
+using MazeMVVM.ModelLib.Communication;
+using MazeMVVM.ModelLib.Player;
 
 namespace MazeMVVM.ViewLib
 {
@@ -36,8 +26,8 @@ namespace MazeMVVM.ViewLib
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
             this.isButtonPressed = true;
-            SinglePlayerModel model = new SinglePlayerModel(new Client(), StartMenu.MazeName,
-                StartMenu.Rows, StartMenu.Cols);
+            SinglePlayerModel model = 
+                new SinglePlayerModel(new Client(), StartMenu.MazeName, StartMenu.Rows, StartMenu.Cols);
             var newForm = new SPGameWindow(model);
             newForm.Show();
             this.Close();

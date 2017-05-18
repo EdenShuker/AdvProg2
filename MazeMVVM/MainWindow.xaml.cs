@@ -28,7 +28,7 @@ namespace MazeMVVM
 
         private void bSP_Click(object sender, RoutedEventArgs e)
         {
-            var newForm = new SPMenuWindow();
+            Window newForm = new SPMenuWindow();
             newForm.Show();
             this.Hide();
         }
@@ -40,7 +40,7 @@ namespace MazeMVVM
 
         private void bSettings_Click(object sender, RoutedEventArgs e)
         {
-            var newForm = new SettingsWindow();
+            Window newForm = new SettingsWindow();
             newForm.Show();
             this.Hide();
         }
