@@ -1,5 +1,4 @@
-﻿using MazeMVVM.ModelLib;
-using MazeMVVM.ModelLib.Settings;
+﻿using MazeMVVM.ModelLib.Settings;
 
 namespace MazeMVVM.ViewModelLib.Settings
 {

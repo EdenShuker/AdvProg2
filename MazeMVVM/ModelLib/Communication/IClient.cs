@@ -6,7 +6,7 @@
 
         void Write(string command);
 
-        string Read(); 
+        string Read();
 
         void Disconnect();
 

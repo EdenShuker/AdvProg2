@@ -10,6 +10,7 @@ namespace MazeMVVM.ModelLib.Player
         protected volatile bool Stop;
 
         private Maze maze;
+
         public Maze Maze
         {
             get { return maze; }
@@ -22,6 +23,7 @@ namespace MazeMVVM.ModelLib.Player
         }
 
         private Position pos;
+
         public Position Pos
         {
             get { return pos; }

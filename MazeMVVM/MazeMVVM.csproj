@@ -85,24 +85,24 @@
     <Compile Include="ViewLib\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewLib\MPMenuWindow.xaml.cs">
+    <Compile Include="ViewLib\MultiPlayer\MPMenuWindow.xaml.cs">
       <DependentUpon>MPMenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewLib\PlayerMovedEventArgs.cs" />
-    <Compile Include="ViewLib\SettingsWindow.xaml.cs">
+    <Compile Include="ViewLib\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewLib\SPGameWindow.xaml.cs">
+    <Compile Include="ViewLib\SinglePlayer\SPGameWindow.xaml.cs">
       <DependentUpon>SPGameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewLib\SPMenuWindow.xaml.cs">
+    <Compile Include="ViewLib\SinglePlayer\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelLib\ISPViewModel.cs" />
-    <Compile Include="ViewModelLib\PlayerViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\ISPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\PlayerViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\ISettingsViewModel.cs" />
-    <Compile Include="ViewModelLib\SPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\SPViewModel.cs" />
     <Compile Include="ViewModelLib\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -128,19 +128,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewLib\MPMenuWindow.xaml">
+    <Page Include="ViewLib\MultiPlayer\MPMenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewLib\SettingsWindow.xaml">
+    <Page Include="ViewLib\Settings\SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ViewLib\SPGameWindow.xaml">
+    <Page Include="ViewLib\SinglePlayer\SPGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewLib\SPMenuWindow.xaml">
+    <Page Include="ViewLib\SinglePlayer\SPMenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

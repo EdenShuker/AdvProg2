@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MazeMVVM.ViewLib;
+using SettingsWindow = MazeMVVM.ViewLib.Settings.SettingsWindow;
+using SPMenuWindow = MazeMVVM.ViewLib.SinglePlayer.SPMenuWindow;
 
 namespace MazeMVVM
 {

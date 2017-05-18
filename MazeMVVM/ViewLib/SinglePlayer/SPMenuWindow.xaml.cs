@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using MazeMVVM.ModelLib;
 using MazeMVVM.ModelLib.Communication;
 using MazeMVVM.ModelLib.Player;
 
-namespace MazeMVVM.ViewLib
+namespace MazeMVVM.ViewLib.SinglePlayer
 {
     /// <summary>
     /// Interaction logic for SPMenuWindow.xaml
@@ -26,9 +25,9 @@ namespace MazeMVVM.ViewLib
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
             this.isButtonPressed = true;
-            SinglePlayerModel model = 
+            SinglePlayerModel model =
                 new SinglePlayerModel(new Client(), StartMenu.MazeName, StartMenu.Rows, StartMenu.Cols);
-            var newForm = new SPGameWindow(model);
+            var newForm = new SinglePlayer.SPGameWindow(model);
             newForm.Show();
             this.Close();
         }

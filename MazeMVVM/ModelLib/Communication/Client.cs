@@ -10,14 +10,6 @@ namespace MazeMVVM.ModelLib.Communication
         private bool isConnected;
 
         /// <summary>
-        /// Constructor.
-        /// </summary>
-        public Client()
-        {
-        }
-
-
-        /// <summary>
         /// Connect to server.
         /// </summary>
         /// <param name="ip"> ip address</param>
@@ -30,7 +22,6 @@ namespace MazeMVVM.ModelLib.Communication
             this.isConnected = true;
         }
 
-
         /// <summary>
         /// Disconnect from Server.
         /// </summary>
@@ -40,7 +31,6 @@ namespace MazeMVVM.ModelLib.Communication
             this.client.GetStream().Dispose();
             this.client.Close();
         }
-
 
         /// <summary>
         /// Read a string from stream.
@@ -52,7 +42,6 @@ namespace MazeMVVM.ModelLib.Communication
             BinaryReader reader = new BinaryReader(stream);
             return reader.ReadString();
         }
-
 
         /// <summary>
         /// Write a commant to stream.

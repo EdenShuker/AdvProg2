@@ -1,13 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
+using MazeMVVM.ModelLib.Player;
 using MazeMVVM.ViewLib;
 using MazeMVVM.ViewLib.Controls;
-using MazeMVVM.ModelLib.Player;
 
-namespace MazeMVVM.ViewModelLib
+namespace MazeMVVM.ViewModelLib.Player
 {
     public class SPViewModel : PlayerViewModel, ISPViewModel
     {
@@ -39,25 +37,13 @@ namespace MazeMVVM.ViewModelLib
 
         public int VM_Cols => model.Maze.Cols;
 
-        public string VM_MazeName
-        {
-            get { return model.Maze.Name; }
-        }
+        public string VM_MazeName => model.Maze.Name;
 
-        public string VM_InitialPos
-        {
-            get { return model.Maze.InitialPos.ToString(); }
-        }
+        public string VM_InitialPos => model.Maze.InitialPos.ToString();
 
-        public string VM_GoalPos
-        {
-            get { return model.Maze.GoalPos.ToString(); }
-        }
+        public string VM_GoalPos => model.Maze.GoalPos.ToString();
 
-        public string VM_Pos
-        {
-            get { return model.Pos.ToString(); }
-        }
+        public string VM_Pos => model.Pos.ToString();
 
         public void Subscribe(MazeDisplayer mazeDisplayer)
         {
@@ -101,7 +87,7 @@ namespace MazeMVVM.ViewModelLib
                         break;
                 }
                 this.model.Move(direction);
-                await Task.Delay(400);
+                await Task.Delay(300);
             }
         }
     }
