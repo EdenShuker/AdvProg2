@@ -7,21 +7,21 @@ namespace MazeMVVM.ModelLib.Player
 {
     public class MultiPlayerModel : PlayerModel
     {
+        private Position posOtherPlayer;
+
         public Position PosOtherPlayer
         {
-            get
-            {
-                return PosOtherPlayer;
-            }
+            get { return posOtherPlayer; }
             set
             {
-                PosOtherPlayer = value;
+                posOtherPlayer = value;
                 NotifyPropertyChanged("PosOtherPlayer");
             }
         }
 
         // for starting a game
-        public MultiPlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client) {
+        public MultiPlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
+        {
             this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.Write($"start {nameOfGame} {rows} {cols}");
             // at the moment when it get the game it means the game started.
@@ -31,7 +31,8 @@ namespace MazeMVVM.ModelLib.Player
         }
 
         // for joining a game
-        public MultiPlayerModel(IClient client, string nameOfGame) : base(client) {
+        public MultiPlayerModel(IClient client, string nameOfGame) : base(client)
+        {
             this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.Write($"join {nameOfGame}");
             this.Maze = Maze.FromJSON(this.Client.Read());
@@ -40,20 +41,15 @@ namespace MazeMVVM.ModelLib.Player
         }
 
 
-
-
-
         /// <summary>
         /// In multiPlayer game we must update other player we made a move.
         /// </summary>
         /// <param name="direction"></param>
-        override public void Move(Direction direction)
+        public override void Move(Direction direction)
         {
             base.Move(direction);
             this.Client.Write("move " + direction);
         }
-
-    
 
 
         private void Start()
@@ -79,8 +75,5 @@ namespace MazeMVVM.ModelLib.Player
                 }
             }).Start();
         }
-
-
-
     }
 }
