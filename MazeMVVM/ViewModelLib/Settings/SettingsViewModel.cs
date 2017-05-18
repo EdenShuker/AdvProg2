@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MazeMVVM.ModelLib;
+﻿using MazeMVVM.ModelLib;
 
-namespace MazeMVVM.ViewModelLib
+namespace MazeMVVM.ViewModelLib.Settings
 {
-    public class SettingsViewModel : ViewModel
+    public class SettingsViewModel : ViewModel, ISettingsViewModel
     {
         private ISettingsModel model;
 

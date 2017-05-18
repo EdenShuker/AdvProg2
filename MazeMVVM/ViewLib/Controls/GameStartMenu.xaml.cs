@@ -20,8 +20,6 @@ namespace MazeMVVM.ViewLib.Controls
     /// </summary>
     public partial class GameStartMenu : UserControl
     {
-        public delegate void StartOnClick(object sender, RoutedEventArgs e);
-
         public GameStartMenu()
         {
             InitializeComponent();

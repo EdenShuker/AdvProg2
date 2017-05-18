@@ -15,10 +15,10 @@ namespace MazeMVVM.ModelLib
         public SinglePlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
         {
             this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
-            this.Client.write($"generate {nameOfGame} {rows} {cols}");
-            this.Maze = Maze.FromJSON(this.Client.read());
+            this.Client.Write($"generate {nameOfGame} {rows} {cols}");
+            this.Maze = Maze.FromJSON(this.Client.Read());
             this.Pos = this.Maze.InitialPos;
-            if (this.Client.read() == new JObject().ToString())
+            if (this.Client.Read() == new JObject().ToString())
             {
                 this.Disconnect();
             }
@@ -32,9 +32,9 @@ namespace MazeMVVM.ModelLib
         public string SolveMaze()
         {
             this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
-            this.Client.write($"solve {this.Maze.Name} {Properties.Settings.Default.SearchAlgorithm}");
-            JObject solution = JObject.Parse(this.Client.read());
-            if (this.Client.read() == new JObject().ToString())
+            this.Client.Write($"solve {this.Maze.Name} {Properties.Settings.Default.SearchAlgorithm}");
+            JObject solution = JObject.Parse(this.Client.Read());
+            if (this.Client.Read() == new JObject().ToString())
             {
                 this.Disconnect();
             }
@@ -42,6 +42,3 @@ namespace MazeMVVM.ModelLib
         }
     }
 }
-
-
-

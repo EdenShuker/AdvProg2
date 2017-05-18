@@ -27,7 +27,7 @@ namespace MazeMVVM.ModelLib
         /// </summary>
         /// <param name="ip"> ip address</param>
         /// <param name="port"> port number </param>
-        public void connect(string ip, int port)
+        public void Connect(string ip, int port)
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
             this.client = new TcpClient();
@@ -39,7 +39,7 @@ namespace MazeMVVM.ModelLib
         /// <summary>
         /// Disconnect from Server.
         /// </summary>
-        public void disconnect()
+        public void Disconnect()
         {
             this.isConnected = false;
             this.client.GetStream().Dispose();
@@ -51,7 +51,7 @@ namespace MazeMVVM.ModelLib
         /// Read a string from stream.
         /// </summary>
         /// <returns> the string recieved </returns>
-        public string read()
+        public string Read()
         {
             NetworkStream stream = this.client.GetStream();
             BinaryReader reader = new BinaryReader(stream);
@@ -63,7 +63,7 @@ namespace MazeMVVM.ModelLib
         /// Write a commant to stream.
         /// </summary>
         /// <param name="command"> the string to be send </param>
-        public void write(string command)
+        public void Write(string command)
         {
             NetworkStream stream = this.client.GetStream();
             BinaryWriter writer = new BinaryWriter(stream);

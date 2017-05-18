@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MazeMVVM.ViewModelLib;
 using MazeMVVM.ModelLib;
+using MazeMVVM.ViewModelLib.Settings;
 
 namespace MazeMVVM.ViewLib
 {
@@ -22,7 +23,7 @@ namespace MazeMVVM.ViewLib
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        private SettingsViewModel vm;
+        private ISettingsViewModel vm;
         private bool isButtonPressed;
 
         /// <summary>

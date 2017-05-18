@@ -65,14 +65,6 @@ namespace MazeMVVM.ViewModelLib
             get { return model.Pos.ToString(); }
         }
 
-        private Position StringToPosition(string position)
-        {
-            int index = position.IndexOf(",", StringComparison.Ordinal);
-            int row = int.Parse(position.Substring(1, index - 1));
-            int col = int.Parse(position.Substring(index + 1, position.Length - index - 2));
-            return new Position(row, col);
-        }
-
         public void Subscribe(MazeDisplayer mazeDisplayer)
         {
             mazeDisplayer.PlayerMoved += PlayerMovedOnBoard;
@@ -90,6 +82,8 @@ namespace MazeMVVM.ViewModelLib
 
         public async void SolveMaze()
         {
+            this.model.RestartGame();
+            await Task.Delay(200);
             string solution = this.model.SolveMaze();
             foreach (char c in solution)
             {

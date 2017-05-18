@@ -9,17 +9,22 @@ using MazeLib;
 
 namespace MazeMVVM.ModelLib
 {
-    public interface IPlayerModel: INotifyPropertyChanged
+    public interface IPlayerModel : INotifyPropertyChanged
     {
         void Connect(string ip, int port);
+
         void Disconnect();
+
         void Start();
+
         void Move(Direction direction);
+
         string SolveMaze();
+
         void RestartGame();
 
-        // Properties
         Position Pos { get; set; }
+
         Maze Maze { get; set; }
     }
 }

@@ -39,7 +39,6 @@ namespace MazeMVVM.ModelLib
             }
         }
 
-        // ViewModel need to subscribe methods to this event
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace MazeMVVM.ModelLib
         /// <param name="port"> port number </param>
         public void Connect(string ip, int port)
         {
-            this.Client.connect(ip, port);
+            this.Client.Connect(ip, port);
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace MazeMVVM.ModelLib
         /// </summary>
         public void Disconnect()
         {
-            this.Client.disconnect();
+            this.Client.Disconnect();
             Stop = true;
         }
 

@@ -8,13 +8,11 @@ namespace MazeMVVM.ModelLib
 {
     public class ApplicationSettingsModel : ISettingsModel
     {
-
         public string ServerIP
         {
             get { return Properties.Settings.Default.ServerIP; }
             set { Properties.Settings.Default.ServerIP = value; }
         }
-
 
         public int ServerPort
         {
@@ -22,13 +20,11 @@ namespace MazeMVVM.ModelLib
             set { Properties.Settings.Default.ServerPort = value; }
         }
 
-
         public int MazeRows
         {
             get { return Properties.Settings.Default.MazeRows; }
             set { Properties.Settings.Default.MazeRows = value; }
         }
-
 
         public int MazeCols
         {
@@ -36,13 +32,11 @@ namespace MazeMVVM.ModelLib
             set { Properties.Settings.Default.MazeCols = value; }
         }
 
-
         public int SearchAlgorithm
         {
             get { return Properties.Settings.Default.SearchAlgorithm; }
             set { Properties.Settings.Default.SearchAlgorithm = value; }
         }
-
 
         public void SaveSettings()
         {
