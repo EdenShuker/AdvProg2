@@ -73,35 +73,45 @@ namespace MazeMVVM.ModelLib.Player
         /// <param name="direction"> Direction of movement </param>
         public virtual void Move(Direction direction)
         {
-            // Takes out player current position.
-            int currentRow = Pos.Row;
-            int currentCol = Pos.Col;
+            Pos = CalcPosition(direction, Pos.Row, Pos.Col);
+        }
 
+
+        protected Position CalcPosition(Direction direction, int currentRow, int currentCol)
+        {
+            Position pos;
             // Right
             if (direction == Direction.Right && currentCol < Maze.Cols - 1 &&
                 Maze[currentRow, currentCol + 1] == CellType.Free)
             {
-                Pos = new Position(currentRow, currentCol + 1);
+                pos = new Position(currentRow, currentCol + 1);
             }
             // Left
             else if (direction == Direction.Left && currentCol > 0 &&
                      Maze[currentRow, currentCol - 1] == CellType.Free)
             {
-                Pos = new Position(currentRow, currentCol - 1);
+                pos = new Position(currentRow, currentCol - 1);
             }
             // Up
             else if (direction == Direction.Up && currentRow > 0 &&
                      Maze[currentRow - 1, currentCol] == CellType.Free)
             {
-                Pos = new Position(currentRow - 1, currentCol);
+                pos = new Position(currentRow - 1, currentCol);
             }
             // Down
             else if (direction == Direction.Down && currentRow < Maze.Rows - 1 &&
                      Maze[currentRow + 1, currentCol] == CellType.Free)
             {
-                Pos = new Position(currentRow + 1, currentCol);
+                pos = new Position(currentRow + 1, currentCol);
             }
+            else
+            {
+                pos = new Position(currentRow, currentCol);
+            }
+            return pos;
         }
+
+
 
         /// <summary>
         /// Notify that the proprety with the given name has changed.

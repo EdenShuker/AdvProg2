@@ -67,6 +67,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ModelLib\Player\IMultiPlayerModel.cs" />
+    <Compile Include="ModelLib\Player\MPMenuModel.cs" />
     <Compile Include="ModelLib\Settings\ApplicationSettingsModel.cs" />
     <Compile Include="ModelLib\Communication\Client.cs" />
     <Compile Include="ModelLib\Communication\IClient.cs" />
@@ -85,6 +87,9 @@
     <Compile Include="ViewLib\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewLib\MultiPlayer\MPGameWindow.xaml.cs">
+      <DependentUpon>MPGameWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewLib\MultiPlayer\MPMenuWindow.xaml.cs">
       <DependentUpon>MPMenuWindow.xaml</DependentUpon>
     </Compile>
@@ -98,7 +103,11 @@
     <Compile Include="ViewLib\SinglePlayer\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelLib\Player\IMPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\IPlayerVM.cs" />
     <Compile Include="ViewModelLib\Player\ISPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\MPMenuViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\MPViewModel.cs" />
     <Compile Include="ViewModelLib\Player\PlayerViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\ISettingsViewModel.cs" />
@@ -125,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewLib\MessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewLib\MultiPlayer\MPGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

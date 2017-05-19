@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿
+using System.Threading.Tasks;
 using MazeLib;
 using MazeMVVM.ModelLib.Communication;
 using Newtonsoft.Json.Linq;
 
 namespace MazeMVVM.ModelLib.Player
 {
-    public class MultiPlayerModel : PlayerModel
+    public class MultiPlayerModel : PlayerModel, IMultiPlayerModel
     {
         private Position posOtherPlayer;
 
@@ -51,18 +52,25 @@ namespace MazeMVVM.ModelLib.Player
             this.Client.Write("move " + direction);
         }
 
+        public void CloseGame()
+        {
+            string endMsg = new JObject().ToString();
+            this.Client.Write(endMsg);
+        }
+
 
         private void Start()
         {
-            new Task(() =>
+            new Task(async () =>
             {
                 string endMsg = new JObject().ToString();
+                Direction direction;
                 while (Client.IsConnected())
                 {
                     string answer = Client.Read();
                     if (answer.Equals(endMsg))
                     {
-                        // End of connection.
+                        // End of connection
                         Client.Disconnect();
                         break;
                     }
@@ -70,10 +78,46 @@ namespace MazeMVVM.ModelLib.Player
                     if (msg["Direction"] != null)
                     {
                         // change other player position.
+                        direction = ParseDirection(msg["Direction"].ToString());
+                        MoveOtherPlayer(direction);
                     }
                     // sleep
+                    await Task.Delay(500);
                 }
             }).Start();
+        }
+
+
+        private void MoveOtherPlayer(Direction direction)
+        {
+            PosOtherPlayer = CalcPosition(direction, PosOtherPlayer.Row, PosOtherPlayer.Col);
+        }
+
+
+        private Direction ParseDirection(string str)
+        {
+            Direction direction;
+            if (str == "right")
+            {
+                direction = Direction.Right;
+            }
+            else if (str == "left")
+            {
+                direction = Direction.Left;
+            }
+            else if (str == "up")
+            {
+                direction = Direction.Up;
+            }
+            else if (str == "down")
+            {
+                direction = Direction.Down;
+            }
+            else
+            {
+                direction = Direction.Unknown;
+            }
+            return direction;
         }
     }
 }

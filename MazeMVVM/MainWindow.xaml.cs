@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MazeMVVM.ViewLib;
 using SettingsWindow = MazeMVVM.ViewLib.Settings.SettingsWindow;
 using SPMenuWindow = MazeMVVM.ViewLib.SinglePlayer.SPMenuWindow;
+using MPMenuWindow = MazeMVVM.ViewLib.MultiPlayer.MPMenuWindow;
 
 namespace MazeMVVM
 {
@@ -37,7 +38,9 @@ namespace MazeMVVM
 
         private void bMP_Click(object sender, RoutedEventArgs e)
         {
-
+            Window newForm = new MPMenuWindow();
+            newForm.Show();
+            this.Hide();
         }
 
         private void bSettings_Click(object sender, RoutedEventArgs e)
