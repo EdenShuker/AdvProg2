@@ -73,5 +73,10 @@ namespace MazeMVVM.ViewModelLib.Player
         {
             this.model.CloseGame();
         }
+
+        public void Start()
+        {
+            this.model.Start();
+        }
     }
 }

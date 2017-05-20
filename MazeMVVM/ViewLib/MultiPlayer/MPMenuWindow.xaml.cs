@@ -2,6 +2,7 @@
 using MazeMVVM.ModelLib.Player;
 using MazeMVVM.ModelLib.Communication;
 using MazeMVVM.ViewModelLib.Player;
+using System.Threading.Tasks;
 
 namespace MazeMVVM.ViewLib.MultiPlayer
 {
@@ -10,8 +11,6 @@ namespace MazeMVVM.ViewLib.MultiPlayer
     /// </summary>
     public partial class MPMenuWindow : Window
     {
-        public int Rows { get; set; }
-        public int Cols { get; set; }
         private bool isButtonPressed;
         private MPMenuViewModel vm;
 
@@ -19,7 +18,9 @@ namespace MazeMVVM.ViewLib.MultiPlayer
         {
             InitializeComponent();
             this.isButtonPressed = false;
-            this.DataContext = this;
+            MPMenuModel model = new MPMenuModel(new Client());
+            this.vm = new MPMenuViewModel(model);
+            this.DataContext = vm;
             StartMenu.bStart.Click += bStart_Click;
         }
 
@@ -49,7 +50,16 @@ namespace MazeMVVM.ViewLib.MultiPlayer
 
         private void comboBox_DropDownOpened(object sender, System.EventArgs e)
         {
+            this.vm.RefreshList();
+        }
 
+        private void MPMenuWindow_OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.isButtonPressed)
+            {
+                Window window = Application.Current.MainWindow;
+                window.Close();
+            }
         }
     }
 }

@@ -28,7 +28,6 @@ namespace MazeMVVM.ModelLib.Player
             // at the moment when it get the game it means the game started.
             this.Maze = Maze.FromJSON(this.Client.Read());
             this.Pos = this.PosOtherPlayer = this.Maze.InitialPos;
-            Start();
         }
 
         // for joining a game
@@ -38,7 +37,6 @@ namespace MazeMVVM.ModelLib.Player
             this.Client.Write($"join {nameOfGame}");
             this.Maze = Maze.FromJSON(this.Client.Read());
             this.Pos = this.PosOtherPlayer = this.Maze.InitialPos;
-            Start();
         }
 
 
@@ -49,7 +47,7 @@ namespace MazeMVVM.ModelLib.Player
         public override void Move(Direction direction)
         {
             base.Move(direction);
-            this.Client.Write("move " + direction);
+            this.Client.Write("play " + direction.ToString().ToLower());
         }
 
         public void CloseGame()
@@ -59,7 +57,7 @@ namespace MazeMVVM.ModelLib.Player
         }
 
 
-        private void Start()
+        public void Start()
         {
             new Task(async () =>
             {

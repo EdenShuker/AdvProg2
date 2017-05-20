@@ -11,6 +11,8 @@ namespace MazeMVVM.ModelLib.Player
     {
         Position PosOtherPlayer { get; set; }
 
+        void Start();
+
         void CloseGame();
 
     }

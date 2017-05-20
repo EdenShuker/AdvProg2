@@ -10,15 +10,12 @@ namespace MazeMVVM.ViewLib.SinglePlayer
     /// </summary>
     public partial class SPMenuWindow : Window
     {
-        public int Rows { get; set; }
-        public int Cols { get; set; }
         private bool isButtonPressed;
 
         public SPMenuWindow()
         {
             InitializeComponent();
             this.isButtonPressed = false;
-            this.DataContext = this;
             StartMenu.bStart.Click += bStart_Click;
         }
 

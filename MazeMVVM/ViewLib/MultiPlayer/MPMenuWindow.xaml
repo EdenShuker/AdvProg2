@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MazeMVVM.ViewLib"
         xmlns:controls="clr-namespace:MazeMVVM.ViewLib.Controls"
         mc:Ignorable="d"
-        Title="MPMenuWindow" Height="350" Width="300">
+        Title="MPMenuWindow" Height="350" Width="300" Closing="MPMenuWindow_OnClosing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="comboBox" Grid.Column="1" Width="130" HorizontalAlignment="Center"  VerticalAlignment="Top"  DropDownOpened="comboBox_DropDownOpened" />
+            <ComboBox x:Name="comboBox" Grid.Column="1" Width="130" HorizontalAlignment="Center"  VerticalAlignment="Top" ItemsSource="{Binding AvailablesGames}"  DropDownOpened="comboBox_DropDownOpened" />
             <TextBlock x:Name="textBlock" Width="100" Height="20" FontSize="15"  HorizontalAlignment="Left"  Text="List of games:" VerticalAlignment="Top"/>
         </Grid>
         <Button x:Name="btnJoin" Content="Join Game"  FontSize="14"   Width="86" Height="29" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0,78,0,0" Click="btnJoin_Click" />

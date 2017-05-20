@@ -22,12 +22,36 @@ namespace MazeMVVM.ViewLib.MultiPlayer
     public partial class MPGameWindow : Window
     {
         private IMPViewModel vm;
+        private bool isBackToMenuButtonPressed;
 
         public MPGameWindow(IMultiPlayerModel model)
         {
             InitializeComponent();
             this.vm = new MPViewModel(model);
+            vm.Subscribe(mazeBoard);
             this.DataContext = vm;
+            vm.Start();
+            this.isBackToMenuButtonPressed = false;
+        }
+
+        private void btnMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.vm.CloseGame();
+            this.isBackToMenuButtonPressed = true;
+            Window win = Application.Current.MainWindow;
+            win.Show();
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!this.isBackToMenuButtonPressed)
+            {
+                this.vm.CloseGame();
+                Window window = Application.Current.MainWindow;
+                window.Close();
+            }
+
         }
     }
 }

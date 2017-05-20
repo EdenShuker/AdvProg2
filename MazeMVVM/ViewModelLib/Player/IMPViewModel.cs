@@ -15,6 +15,8 @@ namespace MazeMVVM.ViewModelLib.Player
 
         // Methods
 
+        void Start();
+
         void CloseGame();
     }
 }

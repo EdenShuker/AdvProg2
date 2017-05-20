@@ -4,23 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MazeMVVM.ViewLib.MultiPlayer"
+        xmlns:Controls="clr-namespace:MazeMVVM.ViewLib.Controls"
         mc:Ignorable="d"
-        Title="MPGameWindow" Height="520" Width="900">
+        Title="MPGameWindow" Height="520" Width="900" Closing="Window_Closing">
     <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        
         <Grid Height="440" Width="770" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="My board" FontSize="12"/>
-            <TextBlock Text="Other player's board" FontSize="12" Grid.Column="1"/>
-            
+            <TextBlock Text="My board" FontSize="12" Grid.Row="1"/>
+            <TextBlock Text="Other player's board" FontSize="12" Grid.Row="1" Grid.Column="2"/>
+            <Button x:Name="btnMenu" Grid.ColumnSpan="3" Content="Back to main menu" HorizontalAlignment="Center" VerticalAlignment="Center" Width="110" Click="btnMenu_Click"/>
+          
+            <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="2" MazeStr="{Binding VM_MazeStr}"
+                                    InitPos="{Binding VM_InitialPos}"
+                                    GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
+                                    ExitImageFile="Exit.png"
+                                    CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}"
+                                    MsgWhenGoalReached="Winner!" />
+
+            <Controls:MazeDisplayer x:Name="mazeBoardOther" Grid.Row="2" Grid.Column="2" MazeStr="{Binding VM_MazeStr}"
+                                    InitPos="{Binding VM_InitialPos}"
+                                    GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
+                                    ExitImageFile="Exit.png"
+                                    CurrPosition="{Binding VM_PosOtherPlayer, UpdateSourceTrigger=PropertyChanged}"
+                                    MsgWhenGoalReached="Winner!" />
+
+
         </Grid>
-        
-        
     </Viewbox>
 </Window>

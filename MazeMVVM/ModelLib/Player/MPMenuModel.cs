@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,8 @@ namespace MazeMVVM.ModelLib.Player
     {
         private IClient Client;
 
-        private string[] availablesGames;
-        public string[] AvailablesGames
+        private ObservableCollection<string> availablesGames;
+        public ObservableCollection<string> AvailablesGames
         {
             get
             {
@@ -31,6 +32,7 @@ namespace MazeMVVM.ModelLib.Player
         public MPMenuModel(IClient client)
         {
             this.Client = client;
+            this.AvailablesGames = new ObservableCollection<string>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,12 +46,18 @@ namespace MazeMVVM.ModelLib.Player
         {
             this.Client.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.Write("list");
-            JObject msg = JObject.Parse(this.Client.Read());
+            string msg = this.Client.Read();
             if (this.Client.Read() == new JObject().ToString())
             {
                 this.Client.Disconnect();
             }
-            this.AvailablesGames = JsonConvert.DeserializeObject<string[]>(msg.ToString());
+            string[] list = JsonConvert.DeserializeObject<string[]>(msg);
+            int count = list.Count();
+            this.AvailablesGames.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                this.AvailablesGames.Add(list[i]);
+            }
         }
     }
 }
