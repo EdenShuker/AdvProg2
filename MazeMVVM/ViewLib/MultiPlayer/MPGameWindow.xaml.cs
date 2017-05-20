@@ -29,9 +29,21 @@ namespace MazeMVVM.ViewLib.MultiPlayer
             InitializeComponent();
             this.vm = new MPViewModel(model);
             vm.Subscribe(mazeBoard);
+            mazeBoard.PlayerMoved += ShowMsg;
             this.DataContext = vm;
             vm.Start();
             this.isBackToMenuButtonPressed = false;
+        }
+
+        private void ShowMsg(object sender, PlayerMovedEventArgs e)
+        {
+            // Check if player reached the goal
+            if (this.vm.VM_Pos == this.vm.VM_GoalPos)
+            {
+                MessageWindow msgWindow = new MessageWindow();
+                msgWindow.Msg = "Winner!";
+                msgWindow.Show();
+            }
         }
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)

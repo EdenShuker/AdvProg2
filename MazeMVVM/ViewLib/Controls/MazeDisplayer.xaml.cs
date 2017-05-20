@@ -95,17 +95,6 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeDisplayer),
                 new PropertyMetadata("..."));
 
-
-        public string MsgWhenGoalReached
-        {
-            get { return (string) GetValue(MsgWhenGoalReachedProperty); }
-            set { SetValue(MsgWhenGoalReachedProperty, value); }
-        }
-
-        public static readonly DependencyProperty MsgWhenGoalReachedProperty =
-            DependencyProperty.Register("MsgWhenGoalReached", typeof(string), typeof(MazeDisplayer),
-                new PropertyMetadata("Message..."));
-
         public string CurrPosition
         {
             get { return (string) GetValue(CurrPositionProperty); }
@@ -131,13 +120,6 @@ namespace MazeMVVM.ViewLib.Controls
             {
                 Position position = StringToPosition(positionStr);
                 ReplaceObject(this.playerImage, position.Row, position.Col);
-            }
-            // Check if player reached the goal
-            if (this.CurrPosition == this.GoalPos)
-            {
-                MessageWindow msgWindow = new MessageWindow();
-                msgWindow.Msg = this.MsgWhenGoalReached;
-                msgWindow.Show();
             }
         }
 

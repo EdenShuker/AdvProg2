@@ -31,8 +31,7 @@
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
                                     Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
                                     ExitImageFile="Exit.png"
-                                    CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}"
-                                    MsgWhenGoalReached="Winner!" />
+                                    CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </Viewbox>
 </Window>

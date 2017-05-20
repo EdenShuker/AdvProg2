@@ -18,8 +18,20 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             InitializeComponent();
             vm = new SPViewModel(model);
             vm.Subscribe(mazeBoard);
+            mazeBoard.PlayerMoved += ShowMsg;
             this.DataContext = vm;
             this.isBackToMenuButtonPressed = false;
+        }
+
+        private void ShowMsg(object sender, PlayerMovedEventArgs e)
+        {
+            // Check if player reached the goal
+            if (this.vm.VM_Pos == this.vm.VM_GoalPos)
+            {
+                MessageWindow msgWindow = new MessageWindow();
+                msgWindow.Msg = "Winner!";
+                msgWindow.Show();
+            }
         }
 
         private void btnRestart_Click(object sender, RoutedEventArgs e)
