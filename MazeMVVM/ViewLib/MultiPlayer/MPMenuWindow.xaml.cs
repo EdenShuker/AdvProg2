@@ -35,6 +35,7 @@ namespace MazeMVVM.ViewLib.MultiPlayer
 
         private void btnJoin_Click(object sender, RoutedEventArgs e)
         {
+            this.isButtonPressed = true;
             MultiPlayerModel
                 model =
                 new MultiPlayerModel(new Client(), comboBox.SelectedItem.ToString());

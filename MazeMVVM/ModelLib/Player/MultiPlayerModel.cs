@@ -52,8 +52,8 @@ namespace MazeMVVM.ModelLib.Player
 
         public void CloseGame()
         {
-            string endMsg = new JObject().ToString();
-            this.Client.Write(endMsg);
+            //string endMsg = new JObject().ToString();
+            this.Client.Write($"close {this.Maze.Name}");
         }
 
 
