@@ -11,6 +11,6 @@
     <Canvas>
         <controls:GameStartMenu x:Name="StartMenu" HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Canvas.Top="60" Canvas.Left="10" />
-        <Image Width="150" Height="44" Canvas.Left="65" Canvas.Top="15" Source="../../mazeLogo.png" />
+        <Image Width="150" Height="44" Canvas.Left="65" Canvas.Top="15" Source="../../resources/mazeLogo.png" />
     </Canvas>
 </Window>

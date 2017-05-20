@@ -27,15 +27,15 @@
             <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="2" MazeStr="{Binding VM_MazeStr}"
                                     InitPos="{Binding VM_InitialPos}"
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
-                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
-                                    ExitImageFile="Exit.png"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="resources/minion.gif"
+                                    ExitImageFile="resources/Exit.png"
                                     CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Controls:MazeDisplayer x:Name="mazeBoardOther" Grid.Row="2" Grid.Column="2" MazeStr="{Binding VM_MazeStr}"
                                     InitPos="{Binding VM_InitialPos}"
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
-                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="minion.gif"
-                                    ExitImageFile="Exit.png"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="resources/pokemon.gif"
+                                    ExitImageFile="resources/Exit.png"
                                     CurrPosition="{Binding VM_PosOtherPlayer, UpdateSourceTrigger=PropertyChanged}"/>
 
 

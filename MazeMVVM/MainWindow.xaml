@@ -17,7 +17,7 @@
             <Button x:Name="bMP" Content="Multi Player" FontSize="16" Grid.Row="1" Height="35" Click="bMP_Click"/>
             <Button x:Name="bSettings" Content="Settings" FontSize="16" Grid.Row="2" Height="35" Click="bSettings_Click"/>
         </Grid>
-        <Image Width="240" Canvas.Left="20" Canvas.Top="20" Source="mazeLogo.png"/>
+        <Image Width="240" Canvas.Left="20" Canvas.Top="20" Source="resources/mazeLogo.png"/>
     </Canvas>
 
 </Window>

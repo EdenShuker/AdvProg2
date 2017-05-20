@@ -197,13 +197,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="mazeLogo.png" />
+    <Resource Include="resources\mazeLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="minion.gif" />
+    <Resource Include="resources\minion.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Exit.png" />
+    <Resource Include="resources\Exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\pokemon.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
