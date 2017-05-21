@@ -21,15 +21,7 @@ namespace MazeMVVM.ViewModelLib.Player.SinglePlayer
             get
             {
                 string mazeStr = model.Maze.ToString();
-                StringBuilder builder = new StringBuilder();
-                foreach (char c in mazeStr)
-                {
-                    if (c != '\r' && c != '\n')
-                    {
-                        builder.Append(c);
-                    }
-                }
-                return builder.ToString();
+                return this.ProduceStrFromMaze(mazeStr);
             }
         }
 
