@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace MazeMVVM.ViewLib
 {
@@ -19,8 +7,14 @@ namespace MazeMVVM.ViewLib
     /// </summary>
     public partial class MessageWindow : Window
     {
+        /// <summary>
+        /// Message to display in the window.
+        /// </summary>
         public string Msg { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MessageWindow()
         {
             InitializeComponent();

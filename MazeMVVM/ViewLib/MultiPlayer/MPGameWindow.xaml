@@ -8,37 +8,38 @@
         mc:Ignorable="d"
         Title="MPGameWindow" Height="520" Width="900" Closing="Window_Closing">
     <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        
+
         <Grid Height="440" Width="770" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Text="My board" FontSize="12" Grid.Row="1"/>
-            <TextBlock Text="Other player's board" FontSize="12" Grid.Row="1" Grid.Column="2"/>
-            <Button x:Name="btnMenu" Grid.ColumnSpan="3" Content="Back to main menu" HorizontalAlignment="Center" VerticalAlignment="Center" Width="110" Click="btnMenu_Click"/>
-          
+            <TextBlock Text="My board" FontSize="12" Grid.Row="1" />
+            <TextBlock Text="Other player's board" FontSize="12" Grid.Row="1" Grid.Column="2" />
+            <Button x:Name="btnMenu" Grid.ColumnSpan="3" Content="Back to main menu" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Width="110" Click="btnMenu_Click" />
+
             <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="2" MazeStr="{Binding VM_MazeStr}"
                                     InitPos="{Binding VM_InitialPos}"
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
-                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="resources/minion.gif"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}"
+                                    PlayerImageFile="resources/minion.gif"
                                     ExitImageFile="resources/Exit.png"
-                                    CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}"/>
+                                    CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}" />
 
             <Controls:MazeDisplayer x:Name="mazeBoardOther" Grid.Row="2" Grid.Column="2" MazeStr="{Binding VM_MazeStr}"
                                     InitPos="{Binding VM_InitialPos}"
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
-                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}" PlayerImageFile="resources/pokemon.gif"
+                                    Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}"
+                                    PlayerImageFile="resources/pokemon.gif"
                                     ExitImageFile="resources/Exit.png"
-                                    CurrPosition="{Binding VM_PosOtherPlayer, UpdateSourceTrigger=PropertyChanged}"/>
-
-
+                                    CurrPosition="{Binding VM_PosOtherPlayer, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </Viewbox>
 </Window>

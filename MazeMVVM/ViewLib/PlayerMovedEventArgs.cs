@@ -1,16 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MazeLib;
 
 namespace MazeMVVM.ViewLib
 {
+    /// <summary>
+    /// Argument of player moved event.
+    /// </summary>
     public class PlayerMovedEventArgs : EventArgs
     {
+        /// <summary>
+        /// The direction which the player moved.
+        /// </summary>
         public Direction Direction { get; private set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="direction"></param>
         public PlayerMovedEventArgs(Direction direction)
         {
             Direction = direction;

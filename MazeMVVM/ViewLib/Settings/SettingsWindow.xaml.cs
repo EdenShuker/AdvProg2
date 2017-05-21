@@ -10,7 +10,14 @@ namespace MazeMVVM.ViewLib.Settings
     /// </summary>
     public partial class SettingsWindow : Window
     {
+        /// <summary>
+        /// view model.
+        /// </summary>
         private ISettingsViewModel vm;
+
+        /// <summary>
+        /// bool if button was pressed.
+        /// </summary>
         private bool isButtonPressed;
 
         /// <summary>
@@ -50,6 +57,9 @@ namespace MazeMVVM.ViewLib.Settings
             BackToMenu();
         }
 
+        /// <summary>
+        /// go back to menu.
+        /// </summary>
         private void BackToMenu()
         {
             Window win = Application.Current.MainWindow;
@@ -57,6 +67,11 @@ namespace MazeMVVM.ViewLib.Settings
             this.Close();
         }
 
+        /// <summary>
+        /// closing.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void SettingsWindow_OnClosing(object sender, CancelEventArgs e)
         {
             if (!this.isButtonPressed)

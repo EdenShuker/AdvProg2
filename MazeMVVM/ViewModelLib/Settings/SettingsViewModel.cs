@@ -2,19 +2,28 @@
 
 namespace MazeMVVM.ViewModelLib.Settings
 {
+    /// <summary>
+    /// Settings view model.
+    /// </summary>
     public class SettingsViewModel : ViewModel, ISettingsViewModel
     {
+        /// <summary>
+        /// Settings Model.
+        /// </summary>
         private ISettingsModel model;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model"> settings model </param>
         public SettingsViewModel(ISettingsModel model)
         {
             this.model = model;
         }
 
+        /// <summary>
+        /// IP address of server.
+        /// </summary>
         public string ServerIP
         {
             get { return model.ServerIP; }
@@ -25,6 +34,9 @@ namespace MazeMVVM.ViewModelLib.Settings
             }
         }
 
+        /// <summary>
+        /// Number of server's port.
+        /// </summary>
         public int ServerPort
         {
             get { return model.ServerPort; }
@@ -35,6 +47,9 @@ namespace MazeMVVM.ViewModelLib.Settings
             }
         }
 
+        /// <summary>
+        /// Number of rows in the maze.
+        /// </summary>
         public int MazeRows
         {
             get { return model.MazeRows; }
@@ -45,6 +60,9 @@ namespace MazeMVVM.ViewModelLib.Settings
             }
         }
 
+        /// <summary>
+        /// Number of columns in the maze.
+        /// </summary>
         public int MazeCols
         {
             get { return model.MazeCols; }
@@ -55,6 +73,9 @@ namespace MazeMVVM.ViewModelLib.Settings
             }
         }
 
+        /// <summary>
+        /// Number that represents the searching algorithm.
+        /// </summary>
         public int SearchAlgorithm
         {
             get { return model.SearchAlgorithm; }
@@ -65,6 +86,9 @@ namespace MazeMVVM.ViewModelLib.Settings
             }
         }
 
+        /// <summary>
+        /// Save the current settings.
+        /// </summary>
         public void SaveSettings()
         {
             model.SaveSettings();

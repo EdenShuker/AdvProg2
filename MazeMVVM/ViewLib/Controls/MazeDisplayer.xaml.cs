@@ -14,6 +14,9 @@ namespace MazeMVVM.ViewLib.Controls
     /// </summary>
     public partial class MazeDisplayer : UserControl
     {
+        /// <summary>
+        /// String representing the maze.
+        /// </summary>
         public string MazeStr
         {
             get { return (string) GetValue(MazeStrProperty); }
@@ -23,7 +26,9 @@ namespace MazeMVVM.ViewLib.Controls
         public static readonly DependencyProperty MazeStrProperty =
             DependencyProperty.Register("MazeStr", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("..."));
 
-
+        /// <summary>
+        /// Initial position of the maze as string.
+        /// </summary>
         public string InitPos
         {
             get { return (string) GetValue(InitPosProperty); }
@@ -33,7 +38,9 @@ namespace MazeMVVM.ViewLib.Controls
         public static readonly DependencyProperty InitPosProperty =
             DependencyProperty.Register("InitPos", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("0"));
 
-
+        /// <summary>
+        /// Goal position of the maze as string.
+        /// </summary>
         public string GoalPos
         {
             get { return (string) GetValue(GoalPosProperty); }
@@ -43,7 +50,9 @@ namespace MazeMVVM.ViewLib.Controls
         public static readonly DependencyProperty GoalPosProperty =
             DependencyProperty.Register("GoalPos", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("0"));
 
-
+        /// <summary>
+        /// Number of rows.
+        /// </summary>
         public int Rows
         {
             get { return (int) GetValue(RowsProperty); }
@@ -54,6 +63,9 @@ namespace MazeMVVM.ViewLib.Controls
             ("Rows", typeof(int), typeof(MazeDisplayer), new PropertyMetadata(0));
 
 
+        /// <summary>
+        /// Number of columns.
+        /// </summary>
         public int Cols
         {
             get { return (int) GetValue(ColsProperty); }
@@ -64,6 +76,9 @@ namespace MazeMVVM.ViewLib.Controls
             ("Cols", typeof(int), typeof(MazeDisplayer), new PropertyMetadata(0));
 
 
+        /// <summary>
+        /// Name of the maze.
+        /// </summary>
         public string MazeName
         {
             get { return (string) GetValue(MazeNameProperty); }
@@ -74,6 +89,9 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("MazeName", typeof(string), typeof(MazeDisplayer), new PropertyMetadata("maze"));
 
 
+        /// <summary>
+        /// Path to the player image.
+        /// </summary>
         public string PlayerImageFile
         {
             get { return (string) GetValue(PlayerImageFileProperty); }
@@ -85,6 +103,9 @@ namespace MazeMVVM.ViewLib.Controls
                 new PropertyMetadata("..."));
 
 
+        /// <summary>
+        /// Path to the exit image.
+        /// </summary>
         public string ExitImageFile
         {
             get { return (string) GetValue(ExitImageFileProperty); }
@@ -95,6 +116,9 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeDisplayer),
                 new PropertyMetadata("..."));
 
+        /// <summary>
+        /// Current position of the main player as string.
+        /// </summary>
         public string CurrPosition
         {
             get { return (string) GetValue(CurrPositionProperty); }
@@ -105,15 +129,31 @@ namespace MazeMVVM.ViewLib.Controls
             DependencyProperty.Register("CurrPosition", typeof(string), typeof(MazeDisplayer),
                 new PropertyMetadata(PosChanged));
 
+        /// <summary>
+        /// When the position is changed.
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="e"></param>
         static void PosChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeDisplayer mazeDisplayer = d as MazeDisplayer;
             mazeDisplayer?.UpdatePlayerLocation((string) e.NewValue);
         }
 
+        /// <summary>
+        /// Width of single block in the maze.
+        /// </summary>
         private double blockWidth;
+
+        /// <summary>
+        /// Height of single block in the maze.
+        /// </summary>
         private double blockHeight;
 
+        /// <summary>
+        /// Update the player location on the board.
+        /// </summary>
+        /// <param name="positionStr"></param>
         public void UpdatePlayerLocation(string positionStr)
         {
             if (this.playerImage != null)
@@ -123,21 +163,41 @@ namespace MazeMVVM.ViewLib.Controls
             }
         }
 
+        /// <summary>
+        /// Set the element position in the canvas.
+        /// </summary>
+        /// <param name="element"> element to replace </param>
+        /// <param name="fromLeft"> cols from left </param>
+        /// <param name="fromTop"> rows from top </param>
         private void ReplaceObject(UIElement element, double fromLeft, double fromTop)
         {
             Canvas.SetTop(element, fromLeft * this.blockHeight);
             Canvas.SetLeft(element, fromTop * this.blockWidth);
         }
 
+        /// <summary>
+        /// player image.
+        /// </summary>
         private Image playerImage;
 
+        /// <summary>
+        /// Event of player moved.
+        /// </summary>
         public event EventHandler<PlayerMovedEventArgs> PlayerMoved;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MazeDisplayer()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// On loaded.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void MazeDisplayer_OnLoaded(object sender, RoutedEventArgs e)
         {
             this.blockWidth = Canvas.Width / Cols;
@@ -147,6 +207,9 @@ namespace MazeMVVM.ViewLib.Controls
             window.KeyDown += MazeDisplayer_OnKeyDown;
         }
 
+        /// <summary>
+        /// Draw the maze components.
+        /// </summary>
         private void DrawComponents()
         {
             string str = MazeStr;
@@ -154,11 +217,13 @@ namespace MazeMVVM.ViewLib.Controls
             {
                 for (int j = 0; j < Cols; j++)
                 {
+                    // Create block
                     Rectangle rectangle = new Rectangle();
                     rectangle.Width = blockWidth;
                     rectangle.Height = blockHeight;
                     int index = Cols * i + j;
                     char curr = str[index];
+                    // Fill the block
                     if (curr == '*' || curr == '#')
                     {
                         rectangle.Fill = new SolidColorBrush(Colors.White);
@@ -175,16 +240,24 @@ namespace MazeMVVM.ViewLib.Controls
                             rectangle.Fill = new SolidColorBrush(Colors.Black);
                         }
                     }
+                    // Add it to the maze
                     ReplaceObject(rectangle, i, j);
                     Canvas.Children.Add(rectangle);
                 }
             }
+            // Load the images.
             LoadImageTo(GoalPos, ExitImageFile);
             LoadImageTo(InitPos, PlayerImageFile);
         }
 
+        /// <summary>
+        /// Load an image to the maze.
+        /// </summary>
+        /// <param name="position"> position as string </param>
+        /// <param name="imagePath"> path of the image file </param>
         private void LoadImageTo(string position, string imagePath)
         {
+            // Create the image
             Image player = new Image();
             player.Width = blockWidth;
             player.Height = blockHeight;
@@ -195,11 +268,16 @@ namespace MazeMVVM.ViewLib.Controls
             player.Source = logo;
             Position currPosition = StringToPosition(position);
             this.playerImage = player;
-
+            // Add it to the maze.
             ReplaceObject(player, currPosition.Row, currPosition.Col);
             Canvas.Children.Add(player);
         }
 
+        /// <summary>
+        /// Convert string to position.
+        /// </summary>
+        /// <param name="position"> position as string </param>
+        /// <returns> position as position </returns>
         private static Position StringToPosition(string position)
         {
             int index = position.IndexOf(",", StringComparison.Ordinal);
@@ -208,8 +286,14 @@ namespace MazeMVVM.ViewLib.Controls
             return new Position(row, col);
         }
 
+        /// <summary>
+        /// On key down.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void MazeDisplayer_OnKeyDown(object sender, KeyEventArgs e)
         {
+            // Check which direction
             Direction direction;
             switch (e.Key)
             {
@@ -229,6 +313,7 @@ namespace MazeMVVM.ViewLib.Controls
                     direction = Direction.Unknown;
                     break;
             }
+            // Invoke the event
             PlayerMoved?.Invoke(this, new PlayerMovedEventArgs(direction));
         }
     }

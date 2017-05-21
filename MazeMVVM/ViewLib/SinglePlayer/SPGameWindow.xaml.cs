@@ -12,9 +12,20 @@ namespace MazeMVVM.ViewLib.SinglePlayer
     /// </summary>
     public partial class SPGameWindow : Window
     {
+        /// <summary>
+        /// view model.
+        /// </summary>
         private ISPViewModel vm;
+
+        /// <summary>
+        /// bool if button was pressed.
+        /// </summary>
         private bool isBackToMenuButtonPressed;
 
+        /// <summary>
+        /// constructor.
+        /// </summary>
+        /// <param name="model"> model </param>
         public SPGameWindow(ISinglePlayerModel model)
         {
             InitializeComponent();
@@ -25,6 +36,11 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             this.isBackToMenuButtonPressed = false;
         }
 
+        /// <summary>
+        /// show message on the screen.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void ShowMsg(object sender, PlayerMovedEventArgs e)
         {
             // Check if player reached the goal
@@ -36,16 +52,31 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             }
         }
 
+        /// <summary>
+        /// reastrt the game.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void btnRestart_Click(object sender, RoutedEventArgs e)
         {
             vm.RestartGame();
         }
 
+        /// <summary>
+        /// solve the maze.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void btnSolve_Click(object sender, RoutedEventArgs e)
         {
             vm.SolveMaze();
         }
 
+        /// <summary>
+        /// go back to menu.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
             this.isBackToMenuButtonPressed = true;
@@ -54,6 +85,11 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             this.Close();
         }
 
+        /// <summary>
+        /// closing
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void SPGameWindow_OnClosing(object sender, CancelEventArgs e)
         {
             if (!this.isBackToMenuButtonPressed)

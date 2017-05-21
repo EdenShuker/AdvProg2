@@ -11,8 +11,14 @@ namespace MazeMVVM.ViewLib.SinglePlayer
     /// </summary>
     public partial class SPMenuWindow : Window
     {
+        /// <summary>
+        /// bool if button was pressed.
+        /// </summary>
         private bool isButtonPressed;
 
+        /// <summary>
+        /// constructor.
+        /// </summary>
         public SPMenuWindow()
         {
             InitializeComponent();
@@ -20,6 +26,11 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             StartMenu.bStart.Click += bStart_Click;
         }
 
+        /// <summary>
+        /// start a game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bStart_Click(object sender, RoutedEventArgs e)
         {
             this.isButtonPressed = true;
@@ -30,6 +41,11 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             this.Close();
         }
 
+        /// <summary>
+        /// closing.
+        /// </summary>
+        /// <param name="sender"> caller </param>
+        /// <param name="e"> args </param>
         private void SPMenuWindow_OnClosing(object sender, CancelEventArgs e)
         {
             if (!this.isButtonPressed)
