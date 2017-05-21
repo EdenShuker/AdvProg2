@@ -7,8 +7,10 @@ using MazeMVVM.ViewLib.Controls;
 
 namespace MazeMVVM.ViewModelLib.Player
 {
-    public interface IMPViewModel: IPlayerVM
+    public interface IMPViewModel : IPlayerVM
     {
+        event EventHandler VMGameEnded;
+
         // Properties
 
         string VM_PosOtherPlayer { get; }

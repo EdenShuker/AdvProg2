@@ -33,6 +33,7 @@ namespace MazeMVVM.ViewLib.MultiPlayer
             this.DataContext = vm;
             vm.Start();
             this.isBackToMenuButtonPressed = false;
+            this.vm.VMGameEnded += CloseCurrentWindow;
         }
 
         private void ShowMsg(object sender, PlayerMovedEventArgs e)
@@ -48,8 +49,8 @@ namespace MazeMVVM.ViewLib.MultiPlayer
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.vm.CloseGame();
             this.isBackToMenuButtonPressed = true;
+            this.vm.CloseGame();
             Window win = Application.Current.MainWindow;
             win.Show();
             this.Close();
@@ -64,6 +65,19 @@ namespace MazeMVVM.ViewLib.MultiPlayer
                 window.Close();
             }
 
+        }
+
+        private void CloseCurrentWindow(object sender, EventArgs e)
+        {
+            if (!this.isBackToMenuButtonPressed)
+            {
+                Dispatcher.BeginInvoke((Action)(() => {
+                    Window win = Application.Current.MainWindow;
+                    win.Show();
+                    this.Close();
+                }));
+            }
+            this.isBackToMenuButtonPressed = true;
         }
     }
 }

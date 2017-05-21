@@ -9,6 +9,8 @@ namespace MazeMVVM.ModelLib.Player
 {
     public interface IMultiPlayerModel : IPlayerModel
     {
+        event EventHandler GameEnded;
+
         Position PosOtherPlayer { get; set; }
 
         void Start();

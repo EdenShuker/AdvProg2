@@ -13,6 +13,8 @@ namespace MazeMVVM.ViewModelLib.Player
     {
         private IMultiPlayerModel model;
 
+        public event EventHandler VMGameEnded;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -20,6 +22,7 @@ namespace MazeMVVM.ViewModelLib.Player
         public MPViewModel(IMultiPlayerModel MultiPlayermodel): base(MultiPlayermodel)
         {
             this.model = MultiPlayermodel;
+            this.model.GameEnded += RaiseEvent_GameEnded; 
         }
 
 
@@ -78,5 +81,12 @@ namespace MazeMVVM.ViewModelLib.Player
         {
             this.model.Start();
         }
+
+
+        private void RaiseEvent_GameEnded(object sender, EventArgs e)
+        {
+            VMGameEnded?.Invoke(this, null);
+        }
+
     }
 }

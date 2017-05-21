@@ -3,11 +3,15 @@ using System.Threading.Tasks;
 using MazeLib;
 using MazeMVVM.ModelLib.Communication;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Windows.Threading;
 
 namespace MazeMVVM.ModelLib.Player
 {
     public class MultiPlayerModel : PlayerModel, IMultiPlayerModel
     {
+        public event EventHandler GameEnded;
+
         private Position posOtherPlayer;
 
         public Position PosOtherPlayer
@@ -56,7 +60,6 @@ namespace MazeMVVM.ModelLib.Player
             this.Client.Write($"close {this.Maze.Name}");
         }
 
-
         public void Start()
         {
             new Task(async () =>
@@ -70,6 +73,7 @@ namespace MazeMVVM.ModelLib.Player
                     {
                         // End of connection
                         Client.Disconnect();
+                        GameEnded?.Invoke(this, null);
                         break;
                     }
                     JObject msg = JObject.Parse(answer);
