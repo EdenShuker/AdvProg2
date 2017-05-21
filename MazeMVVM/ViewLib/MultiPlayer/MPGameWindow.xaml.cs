@@ -25,6 +25,7 @@ namespace MazeMVVM.ViewLib.MultiPlayer
     {
         private IMPViewModel vm;
         private bool isBackToMenuButtonPressed;
+        private bool isExitWindow;
 
         public MPGameWindow(IMultiPlayerModel model)
         {
@@ -35,6 +36,7 @@ namespace MazeMVVM.ViewLib.MultiPlayer
             this.DataContext = vm;
             vm.Start();
             this.isBackToMenuButtonPressed = false;
+            this.isExitWindow = false;
             this.vm.VMGameEnded += CloseCurrentWindow;
         }
 
@@ -53,15 +55,13 @@ namespace MazeMVVM.ViewLib.MultiPlayer
         {
             this.isBackToMenuButtonPressed = true;
             this.vm.CloseGame();
-            //Window win = Application.Current.MainWindow;
-            //win.Show();
-            //this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!this.isBackToMenuButtonPressed)
             {
+                this.isExitWindow = true;
                 this.vm.CloseGame();
                 Window window = Application.Current.MainWindow;
                 window.Close();
@@ -70,13 +70,16 @@ namespace MazeMVVM.ViewLib.MultiPlayer
 
         private void CloseCurrentWindow(object sender, EventArgs e)
         {
-            Dispatcher.BeginInvoke((Action) (() =>
+            if (!this.isExitWindow)
             {
-                Window win = Application.Current.MainWindow;
-                win.Show();
-                this.Close();
-            }));
-            this.isBackToMenuButtonPressed = true;
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                   Window win = Application.Current.MainWindow;
+                   win.Show();
+                   this.Close();
+               }));
+                this.isBackToMenuButtonPressed = true;
+            }
         }
     }
 }
