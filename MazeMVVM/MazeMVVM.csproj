@@ -67,17 +67,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ModelLib\Player\IMultiPlayerModel.cs" />
-    <Compile Include="ModelLib\Player\MPMenuModel.cs" />
+    <Compile Include="ModelLib\Player\MultiPlayer\IMultiPlayerModel.cs" />
+    <Compile Include="ModelLib\Player\MultiPlayer\MPMenuModel.cs" />
     <Compile Include="ModelLib\Settings\ApplicationSettingsModel.cs" />
     <Compile Include="ModelLib\Communication\Client.cs" />
     <Compile Include="ModelLib\Communication\IClient.cs" />
     <Compile Include="ModelLib\Player\IPlayerModel.cs" />
     <Compile Include="ModelLib\Settings\ISettingsModel.cs" />
-    <Compile Include="ModelLib\Player\ISinglePlayerModel.cs" />
-    <Compile Include="ModelLib\Player\MultiPlayerModel.cs" />
+    <Compile Include="ModelLib\Player\SinglePlayer\ISinglePlayerModel.cs" />
+    <Compile Include="ModelLib\Player\MultiPlayer\MultiPlayerModel.cs" />
     <Compile Include="ModelLib\Player\PlayerModel.cs" />
-    <Compile Include="ModelLib\Player\SinglePlayerModel.cs" />
+    <Compile Include="ModelLib\Player\SinglePlayer\SinglePlayerModel.cs" />
     <Compile Include="ViewLib\Controls\GameStartMenu.xaml.cs">
       <DependentUpon>GameStartMenu.xaml</DependentUpon>
     </Compile>
@@ -103,15 +103,15 @@
     <Compile Include="ViewLib\SinglePlayer\SPMenuWindow.xaml.cs">
       <DependentUpon>SPMenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelLib\Player\IMPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\MultiPlayer\IMPViewModel.cs" />
     <Compile Include="ViewModelLib\Player\IPlayerVM.cs" />
-    <Compile Include="ViewModelLib\Player\ISPViewModel.cs" />
-    <Compile Include="ViewModelLib\Player\MPMenuViewModel.cs" />
-    <Compile Include="ViewModelLib\Player\MPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\SinglePlayer\ISPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\MultiPlayer\MPMenuViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\MultiPlayer\MPViewModel.cs" />
     <Compile Include="ViewModelLib\Player\PlayerViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModelLib\Settings\ISettingsViewModel.cs" />
-    <Compile Include="ViewModelLib\Player\SPViewModel.cs" />
+    <Compile Include="ViewModelLib\Player\SinglePlayer\SPViewModel.cs" />
     <Compile Include="ViewModelLib\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +208,7 @@
   <ItemGroup>
     <Resource Include="resources\pokemon.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

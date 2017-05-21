@@ -2,7 +2,7 @@
 using MazeMVVM.ModelLib.Communication;
 using Newtonsoft.Json.Linq;
 
-namespace MazeMVVM.ModelLib.Player
+namespace MazeMVVM.ModelLib.Player.SinglePlayer
 {
     public class SinglePlayerModel : PlayerModel, ISinglePlayerModel
     {

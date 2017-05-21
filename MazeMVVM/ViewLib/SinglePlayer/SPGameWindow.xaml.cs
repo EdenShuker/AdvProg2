@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using MazeMVVM.ModelLib.Player;
+using MazeMVVM.ModelLib.Player.SinglePlayer;
 using MazeMVVM.ViewModelLib.Player;
+using MazeMVVM.ViewModelLib.Player.SinglePlayer;
 
 namespace MazeMVVM.ViewLib.SinglePlayer
 {

@@ -2,6 +2,7 @@
 using System.Windows;
 using MazeMVVM.ModelLib.Communication;
 using MazeMVVM.ModelLib.Player;
+using MazeMVVM.ModelLib.Player.SinglePlayer;
 
 namespace MazeMVVM.ViewLib.SinglePlayer
 {

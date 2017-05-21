@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MazeMVVM.ViewLib.Controls;
 
-namespace MazeMVVM.ViewModelLib.Player
+namespace MazeMVVM.ViewModelLib.Player.MultiPlayer
 {
     public interface IMPViewModel : IPlayerVM
     {

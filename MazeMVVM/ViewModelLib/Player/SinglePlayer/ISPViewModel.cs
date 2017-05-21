@@ -1,6 +1,4 @@
-﻿using MazeMVVM.ViewLib.Controls;
-
-namespace MazeMVVM.ViewModelLib.Player
+﻿namespace MazeMVVM.ViewModelLib.Player.SinglePlayer
 {
     public interface ISPViewModel : IPlayerVM
     {

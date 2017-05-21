@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
 using MazeLib;
-using MazeMVVM.ModelLib.Player;
+using MazeMVVM.ModelLib.Player.SinglePlayer;
 using MazeMVVM.ViewLib;
 using MazeMVVM.ViewLib.Controls;
 
-namespace MazeMVVM.ViewModelLib.Player
+namespace MazeMVVM.ViewModelLib.Player.SinglePlayer
 {
     public class SPViewModel : PlayerViewModel, ISPViewModel
     {

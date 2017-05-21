@@ -1,12 +1,10 @@
-﻿
+﻿using System;
 using System.Threading.Tasks;
 using MazeLib;
 using MazeMVVM.ModelLib.Communication;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Windows.Threading;
 
-namespace MazeMVVM.ModelLib.Player
+namespace MazeMVVM.ModelLib.Player.MultiPlayer
 {
     public class MultiPlayerModel : PlayerModel, IMultiPlayerModel
     {

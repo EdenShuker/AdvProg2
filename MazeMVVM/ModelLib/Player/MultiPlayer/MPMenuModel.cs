@@ -1,15 +1,11 @@
-﻿using MazeMVVM.ModelLib.Communication;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MazeMVVM.ModelLib.Communication;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-namespace MazeMVVM.ModelLib.Player
+namespace MazeMVVM.ModelLib.Player.MultiPlayer
 {
     class MPMenuModel : INotifyPropertyChanged
     {

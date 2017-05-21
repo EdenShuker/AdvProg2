@@ -1,11 +1,7 @@
-﻿using MazeLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using MazeLib;
 
-namespace MazeMVVM.ModelLib.Player
+namespace MazeMVVM.ModelLib.Player.MultiPlayer
 {
     public interface IMultiPlayerModel : IPlayerModel
     {

@@ -3,6 +3,8 @@ using MazeMVVM.ModelLib.Player;
 using MazeMVVM.ModelLib.Communication;
 using MazeMVVM.ViewModelLib.Player;
 using System.Threading.Tasks;
+using MazeMVVM.ModelLib.Player.MultiPlayer;
+using MazeMVVM.ViewModelLib.Player.MultiPlayer;
 
 namespace MazeMVVM.ViewLib.MultiPlayer
 {
