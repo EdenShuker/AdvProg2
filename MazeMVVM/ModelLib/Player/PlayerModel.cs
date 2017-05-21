@@ -46,6 +46,7 @@ namespace MazeMVVM.ModelLib.Player
         {
             this.Client = client;
             this.Stop = false;
+            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
         }
 
         /// <summary>
@@ -79,36 +80,36 @@ namespace MazeMVVM.ModelLib.Player
 
         protected Position CalcPosition(Direction direction, int currentRow, int currentCol)
         {
-            Position pos;
+            Position position;
             // Right
             if (direction == Direction.Right && currentCol < Maze.Cols - 1 &&
                 Maze[currentRow, currentCol + 1] == CellType.Free)
             {
-                pos = new Position(currentRow, currentCol + 1);
+                position = new Position(currentRow, currentCol + 1);
             }
             // Left
             else if (direction == Direction.Left && currentCol > 0 &&
                      Maze[currentRow, currentCol - 1] == CellType.Free)
             {
-                pos = new Position(currentRow, currentCol - 1);
+                position = new Position(currentRow, currentCol - 1);
             }
             // Up
             else if (direction == Direction.Up && currentRow > 0 &&
                      Maze[currentRow - 1, currentCol] == CellType.Free)
             {
-                pos = new Position(currentRow - 1, currentCol);
+                position = new Position(currentRow - 1, currentCol);
             }
             // Down
             else if (direction == Direction.Down && currentRow < Maze.Rows - 1 &&
                      Maze[currentRow + 1, currentCol] == CellType.Free)
             {
-                pos = new Position(currentRow + 1, currentCol);
+                position = new Position(currentRow + 1, currentCol);
             }
             else
             {
-                pos = new Position(currentRow, currentCol);
+                position = new Position(currentRow, currentCol);
             }
-            return pos;
+            return position;
         }
 
 

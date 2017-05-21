@@ -25,22 +25,23 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
         // for starting a game
         public MultiPlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
         {
-            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.Write($"start {nameOfGame} {rows} {cols}");
             // at the moment when it get the game it means the game started.
-            this.Maze = Maze.FromJSON(this.Client.Read());
-            this.Pos = this.PosOtherPlayer = this.Maze.InitialPos;
+            this.InitMembers();
         }
 
         // for joining a game
         public MultiPlayerModel(IClient client, string nameOfGame) : base(client)
         {
-            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.Write($"join {nameOfGame}");
+            this.InitMembers();
+        }
+
+        private void InitMembers()
+        {
             this.Maze = Maze.FromJSON(this.Client.Read());
             this.Pos = this.PosOtherPlayer = this.Maze.InitialPos;
         }
-
 
         /// <summary>
         /// In multiPlayer game we must update other player we made a move.
@@ -54,7 +55,6 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
 
         public void CloseGame()
         {
-            //string endMsg = new JObject().ToString();
             this.Client.Write($"close {this.Maze.Name}");
         }
 
@@ -63,7 +63,6 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
             new Task(async () =>
             {
                 string endMsg = new JObject().ToString();
-                Direction direction;
                 while (Client.IsConnected())
                 {
                     string answer = Client.Read();
@@ -78,7 +77,7 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
                     if (msg["Direction"] != null)
                     {
                         // change other player position.
-                        direction = ParseDirection(msg["Direction"].ToString());
+                        Direction direction = ParseDirection(msg["Direction"].ToString());
                         MoveOtherPlayer(direction);
                     }
                     // sleep

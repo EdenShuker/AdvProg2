@@ -8,7 +8,6 @@ namespace MazeMVVM.ModelLib.Player.SinglePlayer
     {
         public SinglePlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
         {
-            this.Connect(Properties.Settings.Default.ServerIP, Properties.Settings.Default.ServerPort);
             this.Client.Write($"generate {nameOfGame} {rows} {cols}");
             this.Maze = Maze.FromJSON(this.Client.Read());
             this.Pos = this.Maze.InitialPos;
