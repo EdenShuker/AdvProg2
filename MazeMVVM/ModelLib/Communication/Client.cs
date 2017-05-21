@@ -4,9 +4,19 @@ using System.Net.Sockets;
 
 namespace MazeMVVM.ModelLib.Communication
 {
+    /// <summary>
+    /// Implementation of client.
+    /// </summary>
     public class Client : IClient
     {
+        /// <summary>
+        /// Tcp client object to communicate.
+        /// </summary>
         private TcpClient client;
+
+        /// <summary>
+        /// Represent if the current client is connected.
+        /// </summary>
         private bool isConnected;
 
         /// <summary>
@@ -54,6 +64,10 @@ namespace MazeMVVM.ModelLib.Communication
             writer.Write(command);
         }
 
+        /// <summary>
+        /// Check if the current client is connected.
+        /// </summary>
+        /// <returns>true if it is connected, false otherwise</returns>
         bool IClient.IsConnected()
         {
             return this.isConnected;

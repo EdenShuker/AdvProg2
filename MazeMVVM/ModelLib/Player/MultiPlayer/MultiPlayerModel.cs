@@ -6,10 +6,19 @@ using Newtonsoft.Json.Linq;
 
 namespace MazeMVVM.ModelLib.Player.MultiPlayer
 {
+    /// <summary>
+    /// Multi player model.
+    /// </summary>
     public class MultiPlayerModel : PlayerModel, IMultiPlayerModel
     {
+        /// <summary>
+        /// Event of game ending.
+        /// </summary>
         public event EventHandler GameEnded;
 
+        /// <summary>
+        /// Position of the competitor.
+        /// </summary>
         private Position posOtherPlayer;
 
         public Position PosOtherPlayer
@@ -22,7 +31,13 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
             }
         }
 
-        // for starting a game
+        /// <summary>
+        /// Constructor for starting a game.
+        /// </summary>
+        /// <param name="client"> client object </param>
+        /// <param name="nameOfGame"> name of the game </param>
+        /// <param name="rows"> number of rows for the maze </param>
+        /// <param name="cols"> number of columns for the maze </param>
         public MultiPlayerModel(IClient client, string nameOfGame, int rows, int cols) : base(client)
         {
             this.Client.Write($"start {nameOfGame} {rows} {cols}");
@@ -30,13 +45,20 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
             this.InitMembers();
         }
 
-        // for joining a game
+        /// <summary>
+        /// Constructor for joining a game.
+        /// </summary>
+        /// <param name="client"> client object </param>
+        /// <param name="nameOfGame"> name of existed game </param>
         public MultiPlayerModel(IClient client, string nameOfGame) : base(client)
         {
             this.Client.Write($"join {nameOfGame}");
             this.InitMembers();
         }
 
+        /// <summary>
+        /// Initialize the members.
+        /// </summary>
         private void InitMembers()
         {
             this.Maze = Maze.FromJSON(this.Client.Read());
@@ -53,11 +75,17 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
             this.Client.Write("play " + direction.ToString().ToLower());
         }
 
+        /// <summary>
+        /// Close the current game.
+        /// </summary>
         public void CloseGame()
         {
             this.Client.Write($"close {this.Maze.Name}");
         }
 
+        /// <summary>
+        /// Start listening for messages.
+        /// </summary>
         public void Start()
         {
             new Task(async () =>
@@ -86,13 +114,20 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
             }).Start();
         }
 
-
+        /// <summary>
+        /// Move the competitor on the current board.
+        /// </summary>
+        /// <param name="direction"></param>
         private void MoveOtherPlayer(Direction direction)
         {
             PosOtherPlayer = CalcPosition(direction, PosOtherPlayer.Row, PosOtherPlayer.Col);
         }
 
-
+        /// <summary>
+        /// Parse the direction from the given string.
+        /// </summary>
+        /// <param name="str"> string represents direction </param>
+        /// <returns> direction </returns>
         private Direction ParseDirection(string str)
         {
             Direction direction;

@@ -4,13 +4,29 @@ using MazeMVVM.ModelLib.Communication;
 
 namespace MazeMVVM.ModelLib.Player
 {
+    /// <summary>
+    /// Implementation of player-model.
+    /// </summary>
     public abstract class PlayerModel : IPlayerModel
     {
+        /// <summary>
+        /// Client for communication.
+        /// </summary>
         protected IClient Client;
+
+        /// <summary>
+        /// Represent the state of the player.
+        /// </summary>
         protected volatile bool Stop;
 
+        /// <summary>
+        /// The maze the player is playing on.
+        /// </summary>
         private Maze maze;
 
+        /// <summary>
+        /// Public property to customize the private maze.
+        /// </summary>
         public Maze Maze
         {
             get { return maze; }
@@ -22,8 +38,14 @@ namespace MazeMVVM.ModelLib.Player
             }
         }
 
+        /// <summary>
+        /// The position of the main player in the maze.
+        /// </summary>
         private Position pos;
 
+        /// <summary>
+        /// Public property to customize the private position.
+        /// </summary>
         public Position Pos
         {
             get { return pos; }
@@ -36,6 +58,9 @@ namespace MazeMVVM.ModelLib.Player
             }
         }
 
+        /// <summary>
+        /// Event that contains all the functionality when some property is changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -52,7 +77,7 @@ namespace MazeMVVM.ModelLib.Player
         /// <summary>
         /// Connect To server.
         /// </summary>
-        /// <param name="ip"> ip address</param>
+        /// <param name="ip"> ip address </param>
         /// <param name="port"> port number </param>
         public void Connect(string ip, int port)
         {
@@ -76,7 +101,6 @@ namespace MazeMVVM.ModelLib.Player
         {
             Pos = CalcPosition(direction, Pos.Row, Pos.Col);
         }
-
 
         protected Position CalcPosition(Direction direction, int currentRow, int currentCol)
         {
@@ -111,8 +135,6 @@ namespace MazeMVVM.ModelLib.Player
             }
             return position;
         }
-
-
 
         /// <summary>
         /// Notify that the proprety with the given name has changed.

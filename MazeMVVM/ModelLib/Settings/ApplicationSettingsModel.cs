@@ -1,5 +1,9 @@
 ﻿namespace MazeMVVM.ModelLib.Settings
 {
+    /// <summary>
+    /// Implementation of settings model.
+    /// Get all its members from the application-settings.
+    /// </summary>
     public class ApplicationSettingsModel : ISettingsModel
     {
         public string ServerIP
@@ -34,6 +38,7 @@
 
         public void SaveSettings()
         {
+            // Save the application settings.
             Properties.Settings.Default.Save();
         }
     }
