@@ -25,7 +25,7 @@ namespace MazeMVVM.ViewLib.SinglePlayer
             this.isButtonPressed = true;
             SinglePlayerModel model =
                 new SinglePlayerModel(new Client(), StartMenu.MazeName, StartMenu.Rows, StartMenu.Cols);
-            var newForm = new SinglePlayer.SPGameWindow(model);
+            var newForm = new SPGameWindow(model);
             newForm.Show();
             this.Close();
         }

@@ -190,8 +190,6 @@ namespace MazeMVVM.ViewLib.Controls
             player.Height = blockHeight;
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
-            // The image path is good only because the minion is in the current project,
-            // need to check what happens when the file will be somewhere else.
             logo.UriSource = new Uri("/" + imagePath, UriKind.Relative);
             logo.EndInit();
             player.Source = logo;
