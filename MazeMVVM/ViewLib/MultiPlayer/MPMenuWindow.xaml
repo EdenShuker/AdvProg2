@@ -6,24 +6,26 @@
         xmlns:local="clr-namespace:MazeMVVM.ViewLib"
         xmlns:controls="clr-namespace:MazeMVVM.ViewLib.Controls"
         mc:Ignorable="d"
-        Title="MPMenuWindow" Height="350" Width="300" Closing="MPMenuWindow_OnClosing">
-    <Grid>
+        Title="MPMenuWindow" Height="370" Width="300" Closing="MPMenuWindow_OnClosing">
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="120" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <controls:GameStartMenu x:Name="StartMenu" Grid.Row="1" />
+        <controls:GameStartMenu x:Name="StartMenu" Grid.Row="2" />
+        <TextBlock x:Name="WaitMsg" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
 
         <Grid Height="45" Width="270" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <ComboBox x:Name="comboBox" Grid.Column="1" Width="130" HorizontalAlignment="Center"
+            <ComboBox x:Name="ComboBox" Grid.Column="1" Width="130" HorizontalAlignment="Center"
                       VerticalAlignment="Top" ItemsSource="{Binding AvailablesGames}"
                       DropDownOpened="comboBox_DropDownOpened" />
-            <TextBlock x:Name="textBlock" Width="100" Height="20" FontSize="15" HorizontalAlignment="Left"
+            <TextBlock x:Name="TextBlock" Width="100" Height="20" FontSize="15" HorizontalAlignment="Left"
                        Text="List of games:" VerticalAlignment="Top" />
         </Grid>
         <Button x:Name="btnJoin" Content="Join Game" FontSize="14" Width="86" Height="29" HorizontalAlignment="Center"

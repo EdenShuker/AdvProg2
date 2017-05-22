@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using MazeMVVM.ModelLib.Communication;
 using MazeMVVM.ModelLib.Player.MultiPlayer;
 using MazeMVVM.ViewModelLib.Player.MultiPlayer;
@@ -38,9 +40,12 @@ namespace MazeMVVM.ViewLib.MultiPlayer
         /// </summary>
         /// <param name="sender"> caller </param>
         /// <param name="e"> args </param>
-        private void bStart_Click(object sender, RoutedEventArgs e)
+        private async void bStart_Click(object sender, RoutedEventArgs e)
         {
             this.isButtonPressed = true;
+            WaitMsg.Text = "Waiting for competitor...";
+            await Task.Delay(10);
+
             MultiPlayerModel model =
                 new MultiPlayerModel(new Client(), StartMenu.MazeName, StartMenu.Rows, StartMenu.Cols);
             ShowGameWindow(model);
@@ -55,7 +60,7 @@ namespace MazeMVVM.ViewLib.MultiPlayer
         {
             this.isButtonPressed = true;
             MultiPlayerModel model =
-                new MultiPlayerModel(new Client(), comboBox.SelectedItem.ToString());
+                new MultiPlayerModel(new Client(), ComboBox.SelectedItem.ToString());
             ShowGameWindow(model);
         }
 

@@ -25,7 +25,7 @@
             <Button x:Name="btnMenu" Grid.ColumnSpan="3" Content="Back to main menu" HorizontalAlignment="Center"
                     VerticalAlignment="Center" Width="110" Click="btnMenu_Click" />
 
-            <Controls:MazeDisplayer x:Name="mazeBoard" Grid.Row="2" MazeStr="{Binding VM_MazeStr}"
+            <Controls:MazeDisplayer x:Name="MazeBoard" Grid.Row="2" MazeStr="{Binding VM_MazeStr}"
                                     InitPos="{Binding VM_InitialPos}"
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
                                     Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}"
@@ -33,7 +33,7 @@
                                     ExitImageFile="resources/Exit.png"
                                     CurrPosition="{Binding VM_Pos, UpdateSourceTrigger=PropertyChanged}" />
 
-            <Controls:MazeDisplayer x:Name="mazeBoardOther" Grid.Row="2" Grid.Column="2" MazeStr="{Binding VM_MazeStr}"
+            <Controls:MazeDisplayer x:Name="MazeBoardOther" Grid.Row="2" Grid.Column="2" MazeStr="{Binding VM_MazeStr}"
                                     InitPos="{Binding VM_InitialPos}"
                                     GoalPos="{Binding VM_GoalPos}" MazeName="{Binding VM_MazeName}"
                                     Rows="{Binding VM_Rows}" Cols="{Binding VM_Cols}"

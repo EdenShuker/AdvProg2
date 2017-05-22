@@ -33,8 +33,8 @@ namespace MazeMVVM.ViewLib.MultiPlayer
         {
             InitializeComponent();
             this.vm = new MPViewModel(model);
-            vm.Subscribe(mazeBoard);
-            mazeBoard.PlayerMoved += ShowMsg;
+            vm.Subscribe(MazeBoard);
+            MazeBoard.PlayerMoved += ShowMsg;
             this.DataContext = vm;
             vm.Start();
             this.isBackToMenuButtonPressed = false;

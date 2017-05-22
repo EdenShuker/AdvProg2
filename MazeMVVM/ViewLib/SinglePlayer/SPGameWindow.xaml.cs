@@ -30,8 +30,8 @@ namespace MazeMVVM.ViewLib.SinglePlayer
         {
             InitializeComponent();
             vm = new SPViewModel(model);
-            vm.Subscribe(mazeBoard);
-            mazeBoard.PlayerMoved += ShowMsg;
+            vm.Subscribe(MazeBoard);
+            MazeBoard.PlayerMoved += ShowMsg;
             this.DataContext = vm;
             this.isBackToMenuButtonPressed = false;
         }

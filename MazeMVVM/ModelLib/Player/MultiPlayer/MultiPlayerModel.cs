@@ -88,7 +88,7 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
         /// </summary>
         public void Start()
         {
-            new Task(async () =>
+            new Task(() =>
             {
                 string endMsg = new JObject().ToString();
                 while (Client.IsConnected())
@@ -108,8 +108,6 @@ namespace MazeMVVM.ModelLib.Player.MultiPlayer
                         Direction direction = ParseDirection(msg["Direction"].ToString());
                         MoveOtherPlayer(direction);
                     }
-                    // sleep
-                    await Task.Delay(500);
                 }
             }).Start();
         }
